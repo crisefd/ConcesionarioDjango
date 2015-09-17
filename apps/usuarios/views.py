@@ -14,4 +14,5 @@ def login(request):
 	pass
 
 def registro(request):
+	
 	pass
