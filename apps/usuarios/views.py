@@ -4,10 +4,11 @@ from django.http import HttpResponse
 # Create your views here.
 
 def hola_mundo(request):
-	contenido =  "<html><body>Hola Mundo!.</body></html>"
-	t = Template(contenido)
-	html = t.render(Context({}))
-	return HttpResponse(html)
+	nombre_completo = "Cristhian Fuertes"
+	return render(request,
+					"hola_mundo.html",
+					{"nombre_completo": nombre_completo}
+					) 
 
 def login(request):
 	pass
