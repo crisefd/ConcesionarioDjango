@@ -1,5 +1,7 @@
 from .base import *
 
+DEBUG_TOOLBAR_PATCH_SETTINGS = False 
+
 # Database
 # https://docs.djangoproject.com/en/1.8/ref/settings/#databases
 
