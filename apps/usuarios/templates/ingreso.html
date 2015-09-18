@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+ 
+{% block title %}Inicio{% endblock %}
+ 
+{% block content %}
+
+    <div class="container">
+
+      <form class="form-signin">
+        <h2 class="form-signin-heading" align="center">Inicio de Sesión</h2>
+        <label for="inputEmail" class="sr-only">Login</label>
+        <input type="text" id="inputEmail" class="form-control" placeholder="Login" required autofocus>
+        <label for="inputPassword" class="sr-only">Contraseña</label>
+        <input type="password" id="inputPassword" class="form-control" placeholder="Contraseña" required>
+        <div class="checkbox">
+          <label>
+            <input type="checkbox" value="Recordarme"> Recordarme
+          </label>
+        </div>
+        <button class="btn btn-lg btn-primary btn-block" type="submit">Iniciar</button>
+      </form>
+
+    </div> <!-- /container -->
+{% endblock %}
+
+

@@ -11,7 +11,7 @@ def hola_mundo(request):
 					) 
 
 def login(request):
-	pass
+	return render(request,"ingreso.html")
 
 def registro(request):
 	

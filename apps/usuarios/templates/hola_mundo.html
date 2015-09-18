@@ -1,8 +1,11 @@
+
 <!DOCTYPE html>
 <html lang="es">
 <head>
 	<meta charset="UTF-8">
 	<title>Ejemplo</title>
+	{% load staticfiles %}
+	<link href="{% static 'assets/css/main.css'%}" />	
 </head>
 <body>
 <h1>!Hola mundo!, {{nombre_completo}}</h1>
