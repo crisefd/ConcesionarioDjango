@@ -6,6 +6,9 @@ from django.conf import settings
 from django.contrib.auth.models import AbstractBaseUser, BaseUserManager
 from django.utils.translation import ugettext_lazy as _
 from django.contrib.auth.signals import user_logged_in
+from django.core import validators
+from django.utils import six, timezone
+from django.db.models.manager import EmptyManager
 
 def update_last_login(sender, user, **kwargs):
     """
@@ -120,6 +123,44 @@ class Group(Model):
         return (self.name,)
 
 
+# A few helper functions for common logic between User and AnonymousUser.
+def _user_get_all_permissions(user, obj):
+    permissions = set()
+    for backend in auth.get_backends():
+        if hasattr(backend, "get_all_permissions"):
+            permissions.update(backend.get_all_permissions(user, obj))
+    return permissions
+
+
+def _user_has_perm(user, perm, obj):
+    """
+    A backend can raise `PermissionDenied` to short-circuit permission checking.
+    """
+    for backend in auth.get_backends():
+        if not hasattr(backend, 'has_perm'):
+            continue
+        try:
+            if backend.has_perm(user, perm, obj):
+                return True
+        except PermissionDenied:
+            return False
+    return False
+
+
+def _user_has_module_perms(user, app_label):
+    """
+    A backend can raise `PermissionDenied` to short-circuit permission checking.
+    """
+    for backend in auth.get_backends():
+        if not hasattr(backend, 'has_module_perms'):
+            continue
+        try:
+            if backend.has_module_perms(user, app_label):
+                return True
+        except PermissionDenied:
+            return False
+    return False
+
 class PermissionsMixin(Model):
     """
     A mixin class that adds the fields and methods necessary to support
@@ -233,31 +274,79 @@ class UserManager(BaseUserManager, Manager):
 
 
 #class AbstractUser(AbstractBaseUser, PermissionsMixin):
-class User(AbstractBaseUser, PermissionsMixin):
-	nombre = CharField(max_length=50, blank=True)
-	apellido = CharField(max_length=50, blank=True)
-	passwd = CharField(max_length=30, blank=True)
-	fecha_nacimiento = DateField(blank=True)
-	genero = CharField(max_length=1, blank=True)
-	correo_electronico = EmailField(unique=True, blank=True)
-	numero_telefono = CharField(max_length=50, unique=True, blank=True)
-	direccion_residencia = CharField(max_length=50, unique=True, blank=True)
-	documento_id = CharField(max_length=30, primary_key=True, blank=True)
-	esta_activo = BooleanField(default=True)
-	tipo = CharField(max_length=50)
-	objects = UserManager()
+class AbstractUser(AbstractBaseUser, PermissionsMixin):
+    username = CharField ( _('username'),
+        max_length=30,
+        unique=True,
+        help_text=_('Required. 30 characters or fewer. Letters, digits and @/./+/-/_ only.'),
+        validators=[
+            validators.RegexValidator(
+                r'^[\w.@+-]+$',
+                _('Enter a valid username. This value may contain only '
+                  'letters, numbers ' 'and @/./+/-/_ characters.')
+            ),
+        ],
+        error_messages={
+            'unique': _("A user with that username already exists."),
+        }, default=''
+    )
+    nombre = CharField(max_length=50, blank=True)
+    apellido = CharField(max_length=50, blank=True)
+    passwd = CharField(max_length=30, blank=True)
+    fecha_nacimiento = DateField(blank=True)
+    genero = CharField(max_length=1, blank=True)
+    correo_electronico = EmailField(unique=True, blank=True)
+    numero_telefono = CharField(max_length=50, unique=True, blank=True)
+    direccion_residencia = CharField(max_length=50, unique=True, blank=True)
+    documento_id = CharField(max_length=30, primary_key=True, blank=True)
+    esta_activo = BooleanField(default=True)
+    tipo = CharField(max_length=50)
+    objects = UserManager()
 
-	USERNAME_FIELD = _('correo_electronico')
-	REQUIRED_FIELDS = []
+    is_staff = BooleanField(
+        _('staff status'),
+        default=False,
+        help_text=_('Designates whether the user can log into this admin site.'),
+    )
+    is_active = BooleanField(
+        _('active'),
+        default=True,
+        help_text=_(
+            'Designates whether this user should be treated as active. '
+            'Unselect this instead of deleting accounts.'
+        ),
+    )
+    date_joined = DateTimeField(_('date joined'), default=timezone.now)
 
-	class Meta:
-		verbose_name = _('user')
-		verbose_name_plural = _('users')
+    USERNAME_FIELD = _('correo_electronico')
+    REQUIRED_FIELDS = []
+
+    class Meta:
+        verbose_name = _('user')
+        verbose_name_plural = _('users')
+        abstract = True
+
+    def get_full_name(self):
+        """
+        Returns the first_name plus the last_name, with a space in between.
+        """
+        full_name = '%s %s' % (self.nombre, self.apellido)
+        return full_name.strip()
+
+    def get_short_name(self):
+        "Returns the short name for the user."
+        return self.nombre
+
+    def email_user(self, subject, message, from_email=None, **kwargs):
+        """
+        Sends an email to this User.
+        """
+        send_mail(subject, message, from_email, [self.correo_electronico], **kwargs)
 
 
-#class User(AbstractUser):
-	#class Meta(AbstractUser.Meta):
-	#	swappable = 'AUTH_USER_MODEL'
+class User(AbstractUser):
+	class Meta(AbstractUser.Meta):
+		swappable = 'AUTH_USER_MODEL'
 
 
 
@@ -269,6 +358,80 @@ class Vendedor_Sucursal(Model):
 class JefeTaller_Sucursal(Model):
 	sucursal_fk = ForeignKey(settings.MODELO_SUCURSALES)
 	jefe_fk = ForeignKey(User)
+
+
+@python_2_unicode_compatible
+class AnonymousUser(object):
+    id = None
+    pk = None
+    username = ''
+    is_staff = False
+    is_active = False
+    is_superuser = False
+    _groups = EmptyManager(Group)
+    _user_permissions = EmptyManager(Permission_)
+
+    def __init__(self):
+        pass
+
+    def __str__(self):
+        return 'AnonymousUser'
+
+    def __eq__(self, other):
+        return isinstance(other, self.__class__)
+
+    def __ne__(self, other):
+        return not self.__eq__(other)
+
+    def __hash__(self):
+        return 1  # instances always return the same hash value
+
+    def save(self):
+        raise NotImplementedError("Django doesn't provide a DB representation for AnonymousUser.")
+
+    def delete(self):
+        raise NotImplementedError("Django doesn't provide a DB representation for AnonymousUser.")
+
+    def set_password(self, raw_password):
+        raise NotImplementedError("Django doesn't provide a DB representation for AnonymousUser.")
+
+    def check_password(self, raw_password):
+        raise NotImplementedError("Django doesn't provide a DB representation for AnonymousUser.")
+
+    def _get_groups(self):
+        return self._groups
+    groups = property(_get_groups)
+
+    def _get_user_permissions(self):
+        return self._user_permissions
+    user_permissions = property(_get_user_permissions)
+
+    def get_group_permissions(self, obj=None):
+        return set()
+
+    def get_all_permissions(self, obj=None):
+        return _user_get_all_permissions(self, obj=obj)
+
+    def has_perm(self, perm, obj=None):
+        return _user_has_perm(self, perm, obj=obj)
+
+    def has_perms(self, perm_list, obj=None):
+        for perm in perm_list:
+            if not self.has_perm(perm, obj):
+                return False
+        return True
+
+    def has_module_perms(self, module):
+        return _user_has_module_perms(self, module)
+
+    def is_anonymous(self):
+        return True
+
+    def is_authenticated(self):
+        return False
+
+    def get_username(self):
+        return self.username
 
 
 """

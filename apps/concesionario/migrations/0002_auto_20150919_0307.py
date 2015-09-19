@@ -15,12 +15,12 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='ventas',
             name='vendedor_fk',
-            field=models.ForeignKey(to='usuarios.Vendedor'),
+            field=models.ForeignKey(to='usuarios.User'),
         ),
         migrations.AddField(
             model_name='ordenes_trabajo',
             name='jefe_taller_fk',
-            field=models.ForeignKey(to='usuarios.Jefe_Taller'),
+            field=models.ForeignKey(to='usuarios.User'),
         ),
         migrations.AddField(
             model_name='ordenes_trabajo',
@@ -35,6 +35,6 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='cotizaciones',
             name='vendedor_fk',
-            field=models.ForeignKey(to='usuarios.Vendedor'),
+            field=models.ForeignKey(to='usuarios.User'),
         ),
     ]

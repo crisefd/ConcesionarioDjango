@@ -89,3 +89,4 @@ MODELO_AUT_JEFE = 'usuarios.Jefe_Taller'
 """
 MODELO_USUARIO = 'usuarios.User'
 MODELO_SUCURSALES = 'concesionario.Sucursales'
+AUTH_USER_MODEL = 'usuarios.User'

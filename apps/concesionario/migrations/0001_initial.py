@@ -14,9 +14,9 @@ class Migration(migrations.Migration):
             name='Automovil',
             fields=[
                 ('serial_id', models.CharField(default=b'0000', max_length=50, serialize=False, primary_key=True)),
-                ('precio', models.FloatField(null=True)),
-                ('marca', models.CharField(max_length=50, null=True)),
-                ('modelo', models.CharField(max_length=50, null=True)),
+                ('precio', models.FloatField(default=0.0)),
+                ('marca', models.CharField(default=b'Acme', max_length=50)),
+                ('modelo', models.CharField(default=b'Acme', max_length=50)),
             ],
             options={
                 'abstract': False,
@@ -26,15 +26,15 @@ class Migration(migrations.Migration):
             name='Cotizaciones',
             fields=[
                 ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
-                ('nombre_comprador', models.CharField(max_length=50, null=True)),
+                ('nombre_comprador', models.CharField(default=b'', max_length=50)),
             ],
         ),
         migrations.CreateModel(
             name='Mecanicos',
             fields=[
                 ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
-                ('nombre', models.CharField(max_length=50, null=True)),
-                ('apellido', models.CharField(max_length=50, null=True)),
+                ('nombre', models.CharField(default=b'', max_length=50)),
+                ('apellido', models.CharField(default=b'', max_length=50)),
             ],
         ),
         migrations.CreateModel(
@@ -50,8 +50,8 @@ class Migration(migrations.Migration):
             name='Repuesto',
             fields=[
                 ('serial_id', models.CharField(default=b'0000', max_length=50, serialize=False, primary_key=True)),
-                ('precio', models.FloatField(null=True)),
-                ('nombre', models.CharField(max_length=50, null=True)),
+                ('precio', models.FloatField(default=0.0)),
+                ('nombre', models.CharField(default=b'', max_length=50)),
             ],
             options={
                 'abstract': False,
@@ -61,17 +61,17 @@ class Migration(migrations.Migration):
             name='Sucursales',
             fields=[
                 ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
-                ('nombre', models.CharField(max_length=50, null=True)),
-                ('direccion', models.CharField(max_length=30, null=True)),
+                ('nombre', models.CharField(default=b'', max_length=50)),
+                ('direccion', models.CharField(default=b'', max_length=30)),
             ],
         ),
         migrations.CreateModel(
             name='Ventas',
             fields=[
                 ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
-                ('nombre_comprador', models.CharField(max_length=50, null=True)),
-                ('doc_id_comprador', models.CharField(max_length=50, unique=True, null=True)),
-                ('valor_venta', models.FloatField(null=True)),
+                ('nombre_comprador', models.CharField(default=b'', max_length=50)),
+                ('doc_id_comprador', models.CharField(default=b'00000000', unique=True, max_length=50)),
+                ('valor_venta', models.FloatField(default=0.0)),
                 ('automovil_fk', models.ForeignKey(to='concesionario.Automovil', null=True)),
             ],
         ),
