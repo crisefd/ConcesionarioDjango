@@ -3,6 +3,6 @@ from .models import *
 
 # Register your models here.
 
-admin.site.register(Gerente)
-admin.site.register(Vendedor)
-admin.site.register(Jefe_Taller)
+@admin.register(User, Vendedor_Sucursal, JefeTaller_Sucursal)
+class Admin(admin.ModelAdmin):
+    pass
