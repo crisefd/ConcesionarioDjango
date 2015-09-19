@@ -2,12 +2,13 @@
 from __future__ import unicode_literals
 
 from django.db import models, migrations
+from django.conf import settings
 
 
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('usuarios', '0001_initial'),
+        migrations.swappable_dependency(settings.AUTH_USER_MODEL),
         ('concesionario', '0001_initial'),
     ]
 
@@ -15,12 +16,12 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='ventas',
             name='vendedor_fk',
-            field=models.ForeignKey(to='usuarios.User'),
+            field=models.ForeignKey(to=settings.AUTH_USER_MODEL),
         ),
         migrations.AddField(
             model_name='ordenes_trabajo',
             name='jefe_taller_fk',
-            field=models.ForeignKey(to='usuarios.User'),
+            field=models.ForeignKey(to=settings.AUTH_USER_MODEL),
         ),
         migrations.AddField(
             model_name='ordenes_trabajo',
@@ -35,6 +36,6 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='cotizaciones',
             name='vendedor_fk',
-            field=models.ForeignKey(to='usuarios.User'),
+            field=models.ForeignKey(to=settings.AUTH_USER_MODEL),
         ),
     ]
