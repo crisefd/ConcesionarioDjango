@@ -52,6 +52,7 @@ class AbstractUser(AbstractBaseUser, PermissionsMixin):
     id_document = models.CharField(max_length=50, primary_key=True, blank=True)
     staff_type = models.CharField(max_length=50, default='')
     objects = UserManager()
+    charge = models.CharField(max_length=50, default='')
 
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = []
