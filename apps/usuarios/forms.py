@@ -35,9 +35,12 @@ class MyUserCreationForm(UserCreationForm):
     phone_number = forms.CharField(max_length = 50)
     id_document = forms.CharField(max_length = 50)
     email = forms.EmailField(max_length = 255)
+    address = forms.CharField(max_length=50)
     
     class Meta(UserCreationForm.Meta):
         model = User
+        fields = ("birth_date", "sex", "address", "phone_number", 
+            "id_document", "charge", "username", "email")
 
 class JefeTallerSucursalForm(ModelForm):
     class Meta:
