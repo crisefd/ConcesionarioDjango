@@ -45,15 +45,13 @@ class AbstractUser(AbstractBaseUser, PermissionsMixin):
         'active. Unselect this instead of deleting accounts.'))
     date_joined = models.DateTimeField(_('date joined'), default=timezone.now)
 
-    birth_date = models.DateField(blank=True)
+    birth_date = models.DateField(default='1999-12-01')
     sex = models.CharField(max_length=1, default='')
     address = models.CharField(max_length=50, default='')
     phone_number = models.CharField(max_length=50, default='')
     id_document = models.CharField(max_length=50, primary_key=True, blank=True)
-    staff_type = models.CharField(max_length=50, default='')
     objects = UserManager()
     charge = models.CharField(max_length=50, default='')
-
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = []
 
