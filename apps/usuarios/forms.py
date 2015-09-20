@@ -14,6 +14,16 @@ class LoginForm(forms.Form):
 
 
 class MyUserCreationForm(UserCreationForm):
+    def clean_username(self):
+        # Since User.username is unique, this check is redundant,
+        # but it sets a nicer error message than the ORM. See #13147.
+        username = self.cleaned_data["username"]
+        try:
+            User._default_manager.get(username=username)
+        except User.DoesNotExist:
+            return username
+        raise forms.ValidationError(self.error_messages['duplicate_username'])
+
     sex = forms.ChoiceField(choices=[("masculino", "M"),
         ("femenimo", "F"),], widget=forms.RadioSelect())
 
@@ -25,7 +35,9 @@ class MyUserCreationForm(UserCreationForm):
     phone_number = forms.CharField(max_length = 50)
     id_document = forms.CharField(max_length = 50)
     email = forms.EmailField(max_length = 255)
-
+    
+    class Meta(UserCreationForm.Meta):
+        model = User
 
 class JefeTallerSucursalForm(ModelForm):
     class Meta:

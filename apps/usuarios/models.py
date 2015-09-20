@@ -35,8 +35,8 @@ class UserManager(BaseUserManager, models.Manager):
 
 class AbstractUser(AbstractBaseUser, PermissionsMixin):
 
-    email = models.EmailField(_('email address'), max_length=255,
-                              unique=True, db_index=True)
+    username = models.CharField(max_length=50, unique=True, default='examplename')
+    email= models.EmailField(_('email address'),max_length=50, unique=True,)
     is_staff = models.BooleanField(
         _('staff status'), default=False, help_text=_(
             'Designates whether the user can log into this admin site.'))
@@ -52,8 +52,8 @@ class AbstractUser(AbstractBaseUser, PermissionsMixin):
     id_document = models.CharField(max_length=50, primary_key=True, blank=True)
     objects = UserManager()
     charge = models.CharField(max_length=50, default='')
-    USERNAME_FIELD = 'email'
-    REQUIRED_FIELDS = []
+    USERNAME_FIELD = 'username'
+    REQUIRED_FIELDS = ['email']
 
     class Meta:
         verbose_name = _('user')
