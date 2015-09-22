@@ -10,7 +10,7 @@ def hola_mundo(request):
     return render(request, "hola_mundo.html", {"nombre_completo": nombre_completo}) 
 """
 
-class IndexViewLogin(FormView):
+class LoginView(FormView):
     form_class = LoginForm
     template_name = 'index.html'
     succes_url = '/'
@@ -23,16 +23,20 @@ class IndexViewLogin(FormView):
         return super(LoginView, self).form_valid(form)
 
 
-class IndexViewRegister(FormView):
+class RegisterView(FormView):
     form_class = MyUserCreationForm
     template_name = "registro_usuario.html"
-    succes_url = "/registrar/"
+    succes_url = "/registro_completo/"
 
     def form_valid(self, form):
         form.save()
-        return super(IndexViewRegister, self).form_valid(form)
+        return super(RegisterView, self).form_valid(form)
 
-def LogOut(request):
+
+def registration_completed(request):
+    return redirect('registro_completo.html')
+
+def logOut(request):
     logout(request)
     return redirect('index.html')
 
