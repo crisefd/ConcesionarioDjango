@@ -10,7 +10,7 @@ from django.conf import settings
 class UserManager(BaseUserManager, models.Manager):
     def _create_user(self, email, password,
                      is_staff, is_superuser, **extra_fields):
-        #now = timezone.now()
+        now = timezone.now()
         email = self.normalize_email(email)
         if not email:
             raise ValueError('The given email must be set')        

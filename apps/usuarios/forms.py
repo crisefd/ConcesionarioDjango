@@ -24,8 +24,8 @@ class MyUserCreationForm(UserCreationForm):
             return username
         raise forms.ValidationError(self.error_messages['duplicate_username'])
 
-    sex = forms.ChoiceField(choices=[("masculino", "M"),
-        ("femenimo", "F"),], widget=forms.RadioSelect())
+    sex = forms.ChoiceField(choices=[("M", "M"),
+        ("F", "F"),], widget=forms.RadioSelect())
 
     YEARS = [y for y in range(1930,2015)]
     birth_date = forms.DateField(widget=SelectDateWidget(years=YEARS))
@@ -36,11 +36,13 @@ class MyUserCreationForm(UserCreationForm):
     id_document = forms.CharField(max_length = 50)
     email = forms.EmailField(max_length = 255)
     address = forms.CharField(max_length=50)
+    first_name = forms.CharField(max_length=50)
+    last_name = forms.CharField(max_length=50)
     
     class Meta(UserCreationForm.Meta):
         model = User
-        fields = ("birth_date", "sex", "address", "phone_number", 
-            "id_document", "charge", "username", "email")
+        fields = ("first_name","last_name","username", "email","address", "phone_number", 
+            "id_document","sex", "charge", "birth_date")
 
 class JefeTallerSucursalForm(ModelForm):
     class Meta:
