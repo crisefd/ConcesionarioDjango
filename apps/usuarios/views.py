@@ -12,13 +12,16 @@ def hola_mundo(request):
 
 class LoginView(FormView):
     form_class = LoginForm
-    template_name = 'index.html'
+    template_name = 'login.html'
     succes_url = '/'
     def form_valid(self, form):
+        print "validando formulario"
         user = authenticate(username = form.cleaned_data['username'], 
                     password = form.cleaned_data['password'])
         if user is not None:
+            print "el usuario ", user, "existe"
             if user.is_active:
+                print "el usuario esta activo"
                 login(self.request, user)
         return super(LoginView, self).form_valid(form)
 
@@ -38,7 +41,7 @@ def registration_completed(request):
 
 def logOut(request):
     logout(request)
-    return redirect('index.html')
+    return redirect('login.html')
 
 
 def welcome(request):
