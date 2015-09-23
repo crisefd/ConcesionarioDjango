@@ -13,15 +13,18 @@ def hola_mundo(request):
 class LoginView(FormView):
     form_class = LoginForm
     template_name = 'login.html'
-    succes_url = '/'
+    
     def form_valid(self, form):
         print "validando formulario"
         user = authenticate(username = form.cleaned_data['username'], 
                     password = form.cleaned_data['password'])
+        success_url = '/'
         if user is not None:
-            print "el usuario ", user, "existe"
+            print "el usuario ", user.username, "existe"
             if user.is_active:
                 print "el usuario esta activo"
+                if user.charge == "Gerente":
+                    success_url += "cuentas/gerente/" + user.username
                 login(self.request, user)
         return super(LoginView, self).form_valid(form)
 
@@ -35,6 +38,9 @@ class RegisterView(FormView):
         form.save()
         return super(RegisterView, self).form_valid(form)
 
+
+def inicio_gerente(request):
+    return redirect("inicio_gerente.html")
 
 def registration_completed(request):
     return redirect('registro_completo.html')
