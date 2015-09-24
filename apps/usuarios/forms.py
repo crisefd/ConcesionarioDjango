@@ -28,7 +28,8 @@ class MyUserCreationForm(UserCreationForm):
         ("F", "F"),], widget=forms.RadioSelect())
 
     YEARS = [y for y in range(1930,2015)]
-    birth_date = forms.DateField(widget=SelectDateWidget(years=YEARS))
+    birth_date = forms.DateField(widget=SelectDateWidget(years=YEARS,
+                                                        attrs={'class':'fecha'}))
     charge = forms.ChoiceField(choices=[("Gerente","Gerente"),
                                 ("Vendedor", "Vendedor"), ("Jefe Taller", "Jefe Taller")],
                                     widget= forms.RadioSelect())
