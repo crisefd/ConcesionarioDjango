@@ -7,6 +7,31 @@ body {
   background-position: center center;
   position:relative;
 }
+form{
+	background:#ffffff;
+	border: 2px solid #000;
+}
+
+label {
+  display: block;
+  margin: .5em 0 0 0;
+}
+div {
+  margin: .4em 0;
+  
+}
+div label {
+  width: 25%;
+  float: left;
+}
+.btn {
+  display: block;
+  margin: 1em 0;
+}
+#registro{
+	background: white;
+}
+
 
 .form-signin {
   max-width: 330px;
