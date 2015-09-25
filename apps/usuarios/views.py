@@ -1,16 +1,18 @@
 from django.shortcuts import render, redirect
 from django.template import Template, Context
 from django.http import HttpResponse
+from django.contrib.messages.views import SuccessMessageMixin
 from django.views.generic import FormView
 from django.contrib.auth import authenticate, login, logout
 from .forms import LoginForm, MyUserCreationForm
+from django.contrib import messages
 """
 def hola_mundo(request):
     nombre_completo = "Cristhian Fuertes"
     return render(request, "hola_mundo.html", {"nombre_completo": nombre_completo}) 
-"""
 
-class LoginView(FormView):
+"""
+class LoginView(SuccessMessageMixin, FormView):
     form_class = LoginForm
     template_name = 'login.html'
     
@@ -18,13 +20,18 @@ class LoginView(FormView):
         print "validando formulario"
         user = authenticate(username = form.cleaned_data['username'], 
                     password = form.cleaned_data['password'])
-        success_url = '/'
+        self.success_url = ''
         if user is not None:
             print "el usuario ", user.username, "existe"
             if user.is_active:
                 print "el usuario esta activo"
                 if user.charge == "Gerente":
-                    success_url += "cuentas/gerente/" + user.username
+                    self.success_url += "/cuentas/gerente/" + user.username
+                elif user.charge == "Vendedor":
+                    self.success_url += "/cuentas/vendedor/" + user.username
+                else:
+                    self.success_url += "cuentas/jefetaller/" + user.username
+                messages.success(self.request, "Bienvenido " + user.username)
                 login(self.request, user)
         return super(LoginView, self).form_valid(form)
 
@@ -36,11 +43,20 @@ class RegisterView(FormView):
 
     def form_valid(self, form):
         form.save()
+
         return super(RegisterView, self).form_valid(form)
+
 
 
 def inicio_gerente(request):
     return render(request, "inicio_gerente.html")
+
+
+def inicio_vendedor(request):
+    return render(request, "inicio_vendedor.html")
+
+def inicio_jefetaller(request):
+    return render(request, "inicio_jefetaller.html")
 
 def registration_completed(request):
     return redirect('registro_completo.html')
