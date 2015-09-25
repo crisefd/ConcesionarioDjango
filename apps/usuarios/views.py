@@ -6,12 +6,7 @@ from django.views.generic import FormView
 from django.contrib.auth import authenticate, login, logout
 from .forms import LoginForm, MyUserCreationForm
 from django.contrib import messages
-"""
-def hola_mundo(request):
-    nombre_completo = "Cristhian Fuertes"
-    return render(request, "hola_mundo.html", {"nombre_completo": nombre_completo}) 
 
-"""
 class LoginView(SuccessMessageMixin, FormView):
     form_class = LoginForm
     template_name = 'login.html'
@@ -31,7 +26,7 @@ class LoginView(SuccessMessageMixin, FormView):
                     self.success_url += "/cuentas/vendedor/" + user.username
                 else:
                     self.success_url += "cuentas/jefetaller/" + user.username
-                messages.success(self.request, "Bienvenido " + user.username)
+                messages.add_message(self.request, messages.SUCCESS, "Bienvenido " + user.username)
                 login(self.request, user)
         return super(LoginView, self).form_valid(form)
 
@@ -43,7 +38,7 @@ class RegisterView(FormView):
 
     def form_valid(self, form):
         form.save()
-
+        messages.add_message(self.request, messages.SUCCESS, "Se ha registrado exitosamente al usuario " + user.username)
         return super(RegisterView, self).form_valid(form)
 
 
@@ -58,13 +53,9 @@ def inicio_vendedor(request):
 def inicio_jefetaller(request):
     return render(request, "inicio_jefetaller.html")
 
-def registration_completed(request):
-    return redirect('registro_completo.html')
 
 def logOut(request):
     logout(request)
-    return redirect('login.html')
+    return render(request,'login/')
 
 
-def welcome(request):
-    return redirect('welcome.html')
