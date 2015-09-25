@@ -40,7 +40,7 @@ class RegisterView(FormView):
 
 
 def inicio_gerente(request):
-    return redirect("inicio_gerente.html")
+    return render(request, "inicio_gerente.html")
 
 def registration_completed(request):
     return redirect('registro_completo.html')

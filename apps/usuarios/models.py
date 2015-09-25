@@ -45,7 +45,7 @@ class AbstractUser(AbstractBaseUser, PermissionsMixin):
         'active. Unselect this instead of deleting accounts.'))
     date_joined = models.DateTimeField(_('date joined'), default=timezone.now)
     """
-    print "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX"
+    #print "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX"
     birth_date = models.DateField()
     sex = models.CharField(max_length=1)
     address = models.CharField(max_length=50)
