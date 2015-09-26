@@ -81,11 +81,8 @@ USE_I18N = True
 USE_L10N = True
 
 USE_TZ = True
-"""
-MODELO_AUT_VENDEDOR = 'usuarios.Vendedor'
-MODELO_AUT_GERENTE = 'usuarios.Gerente'
-MODELO_AUT_JEFE = 'usuarios.Jefe_Taller'
-"""
-MODELO_USUARIO = 'usuarios.User'
-MODELO_SUCURSALES = 'concesionario.Sucursales'
+
+
+MODELO_SUCURSALES = 'sucursales.Sucursales'
 AUTH_USER_MODEL = 'usuarios.User'
+MODELO_AUTO = 'inventario.Automovil'
