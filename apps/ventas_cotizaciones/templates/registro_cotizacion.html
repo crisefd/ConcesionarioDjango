@@ -1,7 +1,7 @@
 {%extends "base.html"%}
-{%block title%}Registro de Repuesto
-{%endblock%}
-{%block content%}
+
+{%block title%}Registro de Cotización{%endblock%}
+{%block content %}
 <form>
     {%csrf_token%}
     {{form.as_ul}}

@@ -2,5 +2,9 @@
 {%block title%}Registro de Automovil
 {% endblock %}
 {%block content%}
+<form>
+    {%csrf_token%}
     {{form.as_ul}}
+    <input type='submit' value='Registrar'>
+</form>
 {%endblock%}

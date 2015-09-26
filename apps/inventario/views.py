@@ -8,7 +8,7 @@ from django.contrib import messages
 from .forms import *
 
 
-class StockView(SuccessMessageMixin, FormView):
+class RegisterView(SuccessMessageMixin, FormView):
 
     def form_valid(self, form):
         self.success_url = 'inventario/'
