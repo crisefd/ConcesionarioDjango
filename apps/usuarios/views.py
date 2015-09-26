@@ -56,6 +56,6 @@ def inicio_jefetaller(request):
 
 def logOut(request):
     logout(request)
-    return render(request,'login/')
+    return render(request,'login.html')
 
 
