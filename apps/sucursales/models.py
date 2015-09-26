@@ -1,9 +1,9 @@
-from django.db.models import * 
+from django.db import models 
 from django.conf import settings
 
 
 
-class Sucursales(Model):
-	nombre = CharField(max_length=50, default='')
-	direccion = CharField(max_length=30, default='')
+class Sucursales(models.Model):
+	nombre = models.CharField(max_length=50, default='')
+	direccion = models.CharField(max_length=30, default='')
 	#ganancias = FloatField()

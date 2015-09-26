@@ -27,8 +27,11 @@ DJANGO_APPS = (
 
 
 LOCAL_APPS = (
-	'apps.concesionario',
+	'apps.inventario',
     'apps.usuarios',
+    'apps.ordenes_trabajo',
+    'apps.sucursales',
+    'apps.ventas_cotizaciones',
 )
 
 
