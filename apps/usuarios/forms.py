@@ -39,12 +39,14 @@ class MyUserCreationForm(UserCreationForm):
     address = forms.CharField(max_length=50)
     first_name = forms.CharField(max_length=50)
     last_name = forms.CharField(max_length=50)
+    branch = forms.ChoiceField()
     
     class Meta(UserCreationForm.Meta):
         model = User
-        fields = ("first_name","last_name","username", "email","address", "phone_number", 
-            "id_document","sex", "charge", "birth_date")
-
+        fields = ("first_name","last_name","username", "password","email",
+            "address", "phone_number", "id_document","sex", "charge", 
+            "birth_date", "branch")
+"""
 class JefeTallerSucursalForm(ModelForm):
     class Meta:
         model = JefeTaller_Sucursal
@@ -54,3 +56,4 @@ class VendedorSucursalForm(ModelForm):
     class Meta:
         model = Vendedor_Sucursal
         fields = ['sucursal_fk', 'vendedor_fk']
+"""

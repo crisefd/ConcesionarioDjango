@@ -2,7 +2,7 @@
 {% block title %}Registrar Usuario{% endblock %}
 {% block content %}
  {% if user.is_authenticated %}
-  {%ifequal user.charge "Gerente"%}
+   {%ifequal user.charge "Vendedor"%}
     <div class="form-group" align="center">
     	<div class="row">
     		<div class="col-lg-6 col-xs-12 ">
@@ -97,7 +97,13 @@
                 </div>
               </div>
               <hr />
-              
+              <div class="control-group">
+                <label class="control-label" for="input07">Sucursal</label>
+                <div class="controls">
+                  {{form.branch}} 
+                  <p id="help-block" class="help-block">Escoja la sucursal, solo si no es un usuario Gerente</p>
+                </div>
+              </div>
               <div class="form-actions">
                 <button type="submit" class="btn btn-primary">Registrar</button>
                 <button type="reset" class="btn">Cancelar</button>
@@ -113,11 +119,13 @@
     	</div>
     	
     </div>
-    {%else%}
-      <h1> No tienes permisos para estar aquí </h1>
+     {%else%}
+         <h1> No tienes permisos para estar aquí </h1>
     {%endifequal%}
 {%else%}
    <h1> Debes iniciar sesión primero </h1>
           <a href="/login/">Ingresar</a>
 {%endif%}
 {% endblock %}
+                
+              

@@ -10,12 +10,11 @@ from django.contrib import messages
 class LoginView(SuccessMessageMixin, FormView):
     form_class = LoginForm
     template_name = 'login.html'
-    
+    success_url = '/'
     def form_valid(self, form):
         print "validando formulario"
         user = authenticate(username = form.cleaned_data['username'], 
                     password = form.cleaned_data['password'])
-        self.success_url = ''
         if user is not None:
             print "el usuario ", user.username, "existe"
             if user.is_active:

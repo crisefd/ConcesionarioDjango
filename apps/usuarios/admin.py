@@ -4,6 +4,6 @@ from .models import *
 # Register your models here.
 
 
-@admin.register(User, Vendedor_Sucursal, JefeTaller_Sucursal)
+@admin.register(User)
 class Admin(admin.ModelAdmin):
     pass
