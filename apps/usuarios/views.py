@@ -34,7 +34,7 @@ class LoginView(SuccessMessageMixin, FormView):
 class RegisterView(FormView):
     form_class = MyUserCreationForm
     template_name = "registro_usuario.html"
-    succes_url = "/registro_completo/"
+    succes_url = "/registrar/"
 
     def form_valid(self, form):
         form.save()

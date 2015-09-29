@@ -1,4 +1,15 @@
 {% extends "base.html" %}
 
-{%block title%}INICIO GERENTE{% endblock%}
-{%block content %}{% endblock%}
+{%block title%}INICIO JEFE TALLER{% endblock%}
+{%block content %}
+   {% if user.is_authenticated %}
+        {%ifequal user.charge "Gerente"%}
+            <h1> Bienvenido, {{ user.username }} </h1>
+        {%else%}
+            <h1> No tienes permisos para estar aquí </h1>
+        {%endifequal%}
+    {%else%}
+        <h1> Debes iniciar sesión primero </h1>
+          <a href="/login/">Ingresar</a>
+   {%endif%}
+{% endblock%}

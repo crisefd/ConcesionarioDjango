@@ -1,0 +1,18 @@
+{%extends "base.html"%}
+{%block title%}Registro de Orden de Trabajo{% endblock %}
+{%block content%}
+    {% if user.is_authenticated %}
+         {%ifequal user.charge "Jefe Taller"%}
+            <form>
+                {%csrf_token%}
+                {{form.as_p}}
+                <input type='submit' value='Registrar'>
+            </form>
+         {%else%}
+             <h1> No tienes permisos para estar aquí </h1>
+        {%endifequal%}-->
+      {%else%}
+          <h1> Debes iniciar sesión primero </h1>
+          <a href="/login/">Ingresar</a>
+    {%endif%}
+{%endblock%}

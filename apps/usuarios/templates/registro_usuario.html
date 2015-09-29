@@ -1,117 +1,123 @@
 {% extends "base.html" %}
 {% block title %}Registrar Usuario{% endblock %}
 {% block content %}
-<div class="form-group" align="center">
-	<div class="row">
-		
-		
-		<div class="col-lg-6 col-xs-12 ">
-			<form class="form-horizontal well" id="registro" method="POST">{% csrf_token %}
-        <fieldset>
-          <legend>Registrar Usuario</legend>
-          <div class="control-group">
-            <label class="control-label" for="input01">Nombre</label>
-            <div class="controls">
-              {{form.first_name}}
-              <p id="help-block" class="help-block">Coloque aqui su nombre</p>
-            </div>
-          </div>
-          <div class="control-group">
-            <label class="control-label" for="input01">Apellido</label>
-            <div class="controls">
-              {{form.last_name}}
-              <p id="help-block" class="help-block">Coloque aqui el apellido</p>
-            </div>
-          </div>
-          <div class="control-group">
-            <label class="control-label" for="input01">Usuario</label>
-            <div class="controls">
-              {{form.username}}
-              <p id="help-block" class="help-block">Coloque aqui el nombre del usuario</p>
-            </div>
-          </div>
-          <div class="control-group">
-            <label class="control-label" for="input01">E-mail</label>
-            <div class="controls">
-              {{form.email}}
-              <p id="help-block" class="help-block">Coloque aqui el E-mail</p>
-            </div>
-          </div>
-          <div class="control-group">
-            <label class="control-label" for="input01">Dirección</label>
-            <div class="controls">
-              {{form.address}}
-              <p id="help-block" class="help-block">Coloque aqui la dirección</p>
-            </div>
-          </div>
-          <div class="control-group">
-            <label class="control-label" for="input01">Teléfono</label>
-            <div class="controls">
-              {{form.phone_number}}
-              <p id="help-block" class="help-block">Coloque aqui el teléfono</p>
-            </div>
-          </div>
-          <div class="control-group">
-            <label class="control-label" for="input01">ID</label>
-            <div class="controls">
-              {{form.id_document}}
-              <p id="help-block" class="help-block">Coloque aqui el documento de identidad</p>
-            </div>
-          </div>
-          <div class="control-group">
-            <label class="control-label" for="input02">Password</label>
-            <div class="controls">
-              {{form.password1}}
-              <p id="help-block" class="help-block">Introduzca la contraseña</p>
-            </div>
-          </div>
-          <div class="control-group">
-            <label class="control-label" for="input03">Password confirmación</label>
-            <div class="controls">
-              {{form.password2}}
-              <p id="help-block" class="help-block">Repita la contraseña del campo anterior</p>
-            </div>
-          </div>
-          <div class="control-group">
-            <label class="control-label" for="input04">Fecha</label>
-            <div class="controls">
-              {{form.birth_date}}	
-              <p id="help-block" class="help-block">Coloque la fecha de nacimiento</p>
-            </div>
-          </div>
-          
-          <hr>
-         
-         <div class="control-group">
-            <label class="control-label" for="input05">Sexo</label>
-            <div class="controls">
-              {{form.sex}}	
-              <p id="help-block" class="help-block">Escoja el sexo</p>
-            </div>
-          </div>
-          <div class="control-group">
-            <label class="control-label" for="input06">Cargo</label>
-            <div class="controls">
-              {{form.charge}}	
-              <p id="help-block" class="help-block">Escoja el cargo</p>
-            </div>
-          </div>
-          <hr />
-          
-          <div class="form-actions">
-            <button type="submit" class="btn btn-primary">Registrar</button>
-            <button type="reset" class="btn">Cancelar</button>
-            
-          </div>
-        </fieldset>
-      </form>
-		</div>
-		<section>
-			
-		</section>
-		
-	</div>
-	
-</div>
-
+ {% if user.is_authenticated %}
+  {%ifequal user.charge "Gerente"%}
+    <div class="form-group" align="center">
+    	<div class="row">
+    		<div class="col-lg-6 col-xs-12 ">
+    			<form class="form-horizontal well" id="registro" method="POST">{% csrf_token %}
+            <fieldset>
+              <legend>Registrar Usuario</legend>
+              <div class="control-group">
+                <label class="control-label" for="input01">Nombre</label>
+                <div class="controls">
+                  {{form.first_name}}
+                  <p id="help-block" class="help-block">Coloque aqui su nombre</p>
+                </div>
+              </div>
+              <div class="control-group">
+                <label class="control-label" for="input01">Apellido</label>
+                <div class="controls">
+                  {{form.last_name}}
+                  <p id="help-block" class="help-block">Coloque aqui el apellido</p>
+                </div>
+              </div>
+              <div class="control-group">
+                <label class="control-label" for="input01">Usuario</label>
+                <div class="controls">
+                  {{form.username}}
+                  <p id="help-block" class="help-block">Coloque aqui el nombre del usuario</p>
+                </div>
+              </div>
+              <div class="control-group">
+                <label class="control-label" for="input01">E-mail</label>
+                <div class="controls">
+                  {{form.email}}
+                  <p id="help-block" class="help-block">Coloque aqui el E-mail</p>
+                </div>
+              </div>
+              <div class="control-group">
+                <label class="control-label" for="input01">Dirección</label>
+                <div class="controls">
+                  {{form.address}}
+                  <p id="help-block" class="help-block">Coloque aqui la dirección</p>
+                </div>
+              </div>
+              <div class="control-group">
+                <label class="control-label" for="input01">Teléfono</label>
+                <div class="controls">
+                  {{form.phone_number}}
+                  <p id="help-block" class="help-block">Coloque aqui el teléfono</p>
+                </div>
+              </div>
+              <div class="control-group">
+                <label class="control-label" for="input01">ID</label>
+                <div class="controls">
+                  {{form.id_document}}
+                  <p id="help-block" class="help-block">Coloque aqui el documento de identidad</p>
+                </div>
+              </div>
+              <div class="control-group">
+                <label class="control-label" for="input02">Password</label>
+                <div class="controls">
+                  {{form.password1}}
+                  <p id="help-block" class="help-block">Introduzca la contraseña</p>
+                </div>
+              </div>
+              <div class="control-group">
+                <label class="control-label" for="input03">Password confirmación</label>
+                <div class="controls">
+                  {{form.password2}}
+                  <p id="help-block" class="help-block">Repita la contraseña del campo anterior</p>
+                </div>
+              </div>
+              <div class="control-group">
+                <label class="control-label" for="input04">Fecha</label>
+                <div class="controls">
+                  {{form.birth_date}}	
+                  <p id="help-block" class="help-block">Coloque la fecha de nacimiento</p>
+                </div>
+              </div>
+              
+              <hr>
+             
+             <div class="control-group">
+                <label class="control-label" for="input05">Sexo</label>
+                <div class="controls">
+                  {{form.sex}}	
+                  <p id="help-block" class="help-block">Escoja el sexo</p>
+                </div>
+              </div>
+              <div class="control-group">
+                <label class="control-label" for="input06">Cargo</label>
+                <div class="controls">
+                  {{form.charge}}	
+                  <p id="help-block" class="help-block">Escoja el cargo</p>
+                </div>
+              </div>
+              <hr />
+              
+              <div class="form-actions">
+                <button type="submit" class="btn btn-primary">Registrar</button>
+                <button type="reset" class="btn">Cancelar</button>
+                
+              </div>
+            </fieldset>
+          </form>
+    		</div>
+    		<section>
+    			
+    		</section>
+    		
+    	</div>
+    	
+    </div>
+    {%else%}
+      <h1> No tienes permisos para estar aquí </h1>
+    {%endifequal%}
+{%else%}
+   <h1> Debes iniciar sesión primero </h1>
+          <a href="/login/">Ingresar</a>
+{%endif%}
 {% endblock %}
