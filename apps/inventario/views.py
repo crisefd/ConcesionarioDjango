@@ -20,5 +20,5 @@ class RegisterView(SuccessMessageMixin, FormView):
         form.save()
         messages.add_message(self.request, messages.SUCCESS, "Se ha registrado exitosamente el inventario " )
 
-        return super(StockView, self).form_valid(form)
+        return super(RegisterView, self).form_valid(form)
 

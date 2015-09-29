@@ -1,15 +1,21 @@
-body {
+body{
+
+  background-image: url('../img/image.jpeg');
   padding-top: 0px auto;
   padding-bottom: 0px auto;
-  background-image: url('../img/image.jpeg');
   background-repeat: no-repeat;
-  background-size: cover;
-  background-position: center center;
   position:relative;
+ -webkit-background-size: cover;
+ -moz-background-size: cover;
+ -o-background-size: cover;
+ background-size: cover;
+ background-attachment: scroll;
+ background-position:0% -13%;
 }
 form{
-	background:#00000;
-	border: 2px solid #000;
+  background:#00000;
+  border: 2px solid #000;
+  border-radius:13px;
 }
 
 label {
@@ -17,15 +23,18 @@ label {
   display: block;
   margin: .5em 0 0 0;
 }
+
+input{
+  color: black;
+}
+
 div {
   margin: .4em 0;
   
 }
-input{
-  color: black;
-}
-li{
-   width: 10%;
+
+div label {
+  width: 25%;
   float: left;
 }
 select{
@@ -35,12 +44,7 @@ select{
   color: black;
 }
 
-div label {
-  width: 25%;
-  float: left;
-}
 .btn {
-  display: block;
   margin: 1em 0;
 }
 #registro{

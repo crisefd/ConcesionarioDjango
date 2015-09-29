@@ -1,5 +1,4 @@
 {%extends "base.html"%}
-
 {%block title%}Registro de Venta{%endblock%}
 {%block content %}
 {%if user.is_authenticated %}
@@ -10,10 +9,9 @@
             <input type='submit' value='Registrar'>
         </form>
     {%else%}
-         <h1> No tienes permisos para estar aquí </h1>
+         <h1> No tienes permisos para estara aquí </h1>
     {%endifequal%}
  {%else%}
-        <h1> Necesitas ingresar primero</h1>
-        <a href="/login/">Ingresar</a>
+        <h1> Debes iniciar sesión primero</h1>
 {%endif%}
 {%endblock%}

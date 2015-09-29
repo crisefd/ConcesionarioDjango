@@ -3,27 +3,27 @@
 {% block title %}Inicio{% endblock %}
  
 {% block content %}
-  {% if not user.is_authenticated %}
-    <div class="container">
+  {% if user.is_authenticated %}
+    <h1> Bienvenido, {{ user.username }} </h1>
+      <a href="/salir/">LogOut</a>
+  {%else %}
+       <div class="container">
       
       <form class="form-signin" method="POST"> 
         <h2 class="form-signin-heading" align="center">Inicio de Sesión</h2>
-{% csrf_token %}
-{{ form.as_p }}
+        {% csrf_token %}
+        {{ form.as_p }}
         <div class="checkbox">
           <label>
             <input type="checkbox" value="Recordarme"> Recordarme
           </label>
         </div>
-        <button class="btn btn-lg btn-primary btn-block" type="submit">Iniciar</button>
+        <button class="btn btn-lg btn-primary btn-block" type="submit">Ingresar</button>
       </form>
-
     </div> <!-- /container -->
-    {%else%}
-      <h1> Welcome, {{ user.username }} </h1>
-      <a href="/salir/">LogOut</a>
-  {% endif %}
+  {%endif %}
+ 
 {% endblock %}
 
-
+ 
 

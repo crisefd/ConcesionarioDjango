@@ -1,17 +1,17 @@
 {%extends "base.html"%}
-{%block title%}Registro de Repuesto{% endblock %}
+{%block title%}Registro de Orden de Trabajo{% endblock %}
 {%block content%}
     {% if user.is_authenticated %}
-         {%ifequal user.charge "Gerente"%}
+         {%ifequal user.charge "Jefe Taller"%}
             <form>
                 {%csrf_token%}
-                {{form.as_ul}}
+                {{form.as_p}}
                 <input type='submit' value='Registrar'>
             </form>
-        {%else%}
+         {%else%}
              <h1> No tienes permisos para estar aquí </h1>
-        {%endifequal%}
-    {%else%}
+        {%endifequal%}-->
+      {%else%}
           <h1> Debes iniciar sesión primero </h1>
           <a href="/login/">Ingresar</a>
     {%endif%}
