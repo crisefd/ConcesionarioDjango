@@ -3,6 +3,7 @@ from django.forms import ModelForm
 from django.contrib.auth.forms import UserCreationForm
 from django.forms.extras.widgets import SelectDateWidget
 from .models import *
+from apps.sucursales.models import Sucursales
 
 class LoginForm(forms.Form):
     username = forms.CharField(max_length = 50)
@@ -39,7 +40,11 @@ class MyUserCreationForm(UserCreationForm):
     address = forms.CharField(max_length=50)
     first_name = forms.CharField(max_length=50)
     last_name = forms.CharField(max_length=50)
-    branch = forms.ChoiceField()
+    branch = forms.ModelChoiceField(queryset=Sucursales.objects.all().values('id', 'nombre', 'direccion'))
+    def save(self):
+        print self.branch
+        super(MyUserCreationForm, self).save()
+
     
     class Meta(UserCreationForm.Meta):
         model = User

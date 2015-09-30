@@ -2,7 +2,7 @@
 {% block title %}Registrar Usuario{% endblock %}
 {% block content %}
  {% if user.is_authenticated %}
-   {%ifequal user.charge "Vendedor"%}
+   {%ifequal user.charge "Gerente"%}
     <div class="form-group" align="center">
     	<div class="row">
     		<div class="col-lg-6 col-xs-12 ">
