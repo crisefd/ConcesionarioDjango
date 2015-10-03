@@ -55,6 +55,7 @@ class AbstractUser(AbstractBaseUser, PermissionsMixin):
     charge = models.CharField(max_length=50)
     first_name = models.CharField(max_length=50)
     last_name = models.CharField(max_length=50)
+    branch = models.ForeignKey(settings.MODELO_SUCURSALES, null=True, blank=True)
     USERNAME_FIELD = 'username'
     REQUIRED_FIELDS = ['email']
 

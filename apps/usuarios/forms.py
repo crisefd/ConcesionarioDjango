@@ -40,8 +40,9 @@ class MyUserCreationForm(UserCreationForm):
     address = forms.CharField(max_length=50)
     first_name = forms.CharField(max_length=50)
     last_name = forms.CharField(max_length=50)
+    branch = forms.ModelChoiceField(queryset=Sucursales.objects.all())
     
     class Meta(UserCreationForm.Meta):
         model = User
         fields = ("first_name","last_name","username", "email","address", "phone_number", 
-            "id_document","sex", "charge", "birth_date")
+            "id_document","sex", "charge", "birth_date", "branch")
