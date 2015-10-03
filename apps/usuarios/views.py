@@ -32,7 +32,7 @@ class LoginView(SuccessMessageMixin, FormView):
                 messages.add_message(self.request, messages.ERROR, "El usuario" + user.username + " no esta activo")
         else:
             self.success_url += '/login/'
-            messages.add_message(self.request, messages.ERROR, "El usuario" + no existe)
+            messages.add_message(self.request, messages.ERROR, "El usuario no existe")
 
         return super(LoginView, self).form_valid(form)
 
@@ -44,7 +44,7 @@ class LoginView(SuccessMessageMixin, FormView):
 class RegisterView(SuccessMessageMixin, FormView):
     form_class = MyUserCreationForm
     template_name = "registro_usuario.html"
-    succes_url = "/registrar/"
+    success_url = "/registrar/"
 
     def form_valid(self, form):
         form.save()

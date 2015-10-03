@@ -40,25 +40,8 @@ class MyUserCreationForm(UserCreationForm):
     address = forms.CharField(max_length=50)
     first_name = forms.CharField(max_length=50)
     last_name = forms.CharField(max_length=50)
-    branch = forms.ModelChoiceField(queryset=Sucursales.objects.all().values('id', 'nombre', 'direccion'))
-    def save(self):
-        print self.branch
-        super(MyUserCreationForm, self).save()
-
     
     class Meta(UserCreationForm.Meta):
         model = User
-        fields = ("first_name","last_name","username", "password","email",
-            "address", "phone_number", "id_document","sex", "charge", 
-            "birth_date", "branch")
-"""
-class JefeTallerSucursalForm(ModelForm):
-    class Meta:
-        model = JefeTaller_Sucursal
-        fields = ['sucursal_fk', 'jefe_fk']
-
-class VendedorSucursalForm(ModelForm):
-    class Meta:
-        model = Vendedor_Sucursal
-        fields = ['sucursal_fk', 'vendedor_fk']
-"""
+        fields = ("first_name","last_name","username", "email","address", "phone_number", 
+            "id_document","sex", "charge", "birth_date")

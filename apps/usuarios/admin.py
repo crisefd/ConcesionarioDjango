@@ -6,5 +6,5 @@ from .models import *
 
 
 @admin.register(User)
-class Admin(UserAdmin):
-    pass
+class ModeloAdmin(admin.ModelAdmin):
+   pass
