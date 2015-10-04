@@ -7,6 +7,9 @@ class Item_Inventario(models.Model):
                             default = '0000')
     precio = models.FloatField(default=0.0)
 
+    def __unicode__(self):
+        return "%s" % self.serial_id
+
     class Meta:
         abstract = True
 

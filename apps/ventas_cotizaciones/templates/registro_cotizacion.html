@@ -1,14 +1,53 @@
 {%extends "base.html"%}
-
 {%block title%}Registro de Venta{%endblock%}
 {%block content %}
 {%if user.is_authenticated %}
     {%ifequal user.charge "Vendedor"%}
-        <form>
-            {%csrf_token%}
-            {{form.as_ul}}
-            <input type='submit' value='Registrar'>
-        </form>
+        <div class="form-group" align="center">
+      <div class="row">
+        <div class="col-lg-6 col-xs-12 ">
+          <form class="form-horizontal well" id="registro" method="POST">{% csrf_token %}
+            <fieldset>
+              <legend>Registrar orden de trabajo</legend>
+              <div class="control-group">
+                <label class="control-label" for="input01">automovil</label>
+                <div class="controls">
+                  {{form.automovil_fk}}
+                  <p id="help-block" class="help-block">Seleccione el automovil a vender</p>
+                </div>
+              </div>
+              <div class="control-group">
+                <label class="control-label" for="input01">vendedor</label>
+                <div class="controls">
+                  {{form.vendedor_fk}}
+                  <p id="help-block" class="help-block">Seleccione quien realiza la venta</p>
+                </div>
+              </div>
+              <div class="control-group">
+                <label class="control-label" for="input01">Nombre comprador</label>
+                <div class="controls">
+                  {{form.nombre_comprador}}
+                  <p id="help-block" class="help-block">Escriba el nombre del cliente</p>
+                </div>
+              </div>
+              <div class="control-group">
+                <label class="control-label" for="input01">fecha</label>
+                <div class="controls">
+                  {{form.fecha}}
+                  <p id="help-block" class="help-block">Seleccione la fecha de venta</p>
+                </div>
+              </div>
+              <hr />
+              <div class="form-actions">
+                <button type="submit" class="btn btn-primary">Registrar</button>
+                <button type="reset" class="btn">Cancelar</button>
+                
+              </div>
+              </fieldset>
+             </form>
+            </div>
+           </div>
+          </div>
     {%else%}
          <h1> No tienes permisos para estar aquí </h1>
     {%endifequal%}
