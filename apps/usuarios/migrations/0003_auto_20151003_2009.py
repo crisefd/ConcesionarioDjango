@@ -7,13 +7,13 @@ from django.db import models, migrations
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('usuarios', '0008_auto_20150929_1816'),
+        ('usuarios', '0002_auto_20151003_1956'),
     ]
 
     operations = [
         migrations.AlterField(
             model_name='user',
-            name='branch',
-            field=models.ForeignKey(blank=True, to='sucursales.Sucursales', null=True),
+            name='birth_date',
+            field=models.DateField(default=b'1930-01-01'),
         ),
     ]

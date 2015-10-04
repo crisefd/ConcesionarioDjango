@@ -7,14 +7,13 @@ from django.db import models, migrations
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('sucursales', '0001_initial'),
-        ('usuarios', '0001_initial'),
+        ('ordenes_trabajo', '0002_auto_20151003_1917'),
     ]
 
     operations = [
         migrations.AddField(
-            model_name='user',
-            name='branch',
-            field=models.ForeignKey(default=b'', to='sucursales.Sucursales'),
+            model_name='ordenes_trabajo',
+            name='timestamp',
+            field=models.DateTimeField(auto_now=True, null=True),
         ),
     ]

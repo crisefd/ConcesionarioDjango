@@ -2,13 +2,12 @@
 from __future__ import unicode_literals
 
 from django.db import models, migrations
-from django.conf import settings
+import django.utils.timezone
 
 
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('sucursales', '0001_initial'),
         ('auth', '0006_require_contenttypes_0002'),
     ]
 
@@ -21,7 +20,10 @@ class Migration(migrations.Migration):
                 ('is_superuser', models.BooleanField(default=False, help_text='Designates that this user has all permissions without explicitly assigning them.', verbose_name='superuser status')),
                 ('username', models.CharField(default=b'examplename', unique=True, max_length=50)),
                 ('email', models.EmailField(unique=True, max_length=50, verbose_name='email address')),
-                ('birth_date', models.DateField()),
+                ('is_staff', models.BooleanField(default=False, help_text='Designates whether the user can log into this admin site.', verbose_name='staff status')),
+                ('is_active', models.BooleanField(default=True, help_text='Designates whether this user should be treated as active. Unselect this instead of deleting accounts.', verbose_name='active')),
+                ('date_joined', models.DateTimeField(default=django.utils.timezone.now, verbose_name='date joined')),
+                ('birth_date', models.DateField(null=True)),
                 ('sex', models.CharField(max_length=1)),
                 ('address', models.CharField(max_length=50)),
                 ('phone_number', models.CharField(max_length=50)),
@@ -38,21 +40,5 @@ class Migration(migrations.Migration):
                 'swappable': 'AUTH_USER_MODEL',
                 'verbose_name_plural': 'users',
             },
-        ),
-        migrations.CreateModel(
-            name='JefeTaller_Sucursal',
-            fields=[
-                ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
-                ('jefe_fk', models.ForeignKey(to=settings.AUTH_USER_MODEL)),
-                ('sucursal_fk', models.ForeignKey(to='sucursales.Sucursales')),
-            ],
-        ),
-        migrations.CreateModel(
-            name='Vendedor_Sucursal',
-            fields=[
-                ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
-                ('sucursal_fk', models.ForeignKey(to='sucursales.Sucursales')),
-                ('vendedor_fk', models.ForeignKey(to=settings.AUTH_USER_MODEL)),
-            ],
         ),
     ]

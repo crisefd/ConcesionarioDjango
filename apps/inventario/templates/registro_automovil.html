@@ -1,13 +1,52 @@
 {%extends "base.html"%}
 {%block title%}Registro de Automovil{% endblock %}
 {%block content%}
-    {% if user.is_authenticated %}
-         {%ifequal user.charge "Gerente"%}
-            <form>
-                {%csrf_token%}
-                {{form.as_ul}}
-                <input type='submit' value='Registrar'>
-            </form>
+{% if user.is_authenticated %}
+  {%ifequal user.charge "Gerente"%}
+    <div class="form-group" align="center">
+      <div class="row">
+        <div class="col-lg-6 col-xs-12 ">
+          <form class="form-horizontal well" id="registro" method="POST">{% csrf_token %}
+            <fieldset>
+              <legend>Registrar Automovil</legend>
+              <div class="control-group">
+                <label class="control-label" for="input01">Serial</label>
+                <div class="controls">
+                  {{form.serial_id}}
+                  <p id="help-block" class="help-block">Coloque el selial del vehiculo</p>
+                </div>
+              </div>
+              <div class="control-group">
+                <label class="control-label" for="input01">Preco</label>
+                <div class="controls">
+                  {{form.precio}}
+                  <p id="help-block" class="help-block">Coloque el precio del vehiculo</p>
+                </div>
+              </div>
+              <div class="control-group">
+                <label class="control-label" for="input01">Marca</label>
+                <div class="controls">
+                  {{form.marca}}
+                  <p id="help-block" class="help-block">Coloque la marca del fabricante</p>
+                </div>
+              </div>
+              <div class="control-group">
+                <label class="control-label" for="input01">Modelo</label>
+                <div class="controls">
+                  {{form.modelo}}
+                  <p id="help-block" class="help-block">Coloque el modelo del vehiculo</p>
+                </div>
+              </div>
+              <hr />
+              <div class="form-actions">
+                <button type="submit" class="btn btn-primary">Registrar</button>
+                <button type="reset" class="btn">Cancelar</button>
+              </div>
+              </fieldset>
+         </form>
+        </div>
+      </div>
+    </div>
         {%else%}
              <h1> No tienes permisos para estar aquí </h1>
         {%endifequal%}

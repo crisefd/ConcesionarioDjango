@@ -89,3 +89,4 @@ USE_TZ = True
 MODELO_SUCURSALES = 'sucursales.Sucursales'
 AUTH_USER_MODEL = 'usuarios.User'
 MODELO_AUTO = 'inventario.Automovil'
+MODELO_MECANICO = 'ordenes_trabajo.Mecanicos'

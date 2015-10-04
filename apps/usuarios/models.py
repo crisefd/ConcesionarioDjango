@@ -23,7 +23,7 @@ class UserManager(BaseUserManager, models.Manager):
         return user
 
     def create_user(self, email, password=None, **extra_fields):
-        #print "CAMPOS EXTRAS", extra_fields
+        print "CAMPOS EXTRAS", extra_fields
         return self._create_user(email, password, False, False,
                                  **extra_fields)
 
@@ -37,21 +37,21 @@ class AbstractUser(AbstractBaseUser, PermissionsMixin):
 
     username = models.CharField(max_length=50, unique=True, default='examplename')
     email= models.EmailField(_('email address'),max_length=50, unique=True,)
-    is_staff = models.BooleanField(
+    """is_staff = models.BooleanField(
         _('staff status'), default=False, help_text=_(
             'Designates whether the user can log into this admin site.'))
     is_active = models.BooleanField(_('active'), default=True, help_text=_(
         'Designates whether this user should be treated as '
         'active. Unselect this instead of deleting accounts.'))
-    objects = UserManager()
     date_joined = models.DateTimeField(_('date joined'), default=timezone.now)
-    
+    """
     #print "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX"
-    birth_date = models.DateField(null=True)
+    birth_date = models.DateField(default='1930-01-01')
     sex = models.CharField(max_length=1)
     address = models.CharField(max_length=50)
     phone_number = models.CharField(max_length=50)
     id_document = models.CharField(max_length=50, primary_key=True, blank=True)
+    objects = UserManager()
     charge = models.CharField(max_length=50)
     first_name = models.CharField(max_length=50)
     last_name = models.CharField(max_length=50)
@@ -64,29 +64,13 @@ class AbstractUser(AbstractBaseUser, PermissionsMixin):
         verbose_name_plural = _('users')
         abstract = True
 
-    def get_full_name(self):
-        """Return the email."""
-        return self.email
-
-    def get_short_name(self):
-        """Return the email."""
-        return self.email
-
-    def email_user(self, subject, message, from_email=None, **kwargs):
-        """Send an email to this User."""
-        send_mail(subject, message, from_email, [self.email], **kwargs)
 
 
 class User(AbstractUser):
+
+    def __unicode__(self):
+        return "%s %s" % (self.first_name, self.last_name)
+
     class Meta(AbstractUser.Meta):
         swappable = 'AUTH_USER_MODEL'
-"""
 
-class Vendedor_Sucursal(models.Model):
-    sucursal_fk = models.ForeignKey(settings.MODELO_SUCURSALES)
-    vendedor_fk = models.ForeignKey(User)
-
-
-class JefeTaller_Sucursal(models.Model):
-    sucursal_fk = models.ForeignKey(settings.MODELO_SUCURSALES)
-    jefe_fk = models.ForeignKey(User)"""
