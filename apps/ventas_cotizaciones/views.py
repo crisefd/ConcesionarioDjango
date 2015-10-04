@@ -10,7 +10,7 @@ from .forms import *
 class SaleRegisterView(FormView):
     form_class = VentasForm
     template_name = 'registro_venta.html'
-    success_url = 'venta/registro/'
+    success_url = '/venta/registro/'
 
     def form_valid(self, form):
         form.save()
@@ -22,7 +22,7 @@ class SaleRegisterView(FormView):
 class QuoteRegisterView(FormView):
     form_class = CotizacionesForm
     template_name = 'registro_cotizacion.html'
-    success_url = 'cotizacion/registro/'
+    success_url = '/cotizacion/registro/'
 
     def form_valid(self, form):
         form.save()

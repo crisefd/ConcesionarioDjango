@@ -67,6 +67,10 @@ class AbstractUser(AbstractBaseUser, PermissionsMixin):
 
 
 class User(AbstractUser):
+
+    def __unicode__(self):
+        return "%s %s" % (self.first_name, self.last_name)
+
     class Meta(AbstractUser.Meta):
         swappable = 'AUTH_USER_MODEL'
 

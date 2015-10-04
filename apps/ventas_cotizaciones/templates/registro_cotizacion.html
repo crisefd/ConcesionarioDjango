@@ -1,40 +1,35 @@
 {%extends "base.html"%}
-{%block title%}Registro de Venta{%endblock%}
+{%block title%}Registro de Cotizacion{%endblock%}
 {%block content %}
+{%comment%}
 {%if user.is_authenticated %}
     {%ifequal user.charge "Vendedor"%}
+{%endcomment%}
         <div class="form-group" align="center">
       <div class="row">
         <div class="col-lg-6 col-xs-12 ">
           <form class="form-horizontal well" id="registro" method="POST">{% csrf_token %}
             <fieldset>
-              <legend>Registrar orden de trabajo</legend>
+              <legend>Registrar Cotización</legend>
               <div class="control-group">
-                <label class="control-label" for="input01">automovil</label>
+                <label class="control-label" for="input01">Automovil</label>
                 <div class="controls">
-                  {{form.automovil_fk}}
-                  <p id="help-block" class="help-block">Seleccione el automovil a vender</p>
+                  {{form.automovil}}
+                  <p id="help-block" class="help-block">Seleccione el automovil a cotizar</p>
                 </div>
               </div>
               <div class="control-group">
-                <label class="control-label" for="input01">vendedor</label>
+                <label class="control-label" for="input01">Vendedor</label>
                 <div class="controls">
-                  {{form.vendedor_fk}}
-                  <p id="help-block" class="help-block">Seleccione quien realiza la venta</p>
+                  {{form.vendedor}}
+                  <p id="help-block" class="help-block">Seleccione el vendedor</p>
                 </div>
               </div>
               <div class="control-group">
-                <label class="control-label" for="input01">Nombre comprador</label>
+                <label class="control-label" for="input01">Cliente</label>
                 <div class="controls">
                   {{form.nombre_comprador}}
                   <p id="help-block" class="help-block">Escriba el nombre del cliente</p>
-                </div>
-              </div>
-              <div class="control-group">
-                <label class="control-label" for="input01">fecha</label>
-                <div class="controls">
-                  {{form.fecha}}
-                  <p id="help-block" class="help-block">Seleccione la fecha de venta</p>
                 </div>
               </div>
               <hr />
@@ -48,6 +43,7 @@
             </div>
            </div>
           </div>
+{%comment%}
     {%else%}
          <h1> No tienes permisos para estar aquí </h1>
     {%endifequal%}
@@ -55,4 +51,5 @@
         <h1> Necesitas ingresar primero</h1>
         <a href="/login/">Ingresar</a>
 {%endif%}
+{%endcomment%}
 {%endblock%}

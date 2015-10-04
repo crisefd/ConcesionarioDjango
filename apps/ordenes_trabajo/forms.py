@@ -2,6 +2,7 @@ from django import forms
 from django.conf import settings
 from django.contrib.auth.forms import UserCreationForm
 from django.forms.extras.widgets import SelectDateWidget
+
 from .models import *
 
 class Ordenes_TrabajoForm(forms.ModelForm):

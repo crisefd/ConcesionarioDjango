@@ -1,8 +1,10 @@
 {%extends "base.html"%}
 {%block title%}Registro de Orden de Trabajo{% endblock %}
 {%block content%}
-{% if user.is_authenticated %}
-  {%ifequal user.charge "Jefe Taller"%}
+{%comment%}
+{%if user.is_authenticated %}
+    {%ifequal user.charge "Vendedor"%}
+{%endcomment%}
     <div class="form-group" align="center">
       <div class="row">
         <div class="col-lg-6 col-xs-12 ">
@@ -55,11 +57,12 @@
             </div>
            </div>
           </div>
-         {%else%}
-             <h1> No tienes permisos para estar aquí </h1>
-        {%endifequal%}-->
-      {%else%}
-          <h1> Debes iniciar sesión primero </h1>
-          <a href="/login/">Ingresar</a>
-    {%endif%}
+{%comment%}
+    {%else%}
+         <h1> No tienes permisos para estara aquí </h1>
+    {%endifequal%}
+ {%else%}
+        <h1> Debes iniciar sesión primero</h1>
+{%endif%}
+{%endcomment%}
 {%endblock%}

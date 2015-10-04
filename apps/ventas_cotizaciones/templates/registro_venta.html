@@ -1,18 +1,20 @@
 {%extends "base.html"%}
 {%block title%}Registro de Venta{%endblock%}
 {%block content %}
+{%comment%}
 {%if user.is_authenticated %}
     {%ifequal user.charge "Vendedor"%}
+{%endcomment%}
         <div class="form-group" align="center">
       <div class="row">
         <div class="col-lg-6 col-xs-12 ">
           <form class="form-horizontal well" id="registro" method="POST">{% csrf_token %}
             <fieldset>
-              <legend>Registrar orden de trabajo</legend>
+              <legend>Registrar venta</legend>
               <div class="control-group">
-                <label class="control-label" for="input01">vendedor</label>
+                <label class="control-label" for="input01">Vendedor</label>
                 <div class="controls">
-                  {{form.vendedor_fk}}
+                  {{form.vendedor}}
                   <p id="help-block" class="help-block">Seleccione quien realiza la venta</p>
                 </div>
               </div>
@@ -28,28 +30,14 @@
                 <label class="control-label" for="input01">Id comprador</label>
                 <div class="controls">
                   {{form.doc_id_comprador}}
-                  <p id="help-block" class="help-block">Inserte la Id del cliente</p>
+                  <p id="help-block" class="help-block">Inserte la id del cliente</p>
                 </div>
               </div>
               <div class="control-group">
-                <label class="control-label" for="input01">automovil</label>
+                <label class="control-label" for="input01">Automovil</label>
                 <div class="controls">
-                  {{form.automovil_fk}}
+                  {{form.automovil}}
                   <p id="help-block" class="help-block">Seleccione el automovil a vender</p>
-                </div>
-              </div>
-              <div class="control-group">
-                <label class="control-label" for="input01">valor venta</label>
-                <div class="controls">
-                  {{form.valor_venta}}
-                  <p id="help-block" class="help-block">ingrese el valor de la venta</p>
-                </div>
-              </div>
-              <div class="control-group">
-                <label class="control-label" for="input01">fecha</label>
-                <div class="controls">
-                  {{form.fecha}}
-                  <p id="help-block" class="help-block">Seleccione la fecha de venta</p>
                 </div>
               </div>
               <hr />
@@ -63,10 +51,12 @@
             </div>
            </div>
           </div>
+{%comment%}
     {%else%}
          <h1> No tienes permisos para estara aquí </h1>
     {%endifequal%}
  {%else%}
         <h1> Debes iniciar sesión primero</h1>
 {%endif%}
+{%endcomment%}
 {%endblock%}

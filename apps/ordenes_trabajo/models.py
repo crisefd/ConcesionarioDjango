@@ -1,6 +1,6 @@
 from django.db import models
 from django.conf import settings
-
+from django.utils import timezone
 # Create your models here.
 class Mecanicos(models.Model):
     nombre = models.CharField(max_length=50, default='')
@@ -15,7 +15,7 @@ class Ordenes_Trabajo(models.Model):
     CANCELADA = "CANCELADA"
     FINALIZADA = "FINALIZADA"
     ESTADOS = ((ACTIVA,"Activa"), (CANCELADA, "Cancelada"), (FINALIZADA, "Finalizada"),)
-    timestamp = models.DateTimeField(auto_now=True)
+    timestamp = models.DateTimeField(auto_now=True, null=True)
     mecanico_asignado = models.ForeignKey(Mecanicos)
     descripcion = models.TextField(max_length=350, null=True)
     matricula_vehiculo = models.CharField(max_length=10, unique=True, null=True)
