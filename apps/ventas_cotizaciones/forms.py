@@ -8,14 +8,14 @@ from apps.usuarios.models import User
 
 class VentasForm(forms.ModelForm):
     automovil = forms.ModelChoiceField(queryset=Automovil.objects.filter(disponible=True))
-    vendedor = forms.ModelChoiceField(queryset=User.objects.all())
+    vendedor = forms.ModelChoiceField(queryset=User.objects.filter(is_active=True, charge="Vendedor"))
 
     def save(self, *args, **kwargs):
         key = self.cleaned_data['automovil'].serial_id
         auto = Automovil.objects.get(pk=key)
         auto.disponible = False
-        auto.save()
         self.cleaned_data['valor_venta'] = self.cleaned_data['automovil'].precio
+        auto.save()
         return super(VentasForm, self).save(*args, **kwargs)
 
     class Meta:
@@ -24,8 +24,12 @@ class VentasForm(forms.ModelForm):
                  'automovil')
 
 class CotizacionesForm(forms.ModelForm):
-    automovil_fk = forms.ModelChoiceField(queryset=Automovil.objects.filter(disponible=True))
-    vendedor_fk = forms.ModelChoiceField(queryset=User.objects.all())
+    automovil = forms.ModelChoiceField(queryset=Automovil.objects.filter(disponible=True))
+    vendedor = forms.ModelChoiceField(queryset=User.objects.filter(is_active=True, charge="Vendedor"))
+
+    def save(self, *args, **kwargs):
+        return super(CotizacionesForm, self).save(*args, **kwargs)
+    
     class Meta:
         model = Cotizaciones
         fields = ('automovil', 'vendedor', 'nombre_comprador')

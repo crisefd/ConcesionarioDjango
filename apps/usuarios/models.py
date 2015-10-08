@@ -37,14 +37,14 @@ class AbstractUser(AbstractBaseUser, PermissionsMixin):
 
     username = models.CharField(max_length=50, unique=True, default='examplename')
     email= models.EmailField(_('email address'),max_length=50, unique=True,)
-    """is_staff = models.BooleanField(
+    is_staff = models.BooleanField(
         _('staff status'), default=False, help_text=_(
             'Designates whether the user can log into this admin site.'))
     is_active = models.BooleanField(_('active'), default=True, help_text=_(
         'Designates whether this user should be treated as '
         'active. Unselect this instead of deleting accounts.'))
     date_joined = models.DateTimeField(_('date joined'), default=timezone.now)
-    """
+    
     #print "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX"
     birth_date = models.DateField(default='1930-01-01')
     sex = models.CharField(max_length=1)
