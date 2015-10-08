@@ -22,6 +22,7 @@ class Migration(migrations.Migration):
             name='Ordenes_Trabajo',
             fields=[
                 ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
+                ('timestamp', models.DateTimeField(auto_now=True, null=True)),
                 ('descripcion', models.TextField(max_length=350, null=True)),
                 ('matricula_vehiculo', models.CharField(max_length=10, unique=True, null=True)),
                 ('estado', models.CharField(default=b'ACTIVA', max_length=50, choices=[(b'ACTIVA', b'Activa'), (b'CANCELADA', b'Cancelada'), (b'FINALIZADA', b'Finalizada')])),

@@ -1,26 +1,29 @@
 {%extends "base.html"%}
-{%block title%}Registro de Automovil{% endblock %}
+{%block title%}Registro de Automóvil{% endblock %}
 {%block content%}
+{%comment%}
 {% if user.is_authenticated %}
   {%ifequal user.charge "Gerente"%}
+{%endcomment%}
     <div class="form-group" align="center">
       <div class="row">
         <div class="col-lg-6 col-xs-12 ">
           <form class="form-horizontal well" id="registro" method="POST">{% csrf_token %}
             <fieldset>
-              <legend>Registrar Automovil</legend>
+              <legend>Registrar Automóvil</legend>
+              {%comment%}
               <div class="control-group">
                 <label class="control-label" for="input01">Serial</label>
                 <div class="controls">
                   {{form.serial_id}}
-                  <p id="help-block" class="help-block">Coloque el selial del vehiculo</p>
+                  <p id="help-block" class="help-block">Coloque el serial del vehículo</p>
                 </div>
-              </div>
+              </div>{%endcomment%}
               <div class="control-group">
-                <label class="control-label" for="input01">Preco</label>
+                <label class="control-label" for="input01">Precio</label>
                 <div class="controls">
                   {{form.precio}}
-                  <p id="help-block" class="help-block">Coloque el precio del vehiculo</p>
+                  <p id="help-block" class="help-block">Coloque el precio del vehículo</p>
                 </div>
               </div>
               <div class="control-group">
@@ -34,7 +37,14 @@
                 <label class="control-label" for="input01">Modelo</label>
                 <div class="controls">
                   {{form.modelo}}
-                  <p id="help-block" class="help-block">Coloque el modelo del vehiculo</p>
+                  <p id="help-block" class="help-block">Coloque el modelo del vehículo</p>
+                </div>
+              </div>
+              <div class="control-group">
+                <label class="control-label" for="input01">Cantidad de autos</label>
+                <div class="controls">
+                  {{form.cantidad}}
+                  <p id="help-block" class="help-block">Coloque aqui la cantidad de autos</p>
                 </div>
               </div>
               <hr />
@@ -47,6 +57,7 @@
         </div>
       </div>
     </div>
+{%comment%}
         {%else%}
              <h1> No tienes permisos para estar aquí </h1>
         {%endifequal%}
@@ -54,4 +65,5 @@
           <h1> Debes iniciar sesión primero </h1>
           <a href="/login/">Ingresar</a>
     {%endif%}
+{%endcomment%}
 {%endblock%}

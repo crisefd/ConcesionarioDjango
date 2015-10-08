@@ -1,21 +1,24 @@
 {%extends "base.html"%}
 {%block title%}Registro de Repuesto{% endblock %}
 {%block content%}
+{%comment%}
 {% if user.is_authenticated %}
   {%ifequal user.charge "Gerente"%}
+{%endcomment%}
     <div class="form-group" align="center">
       <div class="row">
         <div class="col-lg-6 col-xs-12 ">
           <form class="form-horizontal well" id="registro" method="POST">{% csrf_token %}
             <fieldset>
               <legend>Registrar Repuesto</legend>
+              {%comment%}
               <div class="control-group">
                 <label class="control-label" for="input01">Serial</label>
                 <div class="controls">
                   {{form.serial_id}}
                   <p id="help-block" class="help-block">Coloque aqui el serial del producto</p>
                 </div>
-              </div>
+              </div>{%endcomment%}
               <div class="control-group">
                 <label class="control-label" for="input01">Nombre</label>
                 <div class="controls">
@@ -30,6 +33,13 @@
                   <p id="help-block" class="help-block">Coloque aqui el precio del producto</p>
                 </div>
               </div>
+               <div class="control-group">
+                <label class="control-label" for="input01">Cantidad de repuestos</label>
+                <div class="controls">
+                  {{form.cantidad}}
+                  <p id="help-block" class="help-block">Coloque aqui la cantidad de repuestos</p>
+                </div>
+              </div>
               <hr />
               <div class="form-actions">
                 <button type="submit" class="btn btn-primary">Registrar</button>
@@ -41,6 +51,7 @@
               </div>
              </div>
             </div>
+{%comment%}
         {%else%}
              <h1> No tienes permisos para estar aquí </h1>
         {%endifequal%}
@@ -48,4 +59,5 @@
           <h1> Debes iniciar sesión primero </h1>
           <a href="/login/">Ingresar</a>
     {%endif%}
+{%endcomment%}
 {%endblock%}

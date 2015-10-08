@@ -6,13 +6,17 @@ from .models import *
 
 
 class AutomovilForm(forms.ModelForm):
+    cantidad = forms.IntegerField(min_value=1)
+    precio = forms.FloatField(min_value=1.0)
     class Meta:
         model = Automovil
-        fields = ('serial_id', 'precio', 'marca', 'modelo')
+        fields = ('precio', 'marca', 'modelo', 'cantidad')
 
 
 class RepuestoForm(forms.ModelForm):
+    cantidad = forms.IntegerField(min_value=1)
+    precio = forms.FloatField(min_value=1.0)
     class Meta:
         model = Repuesto
-        fields = ('serial_id', 'precio', 'nombre')
+        fields = ('precio', 'nombre', 'cantidad')
     
