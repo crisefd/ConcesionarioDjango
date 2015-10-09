@@ -41,6 +41,11 @@ class MyUserCreationForm(UserCreationForm):
     first_name = forms.CharField(max_length=50)
     last_name = forms.CharField(max_length=50)
     branch = forms.ModelChoiceField(queryset=Sucursales.objects.all())
+
+    def save(self, commit=True):
+        if self.cleaned_data['charge'] == "Gerente":
+            self.cleaned_data['branch'] = ''
+        return super(MyUserCreationForm, self).save(commit)
     
     class Meta(UserCreationForm.Meta):
         model = User

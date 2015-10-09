@@ -9,7 +9,7 @@ from .forms import *
 
 
 class RegisterView(SuccessMessageMixin, FormView):
-    success_url = 'ordenes_trabajo/registro/'
+    success_url = '/ordenes_trabajo/registro/'
     form_class = Ordenes_TrabajoForm
     template_name = 'registro_orden.html'
     def form_valid(self, form):
