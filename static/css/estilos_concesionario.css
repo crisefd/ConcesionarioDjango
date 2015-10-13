@@ -27,7 +27,12 @@ textarea{
   color: black;
   background: white;
 }
-
+#carousel-home{
+  max-width: 800px;
+  max-height: 600px;
+  min-height: 600px;
+  min-width: 800px;
+}
 input{
   color: black;
 }

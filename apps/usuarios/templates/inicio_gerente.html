@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-
+{% load staticfiles %} 
 {%block title%}INICIO JEFE TALLER{% endblock%}
 {%block content %}
    {% if user.is_authenticated %}
@@ -11,5 +11,6 @@
     {%else%}
         <h1> Debes iniciar sesión primero </h1>
           <a href="/login/">Ingresar</a>
+          
    {%endif%}
 {% endblock%}

@@ -67,6 +67,9 @@ def inicio_vendedor(request):
 def inicio_jefetaller(request):
     return render(request, "inicio_jefetaller.html")
 
+def home(request):
+    return render(request, "home.html")
+
 
 def logOut(request):
     logout(request)

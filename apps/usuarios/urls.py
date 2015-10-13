@@ -8,6 +8,7 @@ urlpatterns = patterns('',
     url(r'^cuentas/vendedor/[^/]+$', 'apps.usuarios.views.inicio_vendedor', name='inicio_vendedor'),
     url(r'^cuentas/jefetaller/[^/]+$', 'apps.usuarios.views.inicio_gerente', name='inicio_jefetaller'),
     url(r'^login/$', LoginView.as_view()),
+    url(r'^home/$', 'apps.usuarios.views.home', name='home'),
     url(r'^registrar/$', RegisterView.as_view()),
     url(r'^salir/$','apps.usuarios.views.logOut'),
 )
