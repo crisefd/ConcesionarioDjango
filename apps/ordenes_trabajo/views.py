@@ -9,9 +9,10 @@ from .forms import *
 
 
 class RegisterView(SuccessMessageMixin, FormView):
-    success_url = 'ordenes_trabajo/registro/'
+    success_url = '/ordenes_trabajo/registro/'
     form_class = Ordenes_TrabajoForm
     template_name = 'registro_orden.html'
+
     def form_valid(self, form):
         form.save()
         messages.add_message(self.request, messages.SUCCESS, 
@@ -19,3 +20,13 @@ class RegisterView(SuccessMessageMixin, FormView):
 
         return super(RegisterView, self).form_valid(form)
 
+class AutorizarRepuestoView(SuccessMessageMixin, FormView):
+    success_url = '/ordenes_trabajo/repuesto/'
+    form_class = Orden_RepuestoForm
+    template_name = 'orden_repuesto.html'
+
+    def form_valid(self, form):
+        form.save()
+        messages.add_message(self.request, messages.SUCCESS, 
+            "Se ha registrado el repuesto a la orden de trabajo " )
+        return super(AutorizarRepuestoView, self).form_valid(form)

@@ -11,8 +11,8 @@ class VentasForm(forms.ModelForm):
     vendedor = forms.ModelChoiceField(queryset=User.objects.filter(is_active=True, charge="Vendedor"))
 
     def save(self, *args, **kwargs):
-        key = self.cleaned_data['automovil'].serial_id
-        auto = Automovil.objects.get(pk=key)
+        pk = self.cleaned_data['automovil'].id
+        auto = Automovil.objects.get(pk=pk)
         auto.disponible = False
         self.cleaned_data['valor_venta'] = self.cleaned_data['automovil'].precio
         auto.save()
