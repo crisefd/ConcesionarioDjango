@@ -13,6 +13,12 @@ class RegisterView(SuccessMessageMixin, FormView):
     form_class = Ordenes_TrabajoForm
     template_name = 'registro_orden.html'
 
+    def get_form(self, form_class=None):
+        f = super(RegisterView, self).get_form(form_class)
+        #print self.get_form_kwargs()
+        f.set_jefe_taller(self.request.user.username)
+        return f
+
     def form_valid(self, form):
         form.save()
         messages.add_message(self.request, messages.SUCCESS, 
@@ -24,6 +30,7 @@ class AutorizarRepuestoView(SuccessMessageMixin, FormView):
     success_url = '/ordenes_trabajo/repuesto/'
     form_class = Orden_RepuestoForm
     template_name = 'orden_repuesto.html'
+
 
     def form_valid(self, form):
         form.save()

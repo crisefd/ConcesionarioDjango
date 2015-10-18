@@ -12,6 +12,12 @@ class SaleRegisterView(FormView):
     template_name = 'registro_venta.html'
     success_url = '/venta/registro/'
 
+    def get_form(self, form_class=None):
+        f = super(SaleRegisterView, self).get_form(form_class)
+        #print self.get_form_kwargs()
+        f.set_vendedor(self.request.user.username)
+        return f
+
     def form_valid(self, form):
         form.save()
         messages.add_message(self.request, messages.SUCCESS, 
@@ -23,6 +29,12 @@ class QuoteRegisterView(FormView):
     form_class = CotizacionesForm
     template_name = 'registro_cotizacion.html'
     success_url = '/cotizacion/registro/'
+
+    def get_form(self, form_class=None):
+        f = super(QuoteRegisterView, self).get_form(form_class)
+        #print self.get_form_kwargs()
+        f.set_vendedor(self.request.user.username)
+        return f
 
     def form_valid(self, form):
         form.save()

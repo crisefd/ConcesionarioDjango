@@ -1,6 +1,7 @@
 from django import forms
 from django.conf import settings
 from django.forms.extras.widgets import SelectDateWidget
+from apps.usuarios.models import User
 from .models import *
 
 from apps.inventario.models import Automovil
@@ -18,6 +19,10 @@ class VentasForm(forms.ModelForm):
         auto.save()
         return super(VentasForm, self).save(*args, **kwargs)
 
+    def set_vendedor(self, vendedor_username):
+        queryset = User.objects.filter(username=vendedor_username)
+        self.fields['vendedor'].queryset = queryset
+
     class Meta:
         model = Ventas
         fields = ('vendedor', 'nombre_comprador', 'doc_id_comprador',
@@ -29,6 +34,10 @@ class CotizacionesForm(forms.ModelForm):
 
     def save(self, *args, **kwargs):
         return super(CotizacionesForm, self).save(*args, **kwargs)
+
+    def set_vendedor(self, vendedor_username):
+        queryset = User.objects.filter(username=vendedor_username)
+        self.fields['vendedor'].queryset = queryset
     
     class Meta:
         model = Cotizaciones

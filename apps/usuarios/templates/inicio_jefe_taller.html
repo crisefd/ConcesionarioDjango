@@ -6,7 +6,7 @@
         {%ifequal user.charge "Jefe Taller"%}
             <h1> Bienvenido, {{ user.username }} </h1>
         {%else%}
-            <h1> No tienes permisos para estar aquí </h1>
+            <h1> No tienes permisos para estar aquí {{user.charge}}</h1>
         {%endifequal%}
     {%else%}
          <h1> Debes iniciar sesión primero </h1>
