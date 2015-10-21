@@ -21,7 +21,7 @@ class RegisterView(SuccessMessageMixin, FormView):
         #print "cantidad de items=" + str(cantidad_items)
         item = form.save(commit=False)
         for i in range(0, cantidad_items):
-            print "salvando item "+ str(i)
+            #print "salvando item "+ str(i)
             item.pk = None
             item.save()
         messages.add_message(self.request, messages.SUCCESS, 
