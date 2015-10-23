@@ -8,8 +8,16 @@ from .models import *
 
 class Ordenes_TrabajoForm(forms.ModelForm):
     mecanico_asignado = forms.ModelChoiceField(queryset=Mecanicos.objects.all())
-    jefe_taller = forms.ModelChoiceField(queryset=User.objects.filter(is_active=True, charge="Jefe Taller"))
+    jefe_taller = forms.ModelChoiceField(queryset=User.objects.all())
+    #jefe_taller = forms.ModelChoiceField(queryset=User.objects.filter(is_active=True, charge="Jefe Taller"))
+    #jefe_taller = forms.ModelChoiceField(queryset=User.objects.filter(username='ironman'))
     descripcion = forms.Textarea()
+
+    def set_jefe_taller(self, jefe_username):
+        queryset = User.objects.filter(username=jefe_username)
+        #print queryset
+        self.fields['jefe_taller'].queryset = queryset
+
     class Meta:
         model = Ordenes_Trabajo
         #fields = ('mecanico_asignado', 'descripcion', 

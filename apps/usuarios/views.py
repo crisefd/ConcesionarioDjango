@@ -24,7 +24,7 @@ class LoginView(SuccessMessageMixin, FormView):
                 elif user.charge == "Vendedor":
                     self.success_url += "/cuentas/vendedor/" + user.username
                 else:
-                    self.success_url += "cuentas/jefetaller/" + user.username
+                    self.success_url += "/cuentas/jefetaller/" + user.username
                 messages.add_message(self.request, messages.SUCCESS, "Bienvenido " + user.username)
                 login(self.request, user)
             else:
@@ -64,8 +64,8 @@ def inicio_gerente(request):
 def inicio_vendedor(request):
     return render(request, "inicio_vendedor.html")
 
-def inicio_jefetaller(request):
-    return render(request, "inicio_jefetaller.html")
+def inicio_jefe_taller(request):
+    return render(request, "inicio_jefe_taller.html")
 
 def home(request):
     return render(request, "home.html")
@@ -73,6 +73,7 @@ def home(request):
 
 def logOut(request):
     logout(request)
-    return render(request,'login.html')
+    #home(request)
+    return redirect('/home')
 
 
