@@ -23,8 +23,12 @@ class RegisterView(SuccessMessageMixin, FormView):
         form.save()
         messages.add_message(self.request, messages.SUCCESS, 
             "Se ha registrado exitosamente la orden de trabajo " )
-
         return super(RegisterView, self).form_valid(form)
+
+    def form_invalid(self, form):
+        messages.add_message(self.request, messages.ERROR, 
+            "No se pudo registrar la orden de trabajo" )
+        return super(RegisterView, self).form_invalid(form)
 
 class AutorizarRepuestoView(SuccessMessageMixin, FormView):
     success_url = '/ordenes_trabajo/repuesto/'
@@ -37,3 +41,8 @@ class AutorizarRepuestoView(SuccessMessageMixin, FormView):
         messages.add_message(self.request, messages.SUCCESS, 
             "Se ha registrado el repuesto a la orden de trabajo " )
         return super(AutorizarRepuestoView, self).form_valid(form)
+
+    def form_invalid(self, form):
+        messages.add_message(self.request, messages.ERROR, 
+            "No se pudo autorizar el respuesto de la orden de trabajo" )
+        return super(AutorizarRepuestoView, self).form_invalid(form)

@@ -73,6 +73,7 @@ def home(request):
 
 def logOut(request):
     logout(request)
-    return render(request,'login.html')
+    #home(request)
+    return redirect('/home')
 
 
