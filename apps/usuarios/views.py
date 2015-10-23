@@ -4,8 +4,9 @@ from django.http import HttpResponse
 from django.contrib.messages.views import SuccessMessageMixin
 from django.views.generic import FormView
 from django.contrib.auth import authenticate, login, logout
-from .forms import LoginForm, MyUserCreationForm
+from .forms import LoginForm, MyUserCreationForm, EditProfileForm
 from django.contrib import messages
+from django.contrib.auth.views import password_change
 
 class LoginView(SuccessMessageMixin, FormView):
     form_class = LoginForm
@@ -55,6 +56,38 @@ class RegisterView(SuccessMessageMixin, FormView):
         print "formularion invalido"
         messages.add_message(self.request, messages.ERROR, "No se pudo registrar al usuario")
         return super(RegisterView, self).form_invalid(form)
+
+class EditProfileView(SuccessMessageMixin, FormView):
+    success_url = '/'
+    form_class = EditProfileForm
+    template_name = 'editar_perfil.html'
+
+    def get_form(self, form_class=None):
+        f = super(EditProfileView, self).get_form(form_class)
+        #print self.get_form_kwargs()
+        f.set_fields(self.request.user.username)
+        return f
+
+    def form_valid(self, form):
+        charge = self.request.user.charge
+        if charge == 'Jefe Taller':
+            self.success_url = "/cuentas/jefetaller/" + self.request.user.username
+            #self.template_name = "inicio_jefe_taller.html"
+        elif charge == "Vendedor":
+            self.success_url = "/cuentas/vendedor/" + self.request.username
+            #self.template_name = "inicio_vendedor.html"
+        messages.success(self.request, "Edicion exitosa")
+        form.update()
+        return super(EditProfileView, self).form_valid(form)
+
+    def form_invalid(self, form):
+        print "INVALIDO"
+        messages.success(self.request, "Error al editar usuario")
+        return super(EditProfileView, self).form_invalid(form)
+
+
+
+
 
 
 def inicio_gerente(request):

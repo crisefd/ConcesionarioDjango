@@ -4,6 +4,8 @@ from django.contrib.auth.forms import UserCreationForm
 from django.forms.extras.widgets import SelectDateWidget
 from .models import *
 from apps.sucursales.models import Sucursales
+from apps.usuarios.models import User
+from django.contrib.auth.forms import AdminPasswordChangeForm
 
 class LoginForm(forms.Form):
     username = forms.CharField(max_length = 50)
@@ -12,7 +14,36 @@ class LoginForm(forms.Form):
                     'type' : 'password'
                 }))
 
+class EditProfileForm(forms.Form):
+    phone_number = forms.CharField(max_length=50)
+    address = forms.CharField(max_length=50)
+    email = forms.EmailField(max_length=50)
 
+    def set_fields(self, username):
+        self.user = User.objects.get(username=username)
+        self.fields['phone_number'].initial = self.user.phone_number
+        self.fields['address'].initial = self.user.address
+        self.fields['email'].initial = self.user.email
+
+    def update(self):
+        print "SALVADO!"
+        #user = super(EditProfileForm, self).save(commit=False)
+        self.user.phone_number = self.cleaned_data['phone_number']
+        self.user.address = self.cleaned_data['address']
+        self.user.email = self.cleaned_data['email']
+        self.user.save()
+
+
+    class Meta:
+        model = User
+        #fields = ('phone_number', 'address', 'email')
+
+
+"""
+    class Meta:
+        model = User
+        exclude = ('is_staff', 'is_active', 'sex',
+                    'charge', 'branch', 'username', 'birth_date')"""
 
 class MyUserCreationForm(UserCreationForm):
     def clean_username(self):
