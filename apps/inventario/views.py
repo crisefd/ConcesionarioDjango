@@ -24,12 +24,12 @@ class RegisterView(SuccessMessageMixin, FormView):
             #print "salvando item "+ str(i)
             item.pk = None
             item.save()
-        messages.add_message(self.request, messages.SUCCESS, 
+        messages.success(self.request, 
             "Se ha registrado exitosamente el inventario " )
         return super(RegisterView, self).form_valid(form)
 
     def form_invalid(self, form):
-        messages.add_message(self.request, messages.ERROR, 
+        messages.error(self.request, 
             "Error, no se pudo registrar al inventario " )
         return super(RegisterView, self).form_valid(form)
 
