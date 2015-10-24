@@ -4,6 +4,7 @@ from django.contrib import admin
 
 urlpatterns=[
 			url(r'^admin/',include(admin.site.urls)),
+            url(r'^accounts/', include('django.contrib.auth.urls')),
             url(r'^', include('apps.home.urls',namespace='home')),
 			url(r'^', include('apps.usuarios.urls',namespace='usuarios')),
             url(r'^', include('apps.inventario.urls',namespace='inventario')),

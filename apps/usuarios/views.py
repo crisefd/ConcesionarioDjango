@@ -6,7 +6,6 @@ from django.views.generic import FormView
 from django.contrib.auth import authenticate, login, logout
 from .forms import LoginForm, MyUserCreationForm, EditProfileForm
 from django.contrib import messages
-from django.contrib.auth.views import password_change
 
 class LoginView(SuccessMessageMixin, FormView):
     form_class = LoginForm
@@ -98,6 +97,16 @@ def inicio_vendedor(request):
 
 def inicio_jefe_taller(request):
     return render(request, "inicio_jefe_taller.html")
+
+def password_change_done(request):
+    url = ""
+    if request.user.charge == 'Gerente':
+        url = "/cuentas/gerente/" + request.user.username
+    elif request.user.charge == 'Jefe Taller':
+        url = "/cuentas/jefetaller/" + request.user.username
+    else:
+        url = "/cuentas/vendedor/" + request.user.username
+    return redirect(url)
 
 
 
