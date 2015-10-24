@@ -1,0 +1,18 @@
+{%extends "base.html"%}
+{%block title%}Editar Perfil{%endblock%}
+{%block content%}
+{%comment%}
+{%if user.is_authenticated %}
+{%endcomment%}
+        <form method="POST">
+            {% csrf_token %}
+            {{form.as_p}}
+            <input type = "submit" value="Aceptar Cambios">
+        </form>
+         <a href="/accounts/password_change/">Cambiar contrasena</a>
+{%comment%}
+ {%else%}
+        <h1> Debes iniciar sesión primero</h1>
+{%endif%}
+{%endcomment%}
+{%endblock%}

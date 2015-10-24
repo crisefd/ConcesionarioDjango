@@ -1,0 +1,94 @@
+{% extends "base.html" %}
+{% load staticfiles %} 
+{%block title%}HOME{% endblock%}
+{%block content %}
+   <div class="container">
+      <div class="row">
+        {%comment%}<div class="col-xs-4" align="center">
+          <h1>¡Hola mundo!</h1>
+        </div>{%endcomment%}
+        {%comment%}<div class="col-xs-8" align="center">
+          <h1>
+            <p>
+              este es el segundo bloque
+            </p>
+          </h1>{%endcomment%}
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-xs-12" align="left">
+          <div id="carousel-home" class="carousel slide" data-ride="carousel">
+          <!-- Indicators -->
+          <ol class="carousel-indicators">
+            <li data-target="#carousel-home" data-slide-to="0" class="active"></li>
+            <li data-target="#carousel-home" data-slide-to="1"></li>
+            <li data-target="#carousel-home" data-slide-to="2"></li>
+            <li data-target="#carousel-home" data-slide-to="3"></li>
+          </ol>
+
+          <!-- Wrapper for slides -->
+          <div class="carousel-inner" role="listbox">
+            <div class="item active">
+            <img src="{% static 'img/camaro.jpg' %}" alt="Desierto" style="width:100%">
+            <div class="carousel-caption">
+              
+            </div>
+            </div>
+            <div class="item">
+            <img src="{% static 'img/bugatti.jpg' %}" alt="Koala" style="width:100%">
+            <div class="carousel-caption">
+            
+            </div>
+            </div>
+            <div class="item">
+            <img src="{% static 'img/lambotron.jpg' %}" alt="Penguins" style="width:100%">
+            <div class="carousel-caption">
+            
+            </div>
+            </div>
+            <div class="item">
+            <img src="{% static 'img/lambo-naranja.jpg' %}" alt="logo" style="width:100%">
+            <div class="carousel-caption">
+            
+            </div>
+            </div>
+          </div>
+          <!-- Controls -->
+          <a class="left carousel-control" href="#carousel-home" role="button" data-slide="prev">
+            <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+            <span class="sr-only">Anterior</span>
+          </a>
+          <a class="right carousel-control" href="#carousel-home" role="button" data-slide="next">
+            <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+            <span class="sr-only">Siguiente</span>
+          </a>
+        </div>
+        </div>
+        <div class="row-xs-4" align="right">
+          <article>
+            <h1>
+              este es un articulo
+            </h1>
+            <p>
+              este es el contenido del articulo
+            </p>
+          </article>
+        </div>
+      </div>
+    </div>
+    <div class="cintainer">
+      <div class="row">
+        <div class="col-xs-4 col-md-6 col-lg-3" align="center">
+          <form name="registro">
+            <input type="text" name="nombre" size="15"/>
+            <br />
+            <input type="text" name="telefono" size="15"/>
+            <br />
+            <input type="email" name="correo" size="15"/>
+            <br />
+          </form>
+        </div>
+      </div>
+    </div>
+     
+{% endblock%}

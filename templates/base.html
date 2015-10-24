@@ -19,13 +19,22 @@
 <link href="{% static 'css/estilos_concesionario.css'%}" rel="stylesheet">
     <title>{% block title%}{% endblock%}</title>
 {% include "includes/navbar.html" %}
+{% if messages %}
+        <div class="col-lg-3 color03">
+            <ul class="messages">
+                {% for message in messages %}
+                    <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+                {% endfor %}
+            </ul>
+        </div>
+{% endif %}
 </head>
     
 <body>
 
 
     {% block content %}
-        {% include "includes/show_messsages.html" %}
+        
     {% endblock %}
 </body>
 <script src="{% static 'js/jquery.min.js' %}"></script>

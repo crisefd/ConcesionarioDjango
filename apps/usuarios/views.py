@@ -4,7 +4,7 @@ from django.http import HttpResponse
 from django.contrib.messages.views import SuccessMessageMixin
 from django.views.generic import FormView
 from django.contrib.auth import authenticate, login, logout
-from .forms import LoginForm, MyUserCreationForm
+from .forms import LoginForm, MyUserCreationForm, EditProfileForm
 from django.contrib import messages
 
 class LoginView(SuccessMessageMixin, FormView):
@@ -56,6 +56,37 @@ class RegisterView(SuccessMessageMixin, FormView):
         messages.add_message(self.request, messages.ERROR, "No se pudo registrar al usuario")
         return super(RegisterView, self).form_invalid(form)
 
+class EditProfileView(SuccessMessageMixin, FormView):
+    success_url = '/'
+    form_class = EditProfileForm
+    template_name = 'editar_perfil.html'
+
+    def get_form(self, form_class=None):
+        f = super(EditProfileView, self).get_form(form_class)
+        #print self.get_form_kwargs()
+        f.set_fields(self.request.user.username)
+        return f
+
+    def form_valid(self, form):
+        charge = self.request.user.charge
+        if charge == 'Jefe Taller':
+            self.success_url = "/cuentas/jefetaller/" + self.request.user.username
+        elif charge == "Vendedor":
+            self.success_url = "/cuentas/vendedor/" + self.request.user.username
+        else:
+            self.success_url = "/cuentas/gerente/" + self.request.user.username
+        messages.success(self.request, "Edicion exitosa")
+        form.update()
+        return super(EditProfileView, self).form_valid(form)
+
+    def form_invalid(self, form):
+        messages.success(self.request, "Error al editar usuario")
+        return super(EditProfileView, self).form_invalid(form)
+
+
+
+
+
 
 def inicio_gerente(request):
     return render(request, "inicio_gerente.html")
@@ -67,8 +98,17 @@ def inicio_vendedor(request):
 def inicio_jefe_taller(request):
     return render(request, "inicio_jefe_taller.html")
 
-def home(request):
-    return render(request, "home.html")
+def password_change_done(request):
+    url = ""
+    if request.user.charge == 'Gerente':
+        url = "/cuentas/gerente/" + request.user.username
+    elif request.user.charge == 'Jefe Taller':
+        url = "/cuentas/jefetaller/" + request.user.username
+    else:
+        url = "/cuentas/vendedor/" + request.user.username
+    return redirect(url)
+
+
 
 
 def logOut(request):
