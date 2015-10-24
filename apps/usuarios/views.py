@@ -72,16 +72,15 @@ class EditProfileView(SuccessMessageMixin, FormView):
         charge = self.request.user.charge
         if charge == 'Jefe Taller':
             self.success_url = "/cuentas/jefetaller/" + self.request.user.username
-            #self.template_name = "inicio_jefe_taller.html"
         elif charge == "Vendedor":
-            self.success_url = "/cuentas/vendedor/" + self.request.username
-            #self.template_name = "inicio_vendedor.html"
+            self.success_url = "/cuentas/vendedor/" + self.request.user.username
+        else:
+            self.success_url = "/cuentas/gerente/" + self.request.user.username
         messages.success(self.request, "Edicion exitosa")
         form.update()
         return super(EditProfileView, self).form_valid(form)
 
     def form_invalid(self, form):
-        print "INVALIDO"
         messages.success(self.request, "Error al editar usuario")
         return super(EditProfileView, self).form_invalid(form)
 
@@ -100,8 +99,7 @@ def inicio_vendedor(request):
 def inicio_jefe_taller(request):
     return render(request, "inicio_jefe_taller.html")
 
-def home(request):
-    return render(request, "home.html")
+
 
 
 def logOut(request):

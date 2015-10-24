@@ -36,14 +36,7 @@ class EditProfileForm(forms.Form):
 
     class Meta:
         model = User
-        #fields = ('phone_number', 'address', 'email')
 
-
-"""
-    class Meta:
-        model = User
-        exclude = ('is_staff', 'is_active', 'sex',
-                    'charge', 'branch', 'username', 'birth_date')"""
 
 class MyUserCreationForm(UserCreationForm):
     def clean_username(self):
