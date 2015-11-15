@@ -6,13 +6,16 @@ from django.views.generic import FormView
 from django.contrib.auth import authenticate, login, logout
 from .forms import LoginForm, MyUserCreationForm, EditProfileForm
 from django.contrib import messages
+from django.http import JsonResponse
 
 class LoginView(SuccessMessageMixin, FormView):
     form_class = LoginForm
     template_name = 'login.html'
     success_url = '/'
+
     def form_valid(self, form):
         self.success_url = ''
+        successful_log_in = False
         user = authenticate(username = form.cleaned_data['username'], 
                     password = form.cleaned_data['password'])
         if user is not None:
@@ -25,14 +28,24 @@ class LoginView(SuccessMessageMixin, FormView):
                     self.success_url += "/cuentas/vendedor/" + user.username
                 else:
                     self.success_url += "/cuentas/jefetaller/" + user.username
-                messages.add_message(self.request, messages.SUCCESS, "Bienvenido " + user.username)
+                #messages.add_message(self.request, messages.SUCCESS, "Bienvenido " + user.username)
                 login(self.request, user)
+                successful_log_in = True
+                #if not self.request.POST.get('rem', None):
+                 #   self.request.session.set_expiry(0)
             else:
                 self.success_url += '/login/'
                 messages.add_message(self.request, messages.ERROR, "El usuario" + user.username + " no esta activo")
         else:
             self.success_url += '/login/'
             messages.add_message(self.request, messages.ERROR, "El usuario no existe")
+
+        if self.request.is_ajax() and successful_log_in:
+            print "request is ajax and login successfull"
+            usr = self.request.POST.get('username', None)
+            data = {'username':usr}
+            #Returning same data back to browser.It is not possible with Normal submit
+            return JsonResponse(data)
 
         return super(LoginView, self).form_valid(form)
 

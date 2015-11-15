@@ -1,0 +1,17 @@
+{%extends "base.html"%}
+{%block title%}Lista Empleados{%endblock%}
+{%block content%}
+{%comment%}
+{%if user.is_authenticated %}
+{%endcomment%}
+        {% for employee in object_list %}
+            <li>{{employee}}</li>
+{% empty %}
+    <li>No users yet.</li>
+{% endfor %}
+{%comment%}
+ {%else%}
+        <h1> Debes iniciar sesión primero</h1>
+{%endif%}
+{%endcomment%}
+{%endblock%}

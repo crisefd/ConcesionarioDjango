@@ -8,11 +8,21 @@ from apps.usuarios.models import User
 from django.contrib.auth.forms import AdminPasswordChangeForm
 
 class LoginForm(forms.Form):
-    username = forms.CharField(max_length = 50)
+
+
+    username = forms.CharField(max_length = 50,
+            widget=forms.TextInput(attrs ={
+                    'id':'usernameInput'
+                }))
     password = forms.CharField(max_length = 50,
             widget = forms.TextInput(attrs = {
-                    'type' : 'password'
+                    'type' : 'password',
+                    'id':'passwordInput'
                 }))
+
+    #def __init__(self, data=None, files=None, auto_id=False, prefix=None, initial=None, label_suffix=None,empty_permitted=False, field_order=None):
+     #   super(LoginForm, self).__init__(auto_id=auto_id)
+
 
 class EditProfileForm(forms.Form):
     phone_number = forms.CharField(max_length=50)
