@@ -40,8 +40,9 @@ class LoginView(SuccessMessageMixin, FormView):
             self.success_url += '/login/'
             messages.add_message(self.request, messages.ERROR, "El usuario no existe")
 
+        print "==> ", self.request.method == 'POST'
         if self.request.is_ajax() and successful_log_in:
-            print "request is ajax and login successfull"
+            #print "request is ajax and login successfull"
             usr = self.request.POST.get('username', None)
             data = {'username':usr}
             #Returning same data back to browser.It is not possible with Normal submit
