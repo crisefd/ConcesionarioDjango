@@ -8,6 +8,8 @@ from .forms import LoginForm, MyUserCreationForm, EditProfileForm
 from django.contrib import messages
 from django.http import JsonResponse
 
+global  MIN_SEARCH_CHARS = 5
+
 class LoginView(SuccessMessageMixin, FormView):
     form_class = LoginForm
     template_name = 'login.html'
@@ -17,7 +19,7 @@ class LoginView(SuccessMessageMixin, FormView):
         self.success_url = ''
         successful_log_in = False
         user = authenticate(username = form.cleaned_data['username'], 
-                    password = form.cleaned_data['password'])
+                        password = form.cleaned_data['password'])
         if user is not None:
             #print "el usuario ", user.username, "existe"
             if user.is_active:
@@ -30,9 +32,9 @@ class LoginView(SuccessMessageMixin, FormView):
                     self.success_url += "/cuentas/jefetaller/" + user.username
                 #messages.add_message(self.request, messages.SUCCESS, "Bienvenido " + user.username)
                 login(self.request, user)
-                successful_log_in = True
+                #successful_log_in = True
                 #if not self.request.POST.get('rem', None):
-                 #   self.request.session.set_expiry(0)
+                #   self.request.session.set_expiry(0)
             else:
                 self.success_url += '/login/'
                 messages.add_message(self.request, messages.ERROR, "El usuario" + user.username + " no esta activo")
@@ -40,15 +42,9 @@ class LoginView(SuccessMessageMixin, FormView):
             self.success_url += '/login/'
             messages.add_message(self.request, messages.ERROR, "El usuario no existe")
 
-        print "==> ", self.request.method == 'POST'
-        if self.request.is_ajax() and successful_log_in:
-            #print "request is ajax and login successfull"
-            usr = self.request.POST.get('username', None)
-            data = {'username':usr}
-            #Returning same data back to browser.It is not possible with Normal submit
-            return JsonResponse(data)
-
         return super(LoginView, self).form_valid(form)
+
+
 
     def form_invalid(self, form):
         messages.add_message(self.request, messages.ERROR, "Formulario incorrecto, revise nombre de usuario y contrasena")
@@ -59,6 +55,7 @@ class RegisterView(SuccessMessageMixin, FormView):
     form_class = MyUserCreationForm
     template_name = "registro_usuario.html"
     success_url = "/registrar/"
+
 
     def form_valid(self, form):
         form.save()
@@ -98,7 +95,34 @@ class EditProfileView(SuccessMessageMixin, FormView):
         return super(EditProfileView, self).form_invalid(form)
 
 
+class UserListView(SuccessMessageMixin, ListView):
+    model = User
+    context_object_name = "users"
 
+    def get_context_data(self, **kwargs):
+        context = super(EmployeeListView, self).get_context_data(**kwargs)
+        global  MIN_SEARCH_CHARS
+        users_search_results = []
+        if self.request.method == "GET":
+            search_text = self.request.GET.get("search_text", "").strip().lower()
+            if len(search_text) < MIN_SEARCH_CHARS:
+                search_text = ""
+            if(search_text != ""):
+                name_search_results = User.objects.filter(first_name__icontains=search_text)
+                surname_search_results = User.objects.filter(last_name__icontains=search_text)
+                email_search_results = User.objects.filter(email__icontains=search_text)
+                username_search_results = User.objects.filter(username__icontains=search_text)
+                id_document_search_results = User.objects.filter(id_document__icontains=search_text)
+                users_search_results = name_search_results | surname_search_results | email_search_results | username_search_results | id_document_search_results
+
+
+        context["search_text"] = search_text
+        context["users_search_results"] = users_search_results
+
+        #For display under the search form
+        context["MIN_SEARCH_CHARS"] = MIN_SEARCH_CHARS
+
+        return  context
 
 
 
@@ -121,6 +145,7 @@ def password_change_done(request):
     else:
         url = "/cuentas/vendedor/" + request.user.username
     return redirect(url)
+
 
 
 

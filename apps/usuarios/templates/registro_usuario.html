@@ -125,6 +125,23 @@
         <h1> Debes iniciar sesión primero</h1>
 {%endif%}
 {%endcomment%}
+<script>
+
+$('#telephoneInput').keypress(function(e) {
+  var keynum = e.which
+  var key = String.fromCharCode(keynum);
+
+  var isNumberKeys = $.inArray(key, ['0', '1', '2',
+                                    '3', '4', '5',
+                                    '6', '7', '8', '9']) > -1
+  if(keynum != 0 && keynum != 8){
+    if(!isNumberKeys ){
+      alert("Characters different to numbers are not allowed");
+    }
+  }
+  
+});
+</script>
 {% endblock %}
                 
               

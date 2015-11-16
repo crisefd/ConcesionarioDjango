@@ -16,6 +16,7 @@ urlpatterns = patterns('',
     url(r'^cuentas/jefetaller/[^/]+$', 'apps.usuarios.views.inicio_jefe_taller', name='inicio_jefe_taller'),
     url(r'^login/$', LoginView.as_view()),
     url(r'^registrar/$', RegisterView.as_view()),
+    url(r'^usuarios/busqueda$' UserListView.as_view(), name="user_list"),
     url(r'^cuentas/editar_perfil/[^/]+$', EditProfileView.as_view(), name="editar_perfil"),
     url(r'^salir/$','apps.usuarios.views.logOut'),
 )

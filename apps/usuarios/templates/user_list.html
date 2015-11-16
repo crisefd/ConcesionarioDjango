@@ -4,11 +4,28 @@
 {%comment%}
 {%if user.is_authenticated %}
 {%endcomment%}
-        {% for employee in object_list %}
-            <li>{{employee}}</li>
-{% empty %}
-    <li>No users yet.</li>
-{% endfor %}
+        <div class="search_section">
+      <form id="search_colors_form_id" method="get" action="{% url 'color_list' %}">
+         <input type="text" id="search_text" name="search_text"/>
+         {# csrf_token is not needed when the method is "get" #}
+         <input id="search" type="submit" value="Search for users"/>
+         <p>(Requires {{ MIN_SEARCH_CHARS|apnumber }} or more characters)</p>
+      </form>
+
+      {% if  search_text|length >= MIN_SEARCH_CHARS %}
+         <p><b>Searching for &quot;<code>{{ search_text }}</code>&quot;:</b>
+         {% if  users_search_results.count > 0 %}
+            </p>
+            <ul>
+               {% for  user in users_search_results %} {# No colon after "color_search_results" #}
+                  <li>{{ user}}</li>
+               {% endfor %}
+            </ul>
+         {% else %}
+            <i>No results</i></p>
+         {% endif %}
+      {% endif %}
+   </div>
 {%comment%}
  {%else%}
         <h1> Debes iniciar sesión primero</h1>
