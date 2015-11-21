@@ -4,28 +4,27 @@
 {%comment%}
 {%if user.is_authenticated %}
 {%endcomment%}
-        <div class="search_section">
-      <form id="search_colors_form_id" method="get" action="{% url 'color_list' %}">
-         <input type="text" id="search_text" name="search_text"/>
-         {# csrf_token is not needed when the method is "get" #}
-         <input id="search" type="submit" value="Search for users"/>
-         <p>(Requires {{ MIN_SEARCH_CHARS|apnumber }} or more characters)</p>
-      </form>
-
-      {% if  search_text|length >= MIN_SEARCH_CHARS %}
-         <p><b>Searching for &quot;<code>{{ search_text }}</code>&quot;:</b>
-         {% if  users_search_results.count > 0 %}
-            </p>
-            <ul>
-               {% for  user in users_search_results %} {# No colon after "color_search_results" #}
-                  <li>{{ user}}</li>
-               {% endfor %}
-            </ul>
-         {% else %}
-            <i>No results</i></p>
-         {% endif %}
+    <div class="search_section">
+         {{form.as_p}}
+           <p>(Requires {{ MIN_SEARCH_CHARS|apnumber }} or more characters)</p>
+          <div id="user_search_results"></div>
+         </div>
+      <div class="content_section">
+      {% if  user.count == 0 %}
+         <p><i>There are no users in database.</i></p>
+      {% else %}
+         <table>
+              
+            {% for  user in users %} {# No colon after "colors" #}
+               {%include "user_search_results.html"%}
+            {% endfor %}
+         </table>
       {% endif %}
    </div>
+   <script language="javascript">
+      var MIN_SEARCH_CHARS = {{ MIN_SEARCH_CHARS }};
+   </script>
+   <script type='text/javascript' src="{% static 'js/search_users.js' %}"></script>
 {%comment%}
  {%else%}
         <h1> Debes iniciar sesión primero</h1>

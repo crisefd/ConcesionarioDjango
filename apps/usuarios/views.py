@@ -8,7 +8,7 @@ from .forms import LoginForm, MyUserCreationForm, EditProfileForm
 from django.contrib import messages
 from django.http import JsonResponse
 
-global  MIN_SEARCH_CHARS = 5
+MIN_SEARCH_CHARS = 4
 
 class LoginView(SuccessMessageMixin, FormView):
     form_class = LoginForm
@@ -98,32 +98,58 @@ class EditProfileView(SuccessMessageMixin, FormView):
 class UserListView(SuccessMessageMixin, ListView):
     model = User
     context_object_name = "users"
+    form_class = SearchUserForm
+
+    def form_valid(self, form):
+        search_text = form.cleaned_data['searchText']
+        return search_users(self.request, search_text)
 
     def get_context_data(self, **kwargs):
+        global MIN_SEARCH_CHARS
         context = super(EmployeeListView, self).get_context_data(**kwargs)
-        global  MIN_SEARCH_CHARS
-        users_search_results = []
-        if self.request.method == "GET":
-            search_text = self.request.GET.get("search_text", "").strip().lower()
-            if len(search_text) < MIN_SEARCH_CHARS:
-                search_text = ""
-            if(search_text != ""):
-                name_search_results = User.objects.filter(first_name__icontains=search_text)
-                surname_search_results = User.objects.filter(last_name__icontains=search_text)
-                email_search_results = User.objects.filter(email__icontains=search_text)
-                username_search_results = User.objects.filter(username__icontains=search_text)
-                id_document_search_results = User.objects.filter(id_document__icontains=search_text)
-                users_search_results = name_search_results | surname_search_results | email_search_results | username_search_results | id_document_search_results
-
-
-        context["search_text"] = search_text
-        context["users_search_results"] = users_search_results
-
-        #For display under the search form
         context["MIN_SEARCH_CHARS"] = MIN_SEARCH_CHARS
 
         return  context
 
+def search_users(request, user_id):
+    """
+    Processes a search request, ignoring any where less than four
+    characters are provided. The search text is both trimmed and
+    lower-cased.
+    """
+ 
+    search_results = []  #Assume no results.
+ 
+    global  MIN_SEARCH_CHARS
+ 
+    search_text = ""   #Assume no search
+    if(request.method == "GET"):
+        search_text = request.GET.get("search_text", "").strip().lower()
+        if(len(search_text) < MIN_SEARCH_CHARS):
+            """
+            Ignore the search. This is also validated by
+            JavaScript, and should never reach here, but remains
+            as prevention.
+            """
+            search_text = ""
+    if(search_text != ""):
+        first_name_results = User.objects.filter(first_name__contains=search_text)
+        last_name_results = User.objects.filter(last_name__contains=search_text)
+        username_results = User.objects.filter(username_name__contains=search_text)
+        email_results = User.objects.filter(email__contains=search_text)
+        id_document_results = User.objects.filter(id_document__contains=search_text)
+        search_results = first_name_results | last_name_results | username_results | email_results | id_document_results
+ 
+    #print('search_text="' + search_text + '", results=' + str(color_results))
+ 
+    context = {
+        "search_text": search_text,
+        "search_results": search_results,
+        "MIN_SEARCH_CHARS": MIN_SEARCH_CHARS,
+    };
+ 
+    return  render_to_response("user_search_results.html",
+                               context)
 
 
 def inicio_gerente(request):

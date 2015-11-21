@@ -20,9 +20,12 @@ class LoginForm(forms.Form):
                     'id':'passwordInput'
                 }))
 
-    #def __init__(self, data=None, files=None, auto_id=False, prefix=None, initial=None, label_suffix=None,empty_permitted=False, field_order=None):
-     #   super(LoginForm, self).__init__(auto_id=auto_id)
 
+class SearchUserForm(form.Forms):
+    search_field = forms.CharField(max_length = 50,
+                                   widget=forms.TextInput(attrs ={
+                                      'id': 'searchText'
+                                    }))
 
 class EditProfileForm(forms.Form):
     phone_number = forms.CharField(max_length=50)
