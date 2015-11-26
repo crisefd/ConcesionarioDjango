@@ -2,11 +2,13 @@ from django.shortcuts import render, redirect
 from django.template import Template, Context
 from django.http import HttpResponse
 from django.contrib.messages.views import SuccessMessageMixin
-from django.views.generic import FormView
+from django.views.generic import FormView, ListView
 from django.contrib.auth import authenticate, login, logout
-from .forms import LoginForm, MyUserCreationForm, EditProfileForm
+from .forms import *
 from django.contrib import messages
 from django.http import JsonResponse
+from .models import User
+
 
 MIN_SEARCH_CHARS = 4
 
@@ -99,6 +101,7 @@ class UserListView(SuccessMessageMixin, ListView):
     model = User
     context_object_name = "users"
     form_class = SearchUserForm
+    template_name = 'user_list.html'
 
     def form_valid(self, form):
         search_text = form.cleaned_data['searchText']
@@ -106,7 +109,7 @@ class UserListView(SuccessMessageMixin, ListView):
 
     def get_context_data(self, **kwargs):
         global MIN_SEARCH_CHARS
-        context = super(EmployeeListView, self).get_context_data(**kwargs)
+        context = super(UserListView, self).get_context_data(**kwargs)
         context["MIN_SEARCH_CHARS"] = MIN_SEARCH_CHARS
 
         return  context
@@ -150,6 +153,10 @@ def search_users(request, user_id):
  
     return  render_to_response("user_search_results.html",
                                context)
+
+#def user_list(request):
+	
+	#return render(request, 'user_list.html')
 
 
 def inicio_gerente(request):

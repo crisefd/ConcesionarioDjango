@@ -21,7 +21,7 @@ class LoginForm(forms.Form):
                 }))
 
 
-class SearchUserForm(form.Forms):
+class SearchUserForm(forms.Form):
     search_field = forms.CharField(max_length = 50,
                                    widget=forms.TextInput(attrs ={
                                       'id': 'searchText'

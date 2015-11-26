@@ -1,14 +1,15 @@
 {%extends "base.html"%}
+{% load staticfiles %}
 {%block title%}Lista Empleados{%endblock%}
 {%block content%}
 {%comment%}
 {%if user.is_authenticated %}
 {%endcomment%}
     <div class="search_section">
-         {{form.as_p}}
-           <p>(Requires {{ MIN_SEARCH_CHARS|apnumber }} or more characters)</p>
+         {{form.search_field}}
+           <p>(Requires {{ MIN_SEARCH_CHARS|floatformat:"0" }} or more characters)</p>
           <div id="user_search_results"></div>
-         </div>
+    </div>
       <div class="content_section">
       {% if  user.count == 0 %}
          <p><i>There are no users in database.</i></p>
@@ -20,14 +21,17 @@
             {% endfor %}
          </table>
       {% endif %}
-   </div>
-   <script language="javascript">
-      var MIN_SEARCH_CHARS = {{ MIN_SEARCH_CHARS }};
-   </script>
-   <script type='text/javascript' src="{% static 'js/search_users.js' %}"></script>
-{%comment%}
+  </div>
+   
+ {%comment%}
  {%else%}
         <h1> Debes iniciar sesión primero</h1>
 {%endif%}
 {%endcomment%}
 {%endblock%}
+   <script language="javascript">
+      var MIN_SEARCH_CHARS = {{ MIN_SEARCH_CHARS }};
+   </script>
+   <script type='text/javascript' src="{% static 'js/search_users.js' %}">
+   </script>
+

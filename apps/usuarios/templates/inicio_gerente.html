@@ -5,6 +5,10 @@
    {% if user.is_authenticated %}
         {%ifequal user.charge "Gerente"%}
             <h1> Bienvenido, {{ user.username }} </h1>
+            <a href="/registrar/">registrar usuario</a>
+            <a href="/usuarios/busqueda/">buscar usuario</a>
+            <a href="/inventario/automovil/registro/">registrar automovil</a>
+            <a href="/inventario/repuesto/registro/">registrar repuesto</a>
         {%else%}
             <h1> No tienes permisos para estar aquí </h1>
         {%endifequal%}

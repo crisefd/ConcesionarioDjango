@@ -12,10 +12,10 @@ DATABASES = {
     #}
      'default':{
 	'ENGINE': 'django.db.backends.postgresql_psycopg2',
-	'NAME' : 'concesionario',
-	'USER' : 'postgres',
-	'PASSWORD' : 'postgres',
-	'HOST' : 'localhost',
+	'NAME' : 'crisefd',
+	'USER' : 'crisefd',
+	'PASSWORD' : 'crisefd',
+	'HOST' : 'pgsql',
 	'PORT' : '5432'
 	}
 }
