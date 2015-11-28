@@ -21,11 +21,7 @@ class LoginForm(forms.Form):
                 }))
 
 
-class SearchUserForm(form.Forms):
-    search_field = forms.CharField(max_length = 50,
-                                   widget=forms.TextInput(attrs ={
-                                      'id': 'searchText'
-                                    }))
+
 
 class EditProfileForm(forms.Form):
     phone_number = forms.CharField(max_length=50)

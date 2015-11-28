@@ -1,11 +1,12 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, render_to_response
 from django.template import Template, Context
 from django.http import HttpResponse
 from django.contrib.messages.views import SuccessMessageMixin
-from django.views.generic import FormView
+from django.views.generic import FormView, ListView
 from django.contrib.auth import authenticate, login, logout
-from .forms import LoginForm, MyUserCreationForm, EditProfileForm
+from .forms import *
 from django.contrib import messages
+from .models import User
 from django.http import JsonResponse
 
 MIN_SEARCH_CHARS = 4
@@ -98,56 +99,56 @@ class EditProfileView(SuccessMessageMixin, FormView):
 class UserListView(SuccessMessageMixin, ListView):
     model = User
     context_object_name = "users"
-    form_class = SearchUserForm
-
-    def form_valid(self, form):
-        search_text = form.cleaned_data['searchText']
-        return search_users(self.request, search_text)
+    template_name = 'user_list.html'
 
     def get_context_data(self, **kwargs):
         global MIN_SEARCH_CHARS
-        context = super(EmployeeListView, self).get_context_data(**kwargs)
+        context = super(UserListView, self).get_context_data(**kwargs)
         context["MIN_SEARCH_CHARS"] = MIN_SEARCH_CHARS
-
+        print "retornando context data"
         return  context
 
-def search_users(request, user_id):
-    """
-    Processes a search request, ignoring any where less than four
-    characters are provided. The search text is both trimmed and
-    lower-cased.
-    """
- 
+
+
+def search_users(request):
+   
     search_results = []  #Assume no results.
  
     global  MIN_SEARCH_CHARS
  
-    search_text = ""   #Assume no search
+    search_text = "--"   #Assume no search
     if(request.method == "GET"):
-        search_text = request.GET.get("search_text", "").strip().lower()
+        print "request is GET"
+        #search_text = "batman"
+        search_text = request.GET.get('search_text', '')
+        search_text = search_text.encode('ascii')
+        print "GET request ", request.GET
+        print "search_text=", search_text
         if(len(search_text) < MIN_SEARCH_CHARS):
-            """
-            Ignore the search. This is also validated by
-            JavaScript, and should never reach here, but remains
-            as prevention.
-            """
             search_text = ""
+            print "search_text too short"
     if(search_text != ""):
-        first_name_results = User.objects.filter(first_name__contains=search_text)
-        last_name_results = User.objects.filter(last_name__contains=search_text)
-        username_results = User.objects.filter(username_name__contains=search_text)
-        email_results = User.objects.filter(email__contains=search_text)
-        id_document_results = User.objects.filter(id_document__contains=search_text)
+        print "making queryset"
+        first_name_results = User.objects.filter(first_name__icontains=search_text)
+        print "queryset firstname"
+        last_name_results = User.objects.filter(last_name__icontains=search_text)
+        print "queryset lastname"
+        username_results = User.objects.filter(username__icontains=search_text)
+        print "queryset username"
+        email_results = User.objects.filter(email__icontains=search_text)
+        print "queryset email"
+        id_document_results = User.objects.filter(id_document__icontains=search_text)
+        print "queryset ID"
         search_results = first_name_results | last_name_results | username_results | email_results | id_document_results
  
-    #print('search_text="' + search_text + '", results=' + str(color_results))
+    print('search_text="' + search_text + '", results=' + str(search_results))
  
     context = {
         "search_text": search_text,
         "search_results": search_results,
-        "MIN_SEARCH_CHARS": MIN_SEARCH_CHARS,
+        "MIN_SEARCH_CHARS": MIN_SEARCH_CHARS
     };
- 
+    print "==> renderizando resultados"
     return  render_to_response("user_search_results.html",
                                context)
 
