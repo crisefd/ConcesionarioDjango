@@ -3,10 +3,17 @@
 {%block content%}
 <div class="form-group" align="center">
       <div class="row">
+        <div class="col-lg-6 col-xs-12 "aling="rigt">
+      <ul>
+        <a href="/cuentas/jefetaller/{{user.username}}">
+          <button class="btn" type="button" >Inicio</button>
+        </a>  
+      </ul>
+    </div>
         <div class="col-lg-6 col-xs-12 ">
           <form class="form-horizontal well" id="registro" method="POST">{% csrf_token %}
             <fieldset>
-              <legend>Registrar orden de trabajo</legend>
+              <legend>Asignar repuesto</legend>
               <div class="control-group">
                 <label class="control-label" for="input01">Orden</label>
                 <div class="controls">

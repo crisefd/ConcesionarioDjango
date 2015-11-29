@@ -5,6 +5,19 @@
 {%comment%}
 {%if user.is_authenticated %}
 {%endcomment%}
+<div class="form-group" align="center">
+      <div class="row">
+        <div class="col-lg-6 col-xs-12 "aling="rigt">
+      <ul>
+        <a href="/cuentas/gerente/{{user.username}}">
+          <button class="btn" type="button" >Inicio</button>
+        </a>  
+      </ul>
+    </div>
+        <div class="col-lg-6 col-xs-12 ">
+          <form class="form-horizontal well" id="registro" method="POST">{% csrf_token %}
+            <fieldset>
+              <legend>Buscar Usuario</legend>
     <div class="search_section">
          {{form.search_field}}
            <p>(Requires {{ MIN_SEARCH_CHARS|floatformat:"0" }} or more characters)</p>
@@ -22,6 +35,10 @@
          </table>
       {% endif %}
   </div>
+  </div>
+  </div>
+  </div>
+
    
  {%comment%}
  {%else%}
