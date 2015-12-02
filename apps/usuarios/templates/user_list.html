@@ -5,50 +5,34 @@
 {%comment%}
 {%if user.is_authenticated %}
 {%endcomment%}
-<div class="form-group" align="center">
-      <div class="row">
-        <div class="col-lg-6 col-xs-12 "aling="rigt">
-      <ul>
-        <a href="/cuentas/gerente/{{user.username}}">
-          <button class="btn" type="button" >Inicio</button>
-        </a>  
-      </ul>
-    </div>
-        <div class="col-lg-6 col-xs-12 ">
-          <form class="form-horizontal well" id="registro" method="POST">{% csrf_token %}
-            <fieldset>
-              <legend>Buscar Usuario</legend>
     <div class="search_section">
-         {{form.search_field}}
-           <p>(Requires {{ MIN_SEARCH_CHARS|floatformat:"0" }} or more characters)</p>
+         <form>
+         Buscar: <input type='text' id='searchTextInput' name='search_text' maxlength="200">
+           <p>(Requires {{ MIN_SEARCH_CHARS|floatformat:'0' }} or more characters)</p>
+           </form>
           <div id="user_search_results"></div>
-    </div>
+         </div>
       <div class="content_section">
-      {% if  user.count == 0 %}
+      {% if  users.count == 0 %}
          <p><i>There are no users in database.</i></p>
       {% else %}
          <table>
-              
-            {% for  user in users %} {# No colon after "colors" #}
-               {%include "user_search_results.html"%}
+            {% for  u in users %}
+                   {%include "user_search_results.html"%}
             {% endfor %}
          </table>
       {% endif %}
-  </div>
-  </div>
-  </div>
-  </div>
-
-   
- {%comment%}
+   </div>
+   <script language="javascript">
+      var MIN_SEARCH_CHARS = {{ MIN_SEARCH_CHARS }};
+      var SUBMIT_URL =  "/usuarios/busqueda/resultados/";
+   </script>
+    <script type='text/javascript' src="https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.7.0/underscore-min.js"></script>
+   <script type='text/javascript' src="{% static 'js/search_users.js' %}"></script>
+{%comment%}
  {%else%}
         <h1> Debes iniciar sesión primero</h1>
 {%endif%}
 {%endcomment%}
 {%endblock%}
-   <script language="javascript">
-      var MIN_SEARCH_CHARS = {{ MIN_SEARCH_CHARS }};
-   </script>
-   <script type='text/javascript' src="{% static 'js/search_users.js' %}">
-   </script>
 
