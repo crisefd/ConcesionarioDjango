@@ -1,10 +1,22 @@
 {% extends "base.html" %}
 
-{%block title%}INICIO JEFE TALLER{% endblock%}
+{%block title%}INICIO VENDEDOR{% endblock%}
 {%block content %}
    {% if user.is_authenticated %}
         {%ifequal user.charge "Vendedor"%}
             <h1> Bienvenido, {{ user.username }} </h1>
+            <div class="col-lg-6 col-xs-12 "aling="rigt">
+      <ul>
+        <a href="/cotizacion/registro/">
+          <button class="btn" type="button" >Registrar cotizacion</button>
+        </a>
+        <a href="/venta/registro/">
+          <button class="btn" type="button" >Registrar venta</button>
+        </a>     
+      </ul>
+    </div>
+            
+            
         {%else%}
             <h1> No tienes permisos para estar aquí </h1>
         {%endifequal%}
