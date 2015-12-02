@@ -1,12 +1,19 @@
 {% extends "base.html" %}
 {% block title %}Registrar Usuario{% endblock %}
 {% block content %}
-{%comment%}
+
 {%if user.is_authenticated %}
-    {%ifequal user.charge "Vendedor"%}
-{%endcomment%}
+    {%ifequal user.charge "Gerente"%}
+    
     <div class="form-group" align="center">
     	<div class="row">
+        <div class="col-lg-6 col-xs-12 "aling="rigt">
+      <ul>
+        <a href="/cuentas/gerente/{{user.username}}">
+          <button class="btn" type="button" >Inicio</button>
+        </a>  
+      </ul>
+    </div>
     		<div class="col-lg-6 col-xs-12 ">
     			<form class="form-horizontal well" id="registro" method="POST">{% csrf_token %}
             <fieldset>
@@ -87,14 +94,24 @@
              <div class="control-group">
                 <label class="control-label" for="input05">Sexo</label>
                 <div class="controls">
-                  {{form.sex}}	
-                  <p id="help-block" class="help-block">Escoja el sexo</p>
+                  {% for radio in form.sex %}
+                    <div class="myradio">
+                    <ul>{{ radio }}</ul>
+                    </div>
+                    {% endfor %}
+                 <p id="help-block" class="help-block">Escoja el sexo</p> 
                 </div>
               </div>
+              <hr>
               <div class="control-group">
                 <label class="control-label" for="input06">Cargo</label>
                 <div class="controls">
-                  {{form.charge}}	
+                  {% for radio in form.charge %}
+                    <div class="myradio">
+                    <ul>{{ radio }}</ul>
+                      
+                    </div>
+                    {% endfor %}	
                   <p id="help-block" class="help-block">Escoja el cargo</p>
                 </div>
               </div>
@@ -107,30 +124,33 @@
                 </div>
               </div>
               <div class="form-actions">
+
                 <button type="submit" class="btn btn-primary">Registrar</button>
                 <button type="reset" class="btn">Cancelar</button>
+                
               </div>
             </fieldset>
           </form>
     		</div>
+
     		<section>
     		</section>
     	</div>
     </div>
-{%comment%}
+    
+
+
     {%else%}
          <h1> No tienes permisos para estara aquí </h1>
     {%endifequal%}
  {%else%}
         <h1> Debes iniciar sesión primero</h1>
 {%endif%}
-{%endcomment%}
-<script>
 
+<script>
 $('#telephoneInput').keypress(function(e) {
   var keynum = e.which
   var key = String.fromCharCode(keynum);
-
   var isNumberKeys = $.inArray(key, ['0', '1', '2',
                                     '3', '4', '5',
                                     '6', '7', '8', '9']) > -1
@@ -143,5 +163,3 @@ $('#telephoneInput').keypress(function(e) {
 });
 </script>
 {% endblock %}
-                
-              

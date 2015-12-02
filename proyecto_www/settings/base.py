@@ -27,6 +27,7 @@ DJANGO_APPS = (
 
 
 LOCAL_APPS = (
+    'apps.home',
 	'apps.inventario',
     'apps.usuarios',
     'apps.ordenes_trabajo',

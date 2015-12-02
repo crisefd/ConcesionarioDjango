@@ -2,9 +2,13 @@
 {% load staticfiles %}
 {%block title%}Lista Empleados{%endblock%}
 {%block content%}
-{%comment%}
+
 {%if user.is_authenticated %}
-{%endcomment%}
+	<div>
+		<a href="/cuentas/gerente/{{user.username}}">
+          <button class="btn" type="button" >Inicio</button>
+        </a>
+	</div>
     <div class="search_section">
          <form>
          Buscar: <input type='text' id='searchTextInput' name='search_text' maxlength="200">
@@ -29,9 +33,9 @@
    </script>
     <script type='text/javascript' src="https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.7.0/underscore-min.js"></script>
    <script type='text/javascript' src="{% static 'js/search_users.js' %}"></script>
-{%comment%}
+
  {%else%}
         <h1> Debes iniciar sesión primero</h1>
 {%endif%}
-{%endcomment%}
+
 {%endblock%}
