@@ -29,11 +29,11 @@ class LoginView(SuccessMessageMixin, FormView):
             if user.is_active:
                 #print "el usuario esta activo"
                 if user.charge == "Gerente":
-                    self.success_url += "/cuentas/gerente/" + user.username
+                    self.success_url += "/cuentas/Gerente/" + user.username
                 elif user.charge == "Vendedor":
-                    self.success_url += "/cuentas/vendedor/" + user.username
+                    self.success_url += "/cuentas/Vendedor/" + user.username
                 else:
-                    self.success_url += "/cuentas/jefetaller/" + user.username
+                    self.success_url += "/cuentas/Jefetaller/" + user.username
                 #messages.add_message(self.request, messages.SUCCESS, "Bienvenido " + user.username)
                 login(self.request, user)
                 #successful_log_in = True
