@@ -8,8 +8,8 @@ from .forms import *
 from django.contrib import messages
 from .models import User
 from django.http import JsonResponse
-from datatableview.views import DatatableView, XEditableDatatableView
-from datatableview import helpers
+#from datatableview.views import DatatableView, XEditableDatatableView
+#from datatableview import helpers
 
 
 MIN_SEARCH_CHARS = 4
@@ -111,7 +111,7 @@ class UserListView(SuccessMessageMixin, ListView):
         print "retornando context data"
         return  context
 
-
+"""
 class UserDatatableView(XEditableDatatableView):
     model = User
     datatable_options = {
@@ -122,13 +122,13 @@ class UserDatatableView(XEditableDatatableView):
             ("e-mail", 'email', helpers.make_xeditable),
             ("Doc ID", 'id_document', helpers.make_xeditable),
             ("Nacimiento", 'birth_date', helpers.make_xeditable),
-            ("Dirección", 'address', helpers.make_xeditable),
+            ("Direccion", 'address', helpers.make_xeditable),
             ("Telefono", 'phone_number', helpers.make_xeditable),
 
         ]
     }
 
-
+"""
 
 def search_users(request):
    
