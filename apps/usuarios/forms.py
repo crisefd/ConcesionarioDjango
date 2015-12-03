@@ -71,7 +71,6 @@ class MyUserCreationForm(UserCreationForm):
                                   widget = forms.TextInput(attrs={
                                                         'id':'telephoneInput',
                                                         'type':'text'
-                                                        
                                    }))
     id_document = forms.CharField(max_length = 50)
     email = forms.EmailField(max_length = 255,
