@@ -8,11 +8,20 @@ from apps.usuarios.models import User
 from django.contrib.auth.forms import AdminPasswordChangeForm
 
 class LoginForm(forms.Form):
-    username = forms.CharField(max_length = 50)
+
+
+    username = forms.CharField(max_length = 50,
+            widget=forms.TextInput(attrs ={
+                    'id':'usernameInput'
+                }))
     password = forms.CharField(max_length = 50,
             widget = forms.TextInput(attrs = {
-                    'type' : 'password'
+                    'type' : 'password',
+                    'id':'passwordInput'
                 }))
+
+
+
 
 class EditProfileForm(forms.Form):
     phone_number = forms.CharField(max_length=50)
@@ -58,9 +67,16 @@ class MyUserCreationForm(UserCreationForm):
     charge = forms.ChoiceField(choices=[("Gerente","Gerente"),
                                 ("Vendedor", "Vendedor"), ("Jefe Taller", "Jefe Taller")],
                                     widget= forms.RadioSelect())
-    phone_number = forms.CharField(max_length = 50)
+    phone_number = forms.CharField(max_length = 50, 
+                                  widget = forms.TextInput(attrs={
+                                                        'id':'telephoneInput',
+                                                        'type':'text'
+                                   }))
     id_document = forms.CharField(max_length = 50)
-    email = forms.EmailField(max_length = 255)
+    email = forms.EmailField(max_length = 255,
+                              widget = forms.TextInput(attrs={
+                                                       'id':'emailInput'
+                                }))
     address = forms.CharField(max_length=50)
     first_name = forms.CharField(max_length=50)
     last_name = forms.CharField(max_length=50)

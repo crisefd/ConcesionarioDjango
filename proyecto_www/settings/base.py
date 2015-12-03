@@ -27,6 +27,7 @@ DJANGO_APPS = (
 
 
 LOCAL_APPS = (
+    'apps.home',
 	'apps.inventario',
     'apps.usuarios',
     'apps.ordenes_trabajo',
@@ -36,6 +37,7 @@ LOCAL_APPS = (
 
 
 THIRD_PARTY_APPS = (
+    #'.django-datatable-view',
 )
 
 INSTALLED_APPS = DJANGO_APPS + LOCAL_APPS + THIRD_PARTY_APPS

@@ -1,13 +1,13 @@
 {%extends "base.html"%}
-{%block title%}Repuesto para Orden de Trabajo{%endblock%}
+{%block title%}Registro Sucursal{%endblock%}
 {%block content%}
 {%if user.is_authenticated %}
-    {%ifequal user.charge "Jefe Taller"%}
-<div class="form-group" align="center">
+
+       <div class="form-group" align="center">
       <div class="row">
         <div class="col-lg-6 col-xs-12 "aling="rigt">
       <ul>
-        <a href="/cuentas/Jefetaller/{{user.username}}">
+        <a href="/cuentas/Gerente/{{user.username}}">
           <button class="btn" type="button" >Inicio</button>
         </a>  
       </ul>
@@ -15,19 +15,19 @@
         <div class="col-lg-6 col-xs-12 ">
           <form class="form-horizontal well" id="registro" method="POST">{% csrf_token %}
             <fieldset>
-              <legend>Asignar repuesto</legend>
+              <legend>Registrar sucursal</legend>
               <div class="control-group">
-                <label class="control-label" for="input01">Orden</label>
+                <label class="control-label" for="input01">Nombre</label>
                 <div class="controls">
-                  {{form.orden}}
-                  <p id="help-block" class="help-block">Seleccione la orden</p>
+                  {{form.nombre}}
+                  <p id="help-block" class="help-block">Inserte nombre sucursal</p>
                 </div>
               </div>
               <div class="control-group">
-                <label class="control-label" for="input01">Repuesto</label>
+                <label class="control-label" for="input01">Direccion</label>
                 <div class="controls">
-                  {{form.repuesto}}
-                  <p id="help-block" class="help-block">Escriba el repuesto</p>
+                  {{form.direccion}}
+                  <p id="help-block" class="help-block">Inserte la direccion de la sucursal</p>
                 </div>
               </div>
               <div class="form-actions">
@@ -39,9 +39,8 @@
             </div>
            </div>
           </div>
-{%else%}
-         <h1> No tienes permisos para estara aquí </h1>
-    {%endifequal%}
+         
+
  {%else%}
         <h1> Debes iniciar sesión primero</h1>
 {%endif%}

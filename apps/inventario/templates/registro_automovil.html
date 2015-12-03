@@ -1,12 +1,19 @@
 {%extends "base.html"%}
 {%block title%}Registro de Automóvil{% endblock %}
 {%block content%}
-{%comment%}
+
 {% if user.is_authenticated %}
   {%ifequal user.charge "Gerente"%}
-{%endcomment%}
+
     <div class="form-group" align="center">
       <div class="row">
+        <div class="col-lg-6 col-xs-12 "aling="rigt">
+      <ul>
+        <a href="/cuentas/Gerente/{{user.username}}">
+          <button class="btn" type="button" >Inicio</button>
+        </a>  
+      </ul>
+    </div>
         <div class="col-lg-6 col-xs-12 ">
           <form class="form-horizontal well" id="registro" method="POST">{% csrf_token %}
             <fieldset>
@@ -57,7 +64,7 @@
         </div>
       </div>
     </div>
-{%comment%}
+
         {%else%}
              <h1> No tienes permisos para estar aquí </h1>
         {%endifequal%}
@@ -65,5 +72,5 @@
           <h1> Debes iniciar sesión primero </h1>
           <a href="/login/">Ingresar</a>
     {%endif%}
-{%endcomment%}
+
 {%endblock%}
