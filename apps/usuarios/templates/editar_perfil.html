@@ -1,18 +1,60 @@
 {%extends "base.html"%}
 {%block title%}Editar Perfil{%endblock%}
 {%block content%}
-{%comment%}
 {%if user.is_authenticated %}
-{%endcomment%}
-        <form method="POST">
-            {% csrf_token %}
-            {{form.as_p}}
-            <input type = "submit" value="Aceptar Cambios">
-        </form>
-         <a href="/accounts/password_change/">Cambiar contrasena</a>
-{%comment%}
+        <div class="form-group" align="center">
+      <div class="row">
+        <div class="col-lg-6 col-xs-12 "aling="rigt">
+      <ul>
+        <a href="/cuentas/{{user.charge}}/{{user.username}}">
+          <button class="btn" type="button" >Inicio</button>
+        </a>
+        
+      </ul>
+    </div>
+        <div class="col-lg-6 col-xs-12 ">
+          <form class="form-horizontal well" id="registro" method="POST">{% csrf_token %}
+            <fieldset>
+              <legend>Editar Perfil</legend>
+              
+              <div class="control-group">
+                <label class="control-label" for="input01">Telefono</label>
+                <div class="controls">
+                  {{form.phone_number}}
+                  <p id="help-block" class="help-block">Coloque el nuevo telefono</p>
+                </div>
+              
+              <div class="control-group">
+                <label class="control-label" for="input01">Direecion</label>
+                <div class="controls">
+                  {{form.address}}
+                  <p id="help-block" class="help-block">Coloque la nueva Direccion</p>
+                </div>
+              </div>
+              <div class="control-group">
+                <label class="control-label" for="input01">Email</label>
+                <div class="controls">
+                  {{form.email}}
+                  <p id="help-block" class="help-block">Coloque el nuevo email</p>
+                </div>
+              </div>
+              
+              <hr />
+              <div class="form-actions">
+                <button type="submit" class="btn btn-primary">Actualizar perfil</button>
+                <button type="reset" class="btn">Cancelar</button>
+              </div>
+              </fieldset>
+         </form>
+        </div>
+      </div>
+    </div>
+         <a href="/accounts/password_change/">
+          <button class="btn" type="button" >Cambiar contrasena</button>
+        </a>   
+
  {%else%}
         <h1> Debes iniciar sesión primero</h1>
 {%endif%}
-{%endcomment%}
+
 {%endblock%}
