@@ -3,11 +3,42 @@
 {%block content%}
 {%if user.is_authenticated %}
 
-        <form method="POST">
-            {% csrf_token %}
-            {{form.as_p}}
-            <input type = "submit" value="Registrar">
-        </form>
+       <div class="form-group" align="center">
+      <div class="row">
+        <div class="col-lg-6 col-xs-12 "aling="rigt">
+      <ul>
+        <a href="/cuentas/Gerente/{{user.username}}">
+          <button class="btn" type="button" >Inicio</button>
+        </a>  
+      </ul>
+    </div>
+        <div class="col-lg-6 col-xs-12 ">
+          <form class="form-horizontal well" id="registro" method="POST">{% csrf_token %}
+            <fieldset>
+              <legend>Registrar sucursal</legend>
+              <div class="control-group">
+                <label class="control-label" for="input01">Nombre</label>
+                <div class="controls">
+                  {{form.nombre}}
+                  <p id="help-block" class="help-block">Inserte nombre sucursal</p>
+                </div>
+              </div>
+              <div class="control-group">
+                <label class="control-label" for="input01">Direccion</label>
+                <div class="controls">
+                  {{form.direccion}}
+                  <p id="help-block" class="help-block">Inserte la direccion de la sucursal</p>
+                </div>
+              </div>
+              <div class="form-actions">
+                <button type="submit" class="btn btn-primary">Registrar</button>
+                <button type="reset" class="btn">Cancelar</button>
+              </div>
+              </fieldset>
+             </form>
+            </div>
+           </div>
+          </div>
          
 
  {%else%}
