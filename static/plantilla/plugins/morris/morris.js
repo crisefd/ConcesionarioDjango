@@ -6,6 +6,7 @@ Licensed under the BSD-2-Clause License.
 
 
 (function() {
+  
   var $, Morris, minutesSpecHelper, secondsSpecHelper,
     __slice = [].slice,
     __bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; },
