@@ -31,7 +31,8 @@
       var MIN_SEARCH_CHARS = {{ MIN_SEARCH_CHARS }};
       var SUBMIT_URL =  "/usuarios/busqueda/resultados/";
    </script>
-    <script type='text/javascript' src="https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.7.0/underscore-min.js"></script>
+        <script type='text/javascript' src ="{% static 'js/underscore-1.8/underscore-min.js' %}" ></script>
+    <!--<script type='text/javascript' src="https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.7.0/underscore-min.js"></script>-->
    <script type='text/javascript' src="{% static 'js/search_users.js' %}"></script>
 
  {%else%}
