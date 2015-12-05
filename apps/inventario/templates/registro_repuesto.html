@@ -5,15 +5,22 @@
 {% if user.is_authenticated %}
   {%ifequal user.charge "Gerente"%}
 
-    <div class="form-group" align="center">
-      <div class="row">
-        <div class="col-lg-6 col-xs-12 "aling="rigt">
-      <ul>
-        <a href="/cuentas/Gerente/{{user.username}}">
-          <button class="btn" type="button" >Inicio</button>
-        </a>  
-      </ul>
-    </div>
+    <div class="content-wrapper">
+        <!-- Content Header (Page header) -->
+        <section class="content-header">
+          <h1>
+            Bienvenido
+            <small>Concesionario</small>
+          </h1>
+          <ol class="breadcrumb">
+            <li><a href="/home"><i class="fa fa-dashboard"></i> Home</a></li>
+            
+          </ol>
+        </section>
+
+        <!-- Main content -->
+        <section class="content">
+        <div class="row">
         <div class="col-lg-6 col-xs-12 ">
           <form class="form-horizontal well" id="registro" method="POST">{% csrf_token %}
             <fieldset>
@@ -57,6 +64,7 @@
                </form>
               </div>
              </div>
+           </section>
             </div>
 
         {%else%}

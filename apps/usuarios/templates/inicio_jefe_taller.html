@@ -5,15 +5,21 @@
    {% if user.is_authenticated %}
         {%ifequal user.charge "Jefe Taller"%}
             <h1> Bienvenido, {{ user.username }} </h1>
-            <div class="col-lg-6 col-xs-12 "aling="rigt">
-      <ul>
-        <a href="/ordenes_trabajo/registro/">
-          <button class="btn" type="button" >Registrar orden de trabajo</button>
-        </a>
-        <a href="/ordenes_trabajo/repuesto/">
-          <button class="btn" type="button" >Repuesto</button>
-        </a>     
-      </ul>
+      <div class="content-wrapper">
+        <!-- Content Header (Page header) -->
+        <section class="content-header">
+          <h1> Bienvenido, {{ user.username }} </h1>
+          <ol class="breadcrumb">
+            <li><a href="/home"><i class="fa fa-dashboard"></i> Home</a></li>
+            
+          </ol>
+        </section>
+
+        <!-- Main content -->
+        <section class="content">
+        <div class="row">
+        </div>
+      </section>
     </div>
         {%else%}
             <h1> No tienes permisos para estar aquí {{user.charge}}</h1>

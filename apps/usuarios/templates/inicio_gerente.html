@@ -4,16 +4,20 @@
 {%block content %}
    {% if user.is_authenticated %}
         {%ifequal user.charge "Gerente"%}
-            <h1> Bienvenido, {{ user.username }} </h1>
-             <div class="col-lg-6 col-xs-12 "aling="rigt">
-      <ul>
-        <a href="/registrar/"><button class="btn" type="button" >Registrar usuario</button></a>
-            <a href="/usuarios/busqueda/"><button class="btn" type="button" >Buscar usuario</button></a>
-            <a href="/inventario/automovil/registro/"><button class="btn" type="button" >Registrar automovil</button></a>
-            <a href="/inventario/repuesto/registro/"><button class="btn" type="button" >Registrar repuesto</button></a>
-            <a href="/sucursal/registro/"><button class="btn" type="button" >Registrar sucursal</button></a>
-        </ul>
-    </div>
+            
+      <div class="content-wrapper">
+        <!-- Content Header (Page header) -->
+        <section class="content-header">
+          <h1> Bienvenido, {{ user.username }} </h1>
+          <ol class="breadcrumb">
+            <li><a href="/home"><i class="fa fa-dashboard"></i> Home</a></li>
+            
+          </ol>
+        </section>
+
+        <!-- Main content -->
+        <section class="content">
+          <div class="row">
     <div class="col-md-4">
     <div class="info-box bg-yellow">
                 <span class="info-box-icon"><i class="ion ion-ios-pricetag-outline"></i></span>
@@ -122,6 +126,9 @@
                 </div>
               </div>
               </div>
+              </div>
+            </section>
+          </div>
 
             
         {%else%}

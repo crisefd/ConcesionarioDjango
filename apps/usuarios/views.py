@@ -85,11 +85,11 @@ class EditProfileView(SuccessMessageMixin, FormView):
     def form_valid(self, form):
         charge = self.request.user.charge
         if charge == 'Jefe Taller':
-            self.success_url = "/cuentas/jefetaller/" + self.request.user.username
+            self.success_url = "/cuentas/Jefetaller/" + self.request.user.username
         elif charge == "Vendedor":
-            self.success_url = "/cuentas/vendedor/" + self.request.user.username
+            self.success_url = "/cuentas/Vendedor/" + self.request.user.username
         else:
-            self.success_url = "/cuentas/gerente/" + self.request.user.username
+            self.success_url = "/cuentas/Gerente/" + self.request.user.username
         messages.success(self.request, "Edicion exitosa")
         form.update()
         return super(EditProfileView, self).form_valid(form)

@@ -34,24 +34,135 @@
             </li>
             <li class="active treeview">
               <a href="#">
-                <i class="fa fa-th"></i> <span>Opciones</span> <i class="fa fa-angle-left pull-right"></i>
+                <i class="fa fa-th"></i> <span>Usuarios</span> <i class="fa fa-angle-left pull-right"></i>
               </a>
               <ul class="treeview-menu">
                 <li class="active"><a href="/registrar/"><i class="fa fa-circle-o"></i> Registrar Usuario </a></li>
-                <li><a href="index2.html"><i class="fa fa-circle-o"></i> Dashboard v2</a></li>
+                <li><a href="/usuarios/busqueda/"><i class="fa fa-circle-o"></i> Buscar Usuarios</a></li>
               </ul>
             </li>
             <li class="treeview">
               <a href="#">
                 <i class="fa fa-pie-chart"></i>
-                <span>Charts</span>
+                <span>Autos</span>
                 <i class="fa fa-angle-left pull-right"></i>
               </a>
               <ul class="treeview-menu">
-                <li><a href="pages/charts/chartjs.html"><i class="fa fa-circle-o"></i> ChartJS</a></li>
+                <li><a href="/inventario/automovil/registro/"><i class="fa fa-circle-o"></i> Registrar Autos</a></li>
+                <li><a href="pages/charts/morris.html"><i class="fa fa-circle-o"></i> Buscar Autos</a></li>
+                <li><a href="pages/charts/flot.html"><i class="fa fa-circle-o"></i> Editar Autos</a></li>
+                
+              </ul>
+            </li>
+            <li class="treeview">
+              <a href="#">
+                <i class="fa fa-pie-chart"></i>
+                <span>Repuestos</span>
+                <i class="fa fa-angle-left pull-right"></i>
+              </a>
+              <ul class="treeview-menu">
+                <li><a href="/inventario/repuesto/registro/"><i class="fa fa-circle-o"></i> Registrar Repuesto</a></li>
                 <li><a href="pages/charts/morris.html"><i class="fa fa-circle-o"></i> Morris</a></li>
                 <li><a href="pages/charts/flot.html"><i class="fa fa-circle-o"></i> Flot</a></li>
                 <li><a href="pages/charts/inline.html"><i class="fa fa-circle-o"></i> Inline charts</a></li>
+              </ul>
+            </li>
+            <li>
+              <a href="pages/calendar.html">
+                <i class="fa fa-calendar"></i> <span>Calendar</span>
+                <small class="label pull-right bg-red">3</small>
+              </a>
+            </li>
+          </ul>
+        </section>
+        {% endifequal %}
+        {%ifequal user.charge "Vendedor" %}
+        <section class="sidebar">
+          <!-- Sidebar user panel -->
+          <div class="user-panel">
+            <div class="pull-left image">
+              <img src="dist/img/user2-160x160.jpg" class="img-circle" alt="User Image">
+            </div>
+            <div class="pull-left info">
+              <p>{{user.username}}</p>
+              <a href="#"><i class="fa fa-circle text-success"></i> Online</a>
+            </div>
+          </div>
+          <!-- search form -->
+          <form action="#" method="get" class="sidebar-form">
+            <div class="input-group">
+              <input type="text" name="q" class="form-control" placeholder="Search...">
+              <span class="input-group-btn">
+                <button type="submit" name="search" id="search-btn" class="btn btn-flat"><i class="fa fa-search"></i></button>
+              </span>
+            </div>
+          </form>
+          <!-- /.search form -->
+          <!-- sidebar menu: : style can be found in sidebar.less -->
+          <ul class="sidebar-menu">
+            <li class="header">MAIN NAVIGATION</li>
+            <li>
+              <a href="/cuentas/Vendedor/{{user.username}}">
+                <i class="fa fa-dashboard"></i> <span>Dashboard</span>
+                
+              </a>
+            </li>
+            <li class="active treeview">
+              <a href="#">
+                <i class="fa fa-th"></i> <span>Ventas</span> <i class="fa fa-angle-left pull-right"></i>
+              </a>
+              <ul class="treeview-menu">
+                <li class="active"><a href="/venta/registro/"><i class="fa fa-circle-o"></i> Registrar Venta </a></li>
+                <li><a href="/cotizacion/registro/"><i class="fa fa-circle-o"></i> Registrar Cotizacion</a></li>
+              </ul>
+            </li>
+            <li>
+              <a href="pages/calendar.html">
+                <i class="fa fa-calendar"></i> <span>Calendar</span>
+                <small class="label pull-right bg-red">3</small>
+              </a>
+            </li>
+          </ul>
+        </section>
+        {% endifequal %}
+        {%ifequal user.charge "Jefe Taller" %}
+        <section class="sidebar">
+          <!-- Sidebar user panel -->
+          <div class="user-panel">
+            <div class="pull-left image">
+              <img src="dist/img/user2-160x160.jpg" class="img-circle" alt="User Image">
+            </div>
+            <div class="pull-left info">
+              <p>{{user.username}}</p>
+              <a href="#"><i class="fa fa-circle text-success"></i> Online</a>
+            </div>
+          </div>
+          <!-- search form -->
+          <form action="#" method="get" class="sidebar-form">
+            <div class="input-group">
+              <input type="text" name="q" class="form-control" placeholder="Search...">
+              <span class="input-group-btn">
+                <button type="submit" name="search" id="search-btn" class="btn btn-flat"><i class="fa fa-search"></i></button>
+              </span>
+            </div>
+          </form>
+          <!-- /.search form -->
+          <!-- sidebar menu: : style can be found in sidebar.less -->
+          <ul class="sidebar-menu">
+            <li class="header">MAIN NAVIGATION</li>
+            <li>
+              <a href="/cuentas/Jefetaller/{{user.username}}">
+                <i class="fa fa-dashboard"></i> <span>Dashboard</span>
+                
+              </a>
+            </li>
+            <li class="active treeview">
+              <a href="#">
+                <i class="fa fa-th"></i> <span>Ventas</span> <i class="fa fa-angle-left pull-right"></i>
+              </a>
+              <ul class="treeview-menu">
+                <li class="active"><a href="/ordenes_trabajo/registro/"><i class="fa fa-circle-o"></i> Registrar orden de trabajo </a></li>
+                <li><a href="/ordenes_trabajo/repuesto/"><i class="fa fa-circle-o"></i> Registrar Repuesto</a></li>
               </ul>
             </li>
             <li>
