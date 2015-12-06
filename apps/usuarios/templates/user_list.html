@@ -4,6 +4,7 @@
 {%block content%}
 
 {%if user.is_authenticated %}
+{% ifequal user.charge "Gerente"%}
 <div class="content-wrapper">
         <!-- Content Header (Page header) -->
         <section class="content-header">
@@ -53,7 +54,9 @@
         <script type='text/javascript' src ="{% static 'js/underscore-1.8/underscore-min.js' %}" ></script>
     <!--<script type='text/javascript' src="https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.7.0/underscore-min.js"></script>-->
    <script type='text/javascript' src="{% static 'js/search_users.js' %}"></script>
-
+   {%else%}
+       <h1> No tienes permisos para estar aqui</h1>
+ {%endifequal%}
  {%else%}
         <h1> Debes iniciar sesión primero</h1>
 {%endif%}
