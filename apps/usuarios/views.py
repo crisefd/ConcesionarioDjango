@@ -121,47 +121,7 @@ class UserDatatableView(XEditableDatatableView):
 
 
 
-def search_users(request):
-   
-    search_results = []  #Assume no results.
- 
-    global  MIN_SEARCH_CHARS
- 
-    search_text = "--"   #Assume no search
-    if(request.method == "GET"):
-        print "request is GET"
-        #search_text = "batman"
-        search_text = request.GET.get('search_text', '')
-        search_text = search_text.encode('ascii')
-        print "GET request ", request.GET
-        print "search_text=", search_text
-        if(len(search_text) < MIN_SEARCH_CHARS):
-            search_text = ""
-            print "search_text too short"
-    if(search_text != ""):
-        print "making queryset"
-        first_name_results = User.objects.filter(first_name__icontains=search_text)
-        print "queryset firstname"
-        last_name_results = User.objects.filter(last_name__icontains=search_text)
-        print "queryset lastname"
-        username_results = User.objects.filter(username__icontains=search_text)
-        print "queryset username"
-        email_results = User.objects.filter(email__icontains=search_text)
-        print "queryset email"
-        id_document_results = User.objects.filter(id_document__icontains=search_text)
-        print "queryset ID"
-        search_results = first_name_results | last_name_results | username_results | email_results | id_document_results
- 
-    print('search_text="' + search_text + '", results=' + str(search_results))
- 
-    context = {
-        "search_text": search_text,
-        "search_results": search_results,
-        "MIN_SEARCH_CHARS": MIN_SEARCH_CHARS
-    };
-    print "==> renderizando resultados"
-    return  render_to_response("user_search_results.html",
-                               context)
+
 
 
 def inicio_gerente(request):
