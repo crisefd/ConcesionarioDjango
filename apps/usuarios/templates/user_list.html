@@ -1,6 +1,7 @@
 {%extends "base.html"%}
 {% load staticfiles %}
 {%block title%}Lista Empleados{%endblock%}
+
 {%block content%}
 
 {%if user.is_authenticated %}
@@ -22,38 +23,43 @@
         <section class="content">
         <div class="row">
           <div class="col-md-6">
-
-	
-    <div class="search_section">
-         <form>
-         Buscar: <input type='text' id='searchTextInput' name='search_text' maxlength="200">
-           <p>(Requires {{ MIN_SEARCH_CHARS|floatformat:'0' }} or more characters)</p>
-           </form>
-          <div id="user_search_results"></div>
-         </div>
-      <div class="content_section">
-      {% if  users.count == 0 %}
-         <p><i>There are no users in database.</i></p>
-      {% else %}
-         <table>
-            {% for  u in users %}
-                   {%include "user_search_results.html"%}
-            {% endfor %}
-         </table>
-      {% endif %}
-   </div>
+          {{datatable}}
    </div>
  </div>
 </section>
 </div>
+<!-- jQuery UI 1.11.4 -->
+<script src="https://code.jquery.com/ui/1.11.4/jquery-ui.min"></script>
 
-   <script language="javascript">
-      var MIN_SEARCH_CHARS = {{ MIN_SEARCH_CHARS }};
-      var SUBMIT_URL =  "/usuarios/busqueda/resultados/";
-   </script>
-        <script type='text/javascript' src ="{% static 'js/underscore-1.8/underscore-min.js' %}" ></script>
-    <!--<script type='text/javascript' src="https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.7.0/underscore-min.js"></script>-->
-   <script type='text/javascript' src="{% static 'js/search_users.js' %}"></script>
+{# datatables.js #}
+<script type="text/javascript" charset="utf8" src="//cdn.datatables.net/1.10.10/js/jquery.dataTables.min.js"></script>
+<link rel="stylesheet" type="text/css" href="//cdn.datatables.net/1.10.10/css/jquery.dataTables.min.css">
+
+
+{# jeditable #}
+    <script type="text/javascript", src="//cdn.jsdelivr.net/jquery.jeditable/1.7.3/jquery.jeditable.js"></script>
+
+{# datatables editable#}
+    <script type="text/javascript" src="http://jquery-datatables-editable.googlecode.com/svn/trunk/media/js/jquery.dataTables.editable.js"></script>
+
+{#validate#}
+    <script type="text/javascript" src="//cdn.jsdelivr.net/jquery.validation/1.14.0/jquery.validate.js"></script>
+
+
+  <script type="text/javascript" src ="{% static 'js/datatableview.min.js'%}"></script>
+  <link rel="stylesheet" href="//cdn.datatables.net/1.10.10/css/jquery.dataTables.min.css"> 
+
+
+<script type="text/javascript">
+    $.fn.editable.defaults.mode = 'inline';
+      datatableview.auto_initialize = false;
+    $(function(){
+        var xeditable_options = {};
+        datatableview.initialize($('.datatable'), {
+            fnRowCallback: datatableview.make_xeditable(xeditable_options),
+        });
+    })
+    </script>
    {%else%}
        <h1> No tienes permisos para estar aqui</h1>
  {%endifequal%}

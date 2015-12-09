@@ -33,23 +33,37 @@
     <!-- bootstrap wysihtml5 - text editor -->
     <link rel="stylesheet" href="{% static 'plantilla/plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.min.css' %}">
     <title>{% block title%}{% endblock%}</title>
+{% include "includes/header.html" %}
+{% include "includes/navbar.html" %}
+
+</head>}
 
 
-</head>
 
 <body class="hold-transition skin-blue sidebar-mini">
-<script src="{% static 'js/jquery.min.js' %}"></script>
-<script src="{% static 'js/bootstrap.min.js' %}"></script>
-<script src="{% static 'plantilla/plugins/jQuery/jQuery-2.1.4.min.js' %}"></script>
-    <!-- jQuery UI 1.11.4 -->
-    <script src="https://code.jquery.com/ui/1.11.4/jquery-ui.min.js"></script>
-    <!-- Resolve conflict in jQuery UI tooltip with Bootstrap tooltip -->
-    <script>
-      $.widget.bridge('uibutton', $.ui.button);
-    </script>
-    <!-- Bootstrap 3.3.5 -->
-    <script src="{% static 'plantilla/bootstrap/js/bootstrap.min.js' %}"></script>
-    <!-- Morris.js charts -->
+
+
+
+{# jquery #}
+<script src="//code.jquery.com/jquery-2.1.4.min.js"></script>
+
+{# Bootstrap #}
+<script src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
+<link href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css" rel="stylesheet" />
+
+    
+
+
+    <div class="wrapper">
+        {% block content %}{% endblock %}
+        {% include "includes/footer.html" %}
+    </div>
+
+<script>
+   $.widget.bridge('uibutton', $.ui.button);
+</script>
+    
+<!-- Morris.js charts -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/raphael/2.1.0/raphael-min.js"></script>
     <script src="{% static 'plantilla/plugins/morris/morris.min.js' %}"></script>
     <!-- Sparkline -->
@@ -76,24 +90,6 @@
     <script src="{% static 'plantilla/dist/js/pages/dashboard.js' %}"></script>
     <!-- AdminLTE for demo purposes -->
     <script src="{% static 'plantilla/dist/js/demo.js' %}"></script> 
-<div class="wrapper">
-{% include "includes/header.html" %}
-{% include "includes/navbar.html" %}
-
-{% block content %}
-      
-    {% endblock %}
-{% include "includes/footer.html" %}
-</div>
-
-
-
-
-
-
-
-    
-
 </body>
 
 

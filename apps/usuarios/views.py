@@ -8,11 +8,11 @@ from .forms import *
 from django.contrib import messages
 from .models import User
 from django.http import JsonResponse
-#from datatableview.views import DatatableView, XEditableDatatableView
-#from datatableview import helpers
+from datatableview.views import DatatableView, XEditableDatatableView
+from datatableview import helpers
 
 
-MIN_SEARCH_CHARS = 4
+
 
 class LoginView(SuccessMessageMixin, FormView):
     form_class = LoginForm
@@ -99,21 +99,12 @@ class EditProfileView(SuccessMessageMixin, FormView):
         return super(EditProfileView, self).form_invalid(form)
 
 
-class UserListView(SuccessMessageMixin, ListView):
-    model = User
-    context_object_name = "users"
-    template_name = 'user_list.html'
 
-    def get_context_data(self, **kwargs):
-        global MIN_SEARCH_CHARS
-        context = super(UserListView, self).get_context_data(**kwargs)
-        context["MIN_SEARCH_CHARS"] = MIN_SEARCH_CHARS
-        print "retornando context data"
-        return  context
 
-"""
+
 class UserDatatableView(XEditableDatatableView):
     model = User
+    template_name = 'user_list.html'
     datatable_options = {
         'columns': [
             ("Nombres", 'first_name', helpers.make_xeditable),
@@ -128,7 +119,7 @@ class UserDatatableView(XEditableDatatableView):
         ]
     }
 
-"""
+
 
 def search_users(request):
    
