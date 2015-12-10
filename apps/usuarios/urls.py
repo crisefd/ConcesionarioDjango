@@ -19,4 +19,5 @@ urlpatterns = patterns('',
     url(r'^usuarios/busqueda/$', UserDatatableView.as_view(), name="user_list"),
     url(r'^cuentas/editar_perfil/[^/]+$', EditProfileView.as_view(), name="editar_perfil"),
     url(r'^salir/$','apps.usuarios.views.logOut'),
+    
 )

@@ -36,7 +36,7 @@
 {% include "includes/header.html" %}
 {% include "includes/navbar.html" %}
 
-</head>}
+</head>
 
 
 
@@ -47,23 +47,23 @@
 {# jquery #}
 <script src="//code.jquery.com/jquery-2.1.4.min.js"></script>
 
+<!-- jQuery UI 1.11.4 -->
+<script src="https://code.jquery.com/ui/1.11.4/jquery-ui.min"></script>
+
 {# Bootstrap #}
 <script src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
 <link href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css" rel="stylesheet" />
 
 
-    
+ <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.10.2/moment.min.js"></script>
 
-
-    <div class="wrapper">
+ <div class="wrapper">
         {% block content %}{% endblock %}
         {% include "includes/footer.html" %}
     </div>
+   
 
-<script>
-   $.widget.bridge('uibutton', $.ui.button);
-</script>
-    
+   
 <!-- Morris.js charts -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/raphael/2.1.0/raphael-min.js"></script>
     <script src="{% static 'plantilla/plugins/morris/morris.min.js' %}"></script>
@@ -75,7 +75,7 @@
     <!-- jQuery Knob Chart -->
     <script src="{% static 'plantilla/plugins/knob/jquery.knob.js' %}"></script>
     <!-- daterangepicker -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.10.2/moment.min.js"></script>
+   
     <script src="{% static 'plantilla/plugins/daterangepicker/daterangepicker.js' %}"></script>
     <!-- datepicker -->
     <script src="{% static 'plantilla/plugins/datepicker/bootstrap-datepicker.js' %}"></script>
@@ -91,6 +91,8 @@
     <script src="{% static 'plantilla/dist/js/pages/dashboard.js' %}"></script>
     <!-- AdminLTE for demo purposes -->
     <script src="{% static 'plantilla/dist/js/demo.js' %}"></script> 
+
+
 </body>
 
 

@@ -115,6 +115,8 @@ class UserDatatableView(XEditableDatatableView):
             ("Nacimiento", 'birth_date', helpers.make_xeditable),
             ("Direccion", 'address', helpers.make_xeditable),
             ("Telefono", 'phone_number', helpers.make_xeditable),
+            ("Cargo", 'charge', helpers.make_xeditable),
+            ("Activo", 'is_active', helpers.make_xeditable),
 
         ]
     }
