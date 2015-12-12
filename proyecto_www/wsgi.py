@@ -12,7 +12,7 @@ from django.core.wsgi import get_wsgi_application
 #from whitenoise.django import DjangoWhiteNoise
 
 #os.environ.setdefault("DJANGO_SETTINGS_MODULE", "proyecto_www.settings")
-os.environ.setdefault("DJANGO_SETTINGS_MODULE", "proyecto_www.settings")
+os.environ.setdefault("DJANGO_SETTINGS_MODULE", "proyecto_www.settings.staging")
 application = get_wsgi_application()
 
 #application = DjangoWhiteNoise(application)
