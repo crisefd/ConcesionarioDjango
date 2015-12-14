@@ -8,13 +8,12 @@ from apps.inventario.models import Automovil
 from apps.usuarios.models import User
 
 class VentasForm(forms.ModelForm):
-    automovil = forms.ModelChoiceField(queryset=Automovil.objects.filter(disponible=True))
+    automovil = forms.ModelChoiceField(queryset=Automovil.objects.filter(cantidad__gte = 1))
     vendedor = forms.ModelChoiceField(queryset=User.objects.filter(is_active=True, charge="Vendedor"))
 
     def save(self, *args, **kwargs):
         pk = self.cleaned_data['automovil'].id
         auto = Automovil.objects.get(pk=pk)
-        auto.disponible = False
         self.cleaned_data['valor_venta'] = self.cleaned_data['automovil'].precio
         auto.cantidad -= 1
         auto.save()
@@ -30,7 +29,7 @@ class VentasForm(forms.ModelForm):
                  'automovil')
 
 class CotizacionesForm(forms.ModelForm):
-    automovil = forms.ModelChoiceField(queryset=Automovil.objects.filter(disponible=True))
+    automovil = forms.ModelChoiceField(queryset=Automovil.objects.filter(cantidad__gte = 1))
     vendedor = forms.ModelChoiceField(queryset=User.objects.filter(is_active=True, charge="Vendedor"))
 
     def save(self, *args, **kwargs):

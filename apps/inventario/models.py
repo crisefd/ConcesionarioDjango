@@ -4,7 +4,6 @@ from django.conf import settings
 
 class Item_Inventario(models.Model):
     precio = models.FloatField(default=0.0)
-    disponible = models.BooleanField(default=True)
     cantidad = models.IntegerField(default=1)
     class Meta:
         abstract = True

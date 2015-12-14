@@ -11,6 +11,7 @@ from .forms import *
 class RegisterView(SuccessMessageMixin, FormView):
 
     def form_valid(self, form):
+        print "Formulario valido"
         self.success_url = '/inventario/'
         if self.template_name == 'registro_automovil.html':
             self.success_url += 'automovil/registro/'
@@ -19,10 +20,12 @@ class RegisterView(SuccessMessageMixin, FormView):
 
         messages.success(self.request, 
             "Se ha registrado exitosamente el inventario " )
+        form.save()
         return super(RegisterView, self).form_valid(form)
 
     def form_invalid(self, form):
+        print "Formularion invalido", form.errors
         messages.error(self.request, 
-            "Error, no se pudo registrar al inventario " )
+            "Error, no se pudo registrar al inventario " + form.errors )
         return super(RegisterView, self).form_valid(form)
 

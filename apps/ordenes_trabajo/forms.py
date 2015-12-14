@@ -26,14 +26,14 @@ class Ordenes_TrabajoForm(forms.ModelForm):
 
 class Orden_RepuestoForm(forms.ModelForm):
     orden = forms.ModelChoiceField(queryset=Ordenes_Trabajo.objects.filter(estado='Activa'))
-    repuesto = forms.ModelChoiceField(queryset=Repuesto.objects.filter(disponible=True))
+    repuesto = forms.ModelChoiceField(queryset=Repuesto.objects.filter(cantidad__gte=1))
 
     def save(self, *args, **kwargs):
         pk_rep = self.cleaned_data['repuesto'].id
         pk_ord = self.cleaned_data['orden'].id
         ord_ = Ordenes_Trabajo.objects.get(pk=pk_ord)
         rep = Repuesto.objects.get(pk=pk_rep)
-        rep.disponible = False
+        rep.cantidad -= 1
         ord_.costo = rep.precio
         rep.save()
         ord_.save()

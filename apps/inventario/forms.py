@@ -6,7 +6,6 @@ from .models import *
 
 
 class AutomovilForm(forms.ModelForm):
-    cantidad = forms.IntegerField(min_value=1)
     precio = forms.FloatField(min_value=1.0)
     class Meta:
         model = Automovil

@@ -17,6 +17,3 @@ class Ventas(models.Model):
     valor_venta = models.FloatField(default=0.0)
     fecha = models.DateField(default=timezone.now)
 
-
-
- 
