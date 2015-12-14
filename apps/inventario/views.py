@@ -17,13 +17,6 @@ class RegisterView(SuccessMessageMixin, FormView):
         else:
             self.success_url += 'repuesto/registro/'
 
-        cantidad_items = form.cleaned_data['cantidad']
-        #print "cantidad de items=" + str(cantidad_items)
-        item = form.save(commit=False)
-        for i in range(0, cantidad_items):
-            #print "salvando item "+ str(i)
-            item.pk = None
-            item.save()
         messages.success(self.request, 
             "Se ha registrado exitosamente el inventario " )
         return super(RegisterView, self).form_valid(form)

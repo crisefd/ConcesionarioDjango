@@ -16,6 +16,7 @@ class VentasForm(forms.ModelForm):
         auto = Automovil.objects.get(pk=pk)
         auto.disponible = False
         self.cleaned_data['valor_venta'] = self.cleaned_data['automovil'].precio
+        auto.cantidad -= 1
         auto.save()
         return super(VentasForm, self).save(*args, **kwargs)
 
