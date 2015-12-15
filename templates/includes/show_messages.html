@@ -1,9 +1,17 @@
 {% if messages %}
-        <div class="col-lg-3 color03">
-            <ul class="messages">
+
+       <!-- <div class="col-lg-3 color03">
+            <ul class="messages"> -->
                 {% for message in messages %}
-                    <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
-                {% endfor %}
-            </ul>
-        </div>
+                
+                {% ifequal message.tags "success" %}
+                    <li{% if message.tags %} class="{{ message.tags }}"{% endif %} id="mensajeverde">{{ message }}</li>
+                    {% else%}
+                    <li{% if message.tags %} class="{{ message.tags }}"{% endif %} id="mensajerojo">{{ message }}</li>
+                    {% endifequal %}
+                  {% endfor %}
+                }
+          <!--  </ul>
+        </div>-->
+
 {% endif %}
