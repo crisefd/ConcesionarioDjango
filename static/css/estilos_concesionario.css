@@ -1,27 +1,11 @@
 
 
-#carousel-home{
-  max-width: 800px;
-  max-height: 600px;
-  min-height: 600px;
-  min-width: 800px;
 
-#id_sex{
-  right: 20px
-}
+
 #mensajerojo{
   color: red;
 }
 #mensajeverde{
   color: green;
-}
-
-#help-block{
-  color: black;
-}
-#message{
-  background:white;
-  border: 2px solid #000;
-  border-radius:13px;
 }
 

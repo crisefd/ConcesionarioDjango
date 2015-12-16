@@ -1,4 +1,5 @@
 from django.shortcuts import render, redirect
+from django.utils import timezone
 from django.template import Template, Context
 from django.http import HttpResponse
 from django.contrib.messages.views import SuccessMessageMixin
@@ -6,6 +7,7 @@ from django.views.generic import FormView
 from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
 from .forms import *
+from .htmltopdf import generate_pdf
 
 class SaleRegisterView(SuccessMessageMixin, FormView):
     form_class = VentasForm
@@ -25,6 +27,7 @@ class SaleRegisterView(SuccessMessageMixin, FormView):
 
     def form_valid(self, form):
         form.save()
+        pdf(self.request, form)
         messages.add_message(self.request, messages.SUCCESS, 
             "Se ha registrado exitosamente la venta " )
         return super(SaleRegisterView, self).form_valid(form)
@@ -51,3 +54,12 @@ class QuoteRegisterView(SuccessMessageMixin, FormView):
         messages.add_message(self.request, messages.SUCCESS, 
             "No se ha podido registrar la cotizacion " )
         return super(QuoteRegisterView, self).form_valid(form)
+
+def pdf(request, form):
+    context = {'vendedor': form.cleaned_data['vendedor'], 
+    'nombre_comprador': form.cleaned_data['nombre_comprador'],
+    'automovil': form.cleaned_data['automovil'],
+     'valor_venta': form.cleaned_data['valor_venta'],
+     'fecha': str(timezone.now())
+     }
+    return generate_pdf("factura_venta.html", context)
