@@ -37,8 +37,8 @@ def generate_pdf(template_src,  context_dict):
     html  = template.render(Context(context_dict))
 
     # Write PDF to file
-
-    file = open('factura.pdf', "w+b")
+    path = 'static/pdfs/factura{0}.pdf'.format(context_dict['fecha'])
+    file = open(path, "w+b")
     pisaStatus = pisa.CreatePDF(html, dest=file,
             link_callback = link_callback)
 
@@ -46,4 +46,5 @@ def generate_pdf(template_src,  context_dict):
     file.seek(0)
     pdf = file.read()
     file.close()            # Don't forget to close the file handle
+    os.remove(path)
     return HttpResponse(pdf, 'application/pdf')

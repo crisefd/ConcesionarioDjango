@@ -1,6 +1,6 @@
 *.pyc
 *~
-www
+www/
 bin/
 lib/
 local/

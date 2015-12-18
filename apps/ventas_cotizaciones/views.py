@@ -33,7 +33,7 @@ class SaleRegisterView(SuccessMessageMixin, FormView):
         global context_pdf
         context_pdf = {'vendedor': form.cleaned_data['vendedor'], 
                         'nombre_comprador': form.cleaned_data['nombre_comprador'],
-                        'doc_id_comprador': form.cleaned_data['doc_id_comprador']
+                        'doc_id_comprador': form.cleaned_data['doc_id_comprador'],
                         'automovil': form.cleaned_data['automovil'],
                         'valor_venta': form.cleaned_data['valor_venta'],
                         'fecha': str(timezone.now())
