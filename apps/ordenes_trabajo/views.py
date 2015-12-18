@@ -6,6 +6,10 @@ from django.views.generic import FormView
 from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
 from .forms import *
+from .models import *
+from django.http import JsonResponse
+from datatableview.views import DatatableView, XEditableDatatableView
+from datatableview import helpers
 
 
 class RegisterView(SuccessMessageMixin, FormView):
@@ -46,3 +50,18 @@ class AutorizarRepuestoView(SuccessMessageMixin, FormView):
         messages.add_message(self.request, messages.ERROR, 
             "No se pudo autorizar el respuesto de la orden de trabajo" )
         return super(AutorizarRepuestoView, self).form_invalid(form)
+
+
+class OrderDataTableView(XEditableDatatableView):
+    model = Ordenes_Trabajo
+    template_name = 'orders_list.html'
+    datatable_options = {
+        'columns': [
+            ("Hora", 'timestamp', helpers.make_xeditable),
+            ("Mecanico", 'mecanico_asignado', helpers.make_xeditable),
+            ("Descripcion", 'descripcion', helpers.make_xeditable),
+            ("Matricula", 'matricula_vehiculo', helpers.make_xeditable),
+            ("Costo", "costo", helpers.make_xeditable),
+            ("Estado", "estado", helpers.make_xeditable),
+           ]
+        }

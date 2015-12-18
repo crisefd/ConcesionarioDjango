@@ -1,0 +1,82 @@
+{%extends "base.html"%}
+{% load staticfiles %}
+{%block title%}Lista Ordenes{%endblock%}
+
+{%block content%}
+
+{%if user.is_authenticated %}
+{% ifequal user.charge "Gerente"%}
+<div class="content-wrapper">
+        <!-- Content Header (Page header) -->
+        <section class="content-header">
+          <h5>
+            {% include "includes/show_messages.html" %}
+          </h5>
+          <ol class="breadcrumb">
+            <li><a href="/home"><i class="fa fa-dashboard"></i> Home</a></li>
+            
+          </ol>
+        </section>
+
+        <!-- Main content -->
+        <section class="content">
+        <div class="row">
+          <div class="col-md-6">
+          {{datatable}}
+   </div>
+ </div>
+</section>
+</div>
+
+
+
+{# datatables.js #}
+<script type="text/javascript" charset="utf8" src="{% static 'js/dataTables.min.js'%}"></script>
+<link rel="stylesheet" type="text/css" href="{% static 'css/dataTables.min.css'%}">
+
+
+{# jeditable #}
+    <script type="text/javascript", src="{% static 'js/jeditable.js'%}"></script>
+
+{# datatables editable#}
+    <script type="text/javascript" src="{% static 'js/dataTables.editable.js' %}"></script>
+
+{#validate#}
+    <script type="text/javascript" src="{% static 'js/jquery.validate.js' %}"></script>
+
+{#datatableview#}
+<script src="{% static 'js/fnSetFilteringDelay.js' %}"></script>
+<script type="text/javascript" src ="{% static 'js/datatableview.min.js'%}"></script>
+  {#<link rel="stylesheet" href="//cdn.datatables.net/1.10.10/css/jquery.dataTables.min.css"> #}
+
+
+
+<script src="{% static 'syntaxhighlighter/shBrushJScript.js' %}" type="text/javascript"></script>
+
+<link href="{% static 'datepicker/css/datepicker.css' %}" rel="stylesheet">
+
+<script src="{%static 'datepicker/js/bootstrap-datepicker.js'%}" type="text/javascript"></script>
+
+<link href="{% static 'css/bootstrap-editable.css' %}" rel="stylesheet"/>
+
+ <script src="{% static 'js/bootstrap-editable.min.js'%}"></script>
+
+ 
+<script type="text/javascript">
+    $.fn.editable.defaults.mode = 'inline';
+      datatableview.auto_initialize = false;
+    $(function(){
+        var xeditable_options = {};
+        datatableview.initialize($('.datatable'), {
+            fnRowCallback: datatableview.make_xeditable(xeditable_options),
+        });
+    })
+    </script>
+   {%else%}
+       <h1> No tienes permisos para estar aqui</h1>
+ {%endifequal%}
+ {%else%}
+        <h1> Debes iniciar sesión primero</h1>
+{%endif%}
+
+{%endblock%}

@@ -6,6 +6,9 @@
         {%ifequal user.charge "Vendedor"%}
             <div class="content-wrapper">
         <!-- Content Header (Page header) -->
+        <h5>
+          {% include "includes/show_messages.html" %}
+        </h5>
         <section class="content-header">
           <h1> Bienvenido, {{ user.username }} </h1>
           <ol class="breadcrumb">

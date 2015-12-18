@@ -6,7 +6,10 @@ from django.views.generic import FormView
 from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
 from .forms import *
-
+from .models import *
+from django.http import JsonResponse
+from datatableview.views import DatatableView, XEditableDatatableView
+from datatableview import helpers
 
 class RegisterView(SuccessMessageMixin, FormView):
 
@@ -28,4 +31,28 @@ class RegisterView(SuccessMessageMixin, FormView):
         messages.error(self.request, 
             "Error, no se pudo registrar al inventario " + form.errors )
         return super(RegisterView, self).form_valid(form)
+
+class AutoDataTableView(XEditableDatatableView):
+    model = Automovil
+    template_name = 'cars_list.html'
+    datatable_options = {
+        'columns': [
+            ("Precio", 'precio', helpers.make_xeditable),
+            ("Cantidad", 'cantidad', helpers.make_xeditable),
+            ("Marca", 'marca', helpers.make_xeditable),
+            ("Modelo", 'modelo', helpers.make_xeditable),
+           ]
+        }
+
+
+class SpareDataTableView(XEditableDatatableView):
+    model = Repuesto
+    template_name = 'spares_list.html'
+    datatable_options = {
+        'columns': [
+            ("Precio $(US Dollar)", 'precio', helpers.make_xeditable),
+            ("Cantidad", 'cantidad', helpers.make_xeditable),
+            ("Nombre", 'nombre', helpers.make_xeditable),
+            ]
+        }
 
