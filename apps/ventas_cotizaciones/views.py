@@ -9,6 +9,9 @@ from django.contrib import messages
 from .forms import *
 from .htmltopdf import generate_pdf
 
+
+context_pdf = {'vendedor':'waldo'}
+
 class SaleRegisterView(SuccessMessageMixin, FormView):
     form_class = VentasForm
     template_name = 'registro_venta.html'
@@ -27,7 +30,16 @@ class SaleRegisterView(SuccessMessageMixin, FormView):
 
     def form_valid(self, form):
         form.save()
-        pdf(self.request, form)
+        global context_pdf
+        context_pdf = {'vendedor': form.cleaned_data['vendedor'], 
+                        'nombre_comprador': form.cleaned_data['nombre_comprador'],
+                        'doc_id_comprador': form.cleaned_data['doc_id_comprador']
+                        'automovil': form.cleaned_data['automovil'],
+                        'valor_venta': form.cleaned_data['valor_venta'],
+                        'fecha': str(timezone.now())
+         }
+        self.success_url = '/factura_venta/'
+        print "Venta ", context_pdf
         messages.add_message(self.request, messages.SUCCESS, 
             "Se ha registrado exitosamente la venta " )
         return super(SaleRegisterView, self).form_valid(form)
@@ -55,11 +67,5 @@ class QuoteRegisterView(SuccessMessageMixin, FormView):
             "No se ha podido registrar la cotizacion " )
         return super(QuoteRegisterView, self).form_valid(form)
 
-def pdf(request, form):
-    context = {'vendedor': form.cleaned_data['vendedor'], 
-    'nombre_comprador': form.cleaned_data['nombre_comprador'],
-    'automovil': form.cleaned_data['automovil'],
-     'valor_venta': form.cleaned_data['valor_venta'],
-     'fecha': str(timezone.now())
-     }
-    return generate_pdf("factura_venta.html", context)
+def pdf(request):
+    return generate_pdf("factura_venta.html", context_pdf)

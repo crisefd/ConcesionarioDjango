@@ -5,4 +5,5 @@ from .forms import *
 urlpatterns = patterns('',
     url(r'^cotizacion/registro/$', QuoteRegisterView.as_view()),
     url(r'^venta/registro/$', SaleRegisterView.as_view()),
+    url(r'^factura_venta/$', pdf),
 )

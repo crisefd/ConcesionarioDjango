@@ -38,7 +38,7 @@ def generate_pdf(template_src,  context_dict):
 
     # Write PDF to file
 
-    file = open('static/pdfs/factura.pdf', "w+b")
+    file = open('factura.pdf', "w+b")
     pisaStatus = pisa.CreatePDF(html, dest=file,
             link_callback = link_callback)
 
