@@ -5,13 +5,13 @@
 {%block content%}
 
 {%if user.is_authenticated %}
-{% ifequal user.charge "Gerente"%}
+{% ifequal user.charge "Jefe Taller"%}
 <div class="content-wrapper">
         <!-- Content Header (Page header) -->
         <section class="content-header">
-          <h5>
-            {% include "includes/show_messages.html" %}
-          </h5>
+           <h5>
+          {% include "includes/show_messages.html" %}
+         </h5>
           <ol class="breadcrumb">
             <li><a href="/home"><i class="fa fa-dashboard"></i> Home</a></li>
             

@@ -57,11 +57,18 @@ class OrderDataTableView(XEditableDatatableView):
     template_name = 'orders_list.html'
     datatable_options = {
         'columns': [
-            ("Hora", 'timestamp', helpers.make_xeditable),
-            ("Mecanico", 'mecanico_asignado', helpers.make_xeditable),
+            #("Hora", 'timestamp', helpers.make_xeditable),
+            #("Mecanico", 'mecanico_asignado', helpers.make_xeditable),
             ("Descripcion", 'descripcion', helpers.make_xeditable),
-            ("Matricula", 'matricula_vehiculo', helpers.make_xeditable),
+            #("Matricula", 'matricula_vehiculo', helpers.make_xeditable),
             ("Costo", "costo", helpers.make_xeditable),
             ("Estado", "estado", helpers.make_xeditable),
            ]
         }
+
+    def get_queryset(self):
+        self.queryset = Ordenes_Trabajo.objects.filter(jefe_taller=self.request.user.id_document)
+        #print "queryset 1", self.queryset
+        queryset = super(OrderDataTableView, self).get_queryset()
+        #print "queryset 2 ", queryset
+        return queryset
