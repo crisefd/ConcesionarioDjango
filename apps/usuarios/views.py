@@ -10,9 +10,7 @@ from .models import User
 from django.http import JsonResponse
 from datatableview.views import DatatableView, XEditableDatatableView
 from datatableview import helpers
-
-
-
+import json as simplejson
 
 class LoginView(SuccessMessageMixin, FormView):
     form_class = LoginForm
@@ -127,7 +125,22 @@ class UserDatatableView(XEditableDatatableView):
 
 
 def inicio_gerente(request):
-    return render(request, "inicio_gerente.html")
+    contexto = {}
+    meses = [ "Enero",
+              "Febrero",
+              "Marzo",
+              "Abril",
+              "Mayo",
+              "Junio",
+              "Julio",
+              "Agosto",
+              "Septiembre",
+              "Octubre",
+              "Noviembre",
+              "Diciembre",
+    ]
+    contexto['meses'] = simplejson.dumps(meses)
+    return render(request, "inicio_gerente.html", contexto)
 
 
 def inicio_vendedor(request):
