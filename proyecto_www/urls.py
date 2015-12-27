@@ -11,5 +11,6 @@ urlpatterns=[
             url(r'^', include('apps.ventas_cotizaciones.urls',namespace='ventas_cotizaciones')),
             url(r'^', include('apps.ordenes_trabajo.urls',namespace='ordenes_trabajo')),
             url(r'^', include('apps.sucursales.urls', namespace='sucursales')),
+            url(r'^', include('apps.reportes.urls', namespace='reportes')),
 			]
 

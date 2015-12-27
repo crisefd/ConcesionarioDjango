@@ -2,5 +2,5 @@ from django.conf.urls import patterns, url
 from .views import *
 
 urlpatterns = patterns('',
-    #ulr(r'^/prueba_reporte/', MyReportView.as_view()),
+    url(r'^prueba_reporte/$', report_view, name='prueba_reporte'),
 )
