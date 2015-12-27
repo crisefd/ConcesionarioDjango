@@ -9,7 +9,7 @@
                   </div>
                 </div>
                 <div class="box-body border-radius-none">
-                  <div class="chart" id="chart" style="height: 300px;"></div>
+                  <div class="chart" id="chart" style="height: 400px;"></div>
                 </div><!-- /.box-body -->
             <script type="text/javascript">
                 var MESES = {{meses|safe}};
@@ -21,7 +21,7 @@
                         $(function () {
                             $('#chart').highcharts({
                             chart: {
-                                type: 'bar'
+                                type: 'line'
                             },
                             title: {
                                 text: 'Ventas Mensuales'
@@ -31,15 +31,12 @@
                             },
                             yAxis: {
                                 title: {
-                                    text: 'numbers'
+                                    text: 'Cantidad de vehiculos'
                             }
                             },
                             series: [{
-                                name: 'John',
-                                data: [1, 0, 4]
-                                }, {
-                                name: 'King',
-                                data: [5, 7, 3]
+                                name: 'Sucursal Norte',
+                                data: [1, 0, 4,1, 0, 4,1, 0, 4,1, 0, 4,]
                                 }]
                             });
                         });
