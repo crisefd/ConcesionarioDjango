@@ -12,7 +12,20 @@
                   <div class="chart" id="chart" style="height: 400px;"></div>
                 </div><!-- /.box-body -->
             <script type="text/javascript">
-                var MESES = {{meses|safe}};
+                //var MESES = {{meses|safe}};
+                var MESES = ["Enero" ,
+                              "Febrero",
+                              "Marzo",
+                              "Abril",
+                              "Mayo",
+                              "Junio",
+                              "Julio",
+                              "Agosto",
+                              "Septiembre",
+                              "Octubre",
+                              "Noviembre",
+                              "Diciembre",
+                              ];
                 //widget.init(MESES);
             </script>
             <script src="{% static 'static/js/highcharts.js' %}"></script>

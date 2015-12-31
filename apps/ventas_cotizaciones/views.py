@@ -20,7 +20,7 @@ class SaleRegisterView(SuccessMessageMixin, FormView):
     def get_form(self, form_class=None):
         f = super(SaleRegisterView, self).get_form(form_class)
         #print self.get_form_kwargs()
-        f.set_vendedor(self.request.user.username)
+        f.asignar_vendedor_sucursal(self.request.user.username)
         return f
 
     def form_invalid(self, form):
@@ -31,14 +31,14 @@ class SaleRegisterView(SuccessMessageMixin, FormView):
     def form_valid(self, form):
         form.save()
         global context_pdf
-        context_pdf = {'vendedor': form.cleaned_data['vendedor'], 
+        context_pdf = {'vendedor': form.cleaned_data['vendedor'],
+                        'sucursal': form.cleaned_data['sucursal'], 
                         'nombre_comprador': form.cleaned_data['nombre_comprador'],
                         'doc_id_comprador': form.cleaned_data['doc_id_comprador'],
                         'automovil': form.cleaned_data['automovil'],
                         'valor_venta': form.cleaned_data['valor_venta'],
                         'fecha': str(timezone.now())
          }
-        self.success_url = '/factura_venta/'
         print "Venta ", context_pdf
         messages.add_message(self.request, messages.SUCCESS, 
             "Se ha registrado exitosamente la venta " )

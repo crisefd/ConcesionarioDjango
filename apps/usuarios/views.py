@@ -7,10 +7,16 @@ from django.contrib.auth import authenticate, login, logout
 from .forms import *
 from django.contrib import messages
 from .models import User
+from apps.sucursales.models import Sucursales
 from django.http import JsonResponse
 from datatableview.views import DatatableView, XEditableDatatableView
 from datatableview import helpers
 import json as simplejson
+import datetime
+from apps.ventas_cotizaciones.models import Ventas
+from django.db.models import Count
+
+
 
 class LoginView(SuccessMessageMixin, FormView):
     form_class = LoginForm
@@ -122,11 +128,8 @@ class UserDatatableView(XEditableDatatableView):
 
 
 
-
-
-def inicio_gerente(request):
-    contexto = {}
-    meses = [ "Enero",
+def mes(m):
+    ls1 = [ "Enero" ,
               "Febrero",
               "Marzo",
               "Abril",
@@ -139,8 +142,108 @@ def inicio_gerente(request):
               "Noviembre",
               "Diciembre",
     ]
-    contexto['meses'] = simplejson.dumps(meses)
-    return render(request, "inicio_gerente.html", contexto)
+
+    ls2 = {  "Enero":0 ,
+              "Febrero":1,
+              "Marzo":2,
+              "Abril":3,
+              "Mayo":4,
+              "Junio":5,
+              "Julio":6,
+              "Agosto":7,
+              "Septiembre":8,
+              "Octubre":9,
+              "Noviembre":10,
+              "Diciembre":11,
+    }
+    if type(m) == type(4):
+        return ls1[m]
+    elif type(m) == type("a"):
+        return ls2[m]
+
+def consultar_ventas_sucursales(ano_actual, mes_actual, fechas_permitidas, sucursales):
+    fecha_ignorar = datetime.date(ano_actual-2,  12, 31)
+    items = Ventas.objects.exclude(fecha__lte=fecha_ignorar).values('sucursal', 'fecha').annotate(num_ventas=Count('sucursal')).order_by('fecha')
+    #print "==>", type(fechas_permitidas[0])
+    for item in items:
+        fecha_encontrada = False
+        j = 0
+        for f in fechas_permitidas:
+            if item['fecha'].year == f.year and item['fecha'].month == f.month:
+                fecha_encontrada = True
+                break
+            if j == len(fechas_permitidas):
+                fecha_encontrada = False
+            j += 1
+        if not fecha_encontrada:
+            items.remove(item)
+    r = []
+    s = []
+    for item in items:
+        r.append({'sucursal': item['sucursal'], 'num_ventas': item['num_ventas']})
+
+    for item in r:
+        if item not in s:
+            s.append(item)
+
+    #######FALTA VALIDAR SUCURSALES INACTIVAS##########
+    for sucursal in sucursales:
+        sucursal_encontrada = False
+        j = 0
+        for item in s:
+            if item['sucursal'] == sucursal.id:
+                sucursal_encontrada = True
+                break
+            if j == len(s):
+                sucursal_encontrada = False
+        if not sucursal_encontrada:
+            s.append({'sucursal': sucursal.id, 'num_ventas': 0})
+    return s
+
+
+
+
+    
+    return consulta
+
+def fechas_permitidas(ano_actual, num_mes_actual):
+    def foo(m):
+        ls = [1,2,3,4,5,6,7,8,9,10,11,12]
+        return ls[m]
+
+    m = num_mes_actual
+    ano = ano_actual
+    fechas = []
+    for i in range(0, 12):
+        if m == 0:
+            ano -= 1
+        mes = foo(m - 1)
+        fechas.append(datetime.date(ano, mes, 1))
+        m -= 1
+    return fechas
+
+def obtener_meses(num_mes_actual):
+    respueta_meses = []
+    for i in range(0, 12):
+        respueta_meses.append(mes(num_mes_actual - i))
+    return respueta_meses
+
+
+def inicio_gerente(request):
+    contexto = {}
+    num_mes_actual = datetime.datetime.now().month
+    ano_actual = datetime.datetime.now().year
+    meses = obtener_meses(num_mes_actual - 1)
+    print "meses ", meses
+    sucursales = list(Sucursales.objects.filter(is_active=True))
+    print "sucursales", sucursales
+    fechas_permit = fechas_permitidas(ano_actual, num_mes_actual)
+    ventas_sucursales = consultar_ventas_sucursales(ano_actual, num_mes_actual, fechas_permit, sucursales)
+
+    print "ventas_sucursales ", ventas_sucursales
+    """contexto['meses'] = simplejson.dumps(meses)
+    contexto['sucursales'] = simplejson.dumps(sucursales)"""
+    return render(request, "inicio_gerente.html")
 
 
 def inicio_vendedor(request):
