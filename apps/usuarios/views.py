@@ -163,42 +163,32 @@ def mes(m):
 
 def consultar_ventas_sucursales(ano_actual, mes_actual, fechas_permitidas, sucursales):
     fecha_ignorar = datetime.date(ano_actual-2,  12, 31)
-    items = Ventas.objects.exclude(fecha__lte=fecha_ignorar).values('sucursal', 'fecha').annotate(num_ventas=Count('sucursal')).order_by('fecha')
+    items = list(Ventas.objects.exclude(fecha__lte=fecha_ignorar).values('sucursal', 'fecha').annotate(num_ventas=Count('sucursal')).order_by('fecha'))
     #print "==>", type(fechas_permitidas[0])
+    salida = {}
     for item in items:
-        fecha_encontrada = False
-        j = 0
         for f in fechas_permitidas:
             if item['fecha'].year == f.year and item['fecha'].month == f.month:
-                fecha_encontrada = True
-                break
-            if j == len(fechas_permitidas):
-                fecha_encontrada = False
-            j += 1
-        if not fecha_encontrada:
-            items.remove(item)
-    r = []
-    s = []
-    for item in items:
-        r.append({'sucursal': item['sucursal'], 'num_ventas': item['num_ventas']})
+                if str(f.year)+"-"+mes(f.month - 1) in salida:
+                    salida[str(f.year)+"-"+mes(f.month - 1)].append({'sucursal': Sucursales.objects.get(pk=item['sucursal']).nombre.encode(),
+                        'num_ventas': item['num_ventas']})
+                else:
+                    salida[str(f.year)+"-"+mes(f.month - 1)] = [{'sucursal': Sucursales.objects.get(pk=item['sucursal']).nombre.encode(),
+                    'num_ventas': item['num_ventas']}]
 
-    for item in r:
-        if item not in s:
-            s.append(item)
-
-    #######FALTA VALIDAR SUCURSALES INACTIVAS##########
+        
     for sucursal in sucursales:
-        sucursal_encontrada = False
-        j = 0
-        for item in s:
-            if item['sucursal'] == sucursal.id:
-                sucursal_encontrada = True
-                break
-            if j == len(s):
-                sucursal_encontrada = False
-        if not sucursal_encontrada:
-            s.append({'sucursal': sucursal.id, 'num_ventas': 0})
-    return s
+        sucursal_encontrada= False
+        for clave, datos in salida.iteritems():
+            k = 1
+            for item in datos:
+                if item['sucursal'] == sucursal.nombre:
+                    break;
+                if k == len(datos):
+                    salida[clave].append({'sucursal': sucursal.nombre.encode(),
+                        'num_ventas': 0}) 
+
+    return salida
 
 
 
@@ -234,13 +224,13 @@ def inicio_gerente(request):
     num_mes_actual = datetime.datetime.now().month
     ano_actual = datetime.datetime.now().year
     meses = obtener_meses(num_mes_actual - 1)
-    print "meses ", meses
+    print "meses ==>", len(meses), meses
     sucursales = list(Sucursales.objects.filter(is_active=True))
-    print "sucursales", sucursales
+    print "sucursales ==>", len(sucursales),sucursales
     fechas_permit = fechas_permitidas(ano_actual, num_mes_actual)
     ventas_sucursales = consultar_ventas_sucursales(ano_actual, num_mes_actual, fechas_permit, sucursales)
 
-    print "ventas_sucursales ", ventas_sucursales
+    print "ventas_sucursales ==>", len(ventas_sucursales),ventas_sucursales
     """contexto['meses'] = simplejson.dumps(meses)
     contexto['sucursales'] = simplejson.dumps(sucursales)"""
     return render(request, "inicio_gerente.html")
