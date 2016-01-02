@@ -165,16 +165,24 @@ def consultar_ventas_sucursales(ano_actual, mes_actual, fechas_permitidas, sucur
     fecha_ignorar = datetime.date(ano_actual-2,  12, 31)
     items = list(Ventas.objects.exclude(fecha__lte=fecha_ignorar).values('sucursal', 'fecha').annotate(num_ventas=Count('sucursal')).order_by('fecha'))
     #print "==>", type(fechas_permitidas[0])
+    banderas_f_permitidas = [0]*len(fechas_permitidas)
     salida = {}
     for item in items:
+        i = 0
         for f in fechas_permitidas:
             if item['fecha'].year == f.year and item['fecha'].month == f.month:
+                banderas_f_permitidas[i] = 1
                 if str(f.year)+"-"+mes(f.month - 1) in salida:
                     salida[str(f.year)+"-"+mes(f.month - 1)].append({'sucursal': Sucursales.objects.get(pk=item['sucursal']).nombre.encode(),
                         'num_ventas': item['num_ventas']})
                 else:
                     salida[str(f.year)+"-"+mes(f.month - 1)] = [{'sucursal': Sucursales.objects.get(pk=item['sucursal']).nombre.encode(),
                     'num_ventas': item['num_ventas']}]
+            i += 1
+    for k in range(0, len(banderas_f_permitidas)):
+        if banderas_f_permitidas[k] == 0:
+            salida[str(fechas_permitidas[k].year)+"-"+str(fechas_permitidas[k].month)] = []
+
 
         
     for sucursal in sucursales:
