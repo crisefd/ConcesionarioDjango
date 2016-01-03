@@ -12,21 +12,91 @@
                   <div class="chart" id="chart" style="height: 400px;"></div>
                 </div><!-- /.box-body -->
             <script type="text/javascript">
-                //var MESES = {{meses|safe}};
-                var MESES = ["Enero" ,
-                              "Febrero",
-                              "Marzo",
-                              "Abril",
-                              "Mayo",
-                              "Junio",
-                              "Julio",
-                              "Agosto",
-                              "Septiembre",
-                              "Octubre",
-                              "Noviembre",
-                              "Diciembre",
-                              ];
-                //widget.init(MESES);
+                var MESES = {{meses|safe}};
+                var SUCURSALES = {{sucursales|safe}};
+                var VENTAS_SUCURSALES = {{ventas_sucursales|safe}};
+                //console.log(VENTAS_SUCURSALES[0]);
+                //alert(VENTAS_SUCURSALES["Suroriente"]);
+                var series_vals = [];
+                var mes = function(m){
+                    ls1 = [ 
+                          "Enero" ,
+                          "Febrero",
+                          "Marzo",
+                          "Abril",
+                          "Mayo",
+                          "Junio",
+                          "Julio",
+                          "Agosto",
+                          "Septiembre",
+                          "Octubre",
+                          "Noviembre",
+                          "Diciembre",
+                        ];
+                    ls2 = new Array();
+                    ls2["Enero"] = 1;
+                    ls2["Febrero"] = 2;
+                    ls2["Marzo"] = 3;
+                    ls2["Abril"] = 4;
+                    ls2["Mayo"] = 5;
+                    ls2["Junio"] = 6;
+                    ls2["Julio"] = 7;
+                    ls2["Agosto"] = 8;
+                    ls2["Septiembre"] = 9;
+                    ls2["Octubre"] = 10;
+                    ls2["Noviembre"] = 11;
+                    ls2["Diciembre"] = 12;
+                    if(typeof m == typeof 4){
+                        return ls1[m];
+                    }else{
+                        if(typeof m == typeof "4"){
+                            return ls2[m];
+                        }
+                    }
+
+                };
+
+             
+
+               
+
+                
+                var ordenar_datos_ventas = function(arrSucursal){
+                    //alert(arrSucursal);
+                    var data = [0,0,0,0,0,0,0,0,0,0,0,0];
+                    var fecha_actual = new Date();
+                    var mes_actual = fecha_actual.getMonth();
+                    var ano_actual = fecha_actual.getYear();
+                    var cantidad_meses_ano_anterior = 12 - mes_actual;
+                    var k = 0;
+                    for (var clave in arrSucursal) {
+                        var fecha_ = arrSucursal[clave]["fecha"]
+                        var sum_ventas = 0;
+                        for (var i = 0; i < arrSucursal.length; i++) {
+                            if(arrSucursal[i]["fecha"] == fecha){
+                                sum_ventas += arrSucursal[i]["num_ventas"]
+                            }
+                        };
+                        data[k] = sum_ventas;
+                        k++;
+                    };
+
+                    return data;
+
+                };
+                
+                var generar_valores_series = function(){
+                    k = 0;
+                    series_vals = []
+                    for (var i = SUCURSALES.length - 1; i >= 0; i--) {
+                        series_vals.push({name: SUCURSALES[i], 
+                            data: ordenar_datos_ventas(VENTAS_SUCURSALES[k])})
+                    k++;
+                    };
+                };
+
+                generar_valores_series();
+
             </script>
             <script src="{% static 'static/js/highcharts.js' %}"></script>
 
@@ -37,7 +107,7 @@
                                 type: 'line'
                             },
                             title: {
-                                text: 'Ventas Mensuales'
+                                text: 'Ventas por Sucursal de los Ultimos 12 Meses'
                             },
                             xAxis: {
                                 categories:  MESES
@@ -47,10 +117,7 @@
                                     text: 'Cantidad de vehiculos'
                             }
                             },
-                            series: [{
-                                name: 'Sucursal Norte',
-                                data: [1, 0, 4,1, 0, 4,1, 0, 4,1, 0, 4,]
-                                }]
+                            series: series_vals
                             });
                         });
             </script>

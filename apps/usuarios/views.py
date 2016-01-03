@@ -164,45 +164,27 @@ def mes(m):
 def consultar_ventas_sucursales(ano_actual, mes_actual, fechas_permitidas, sucursales):
     fecha_ignorar = datetime.date(ano_actual-2,  12, 31)
     items = list(Ventas.objects.exclude(fecha__lte=fecha_ignorar).values('sucursal', 'fecha').annotate(num_ventas=Count('sucursal')).order_by('fecha'))
-    #print "==>", type(fechas_permitidas[0])
+    print "==> fechas permitidas ", fechas_permitidas
     banderas_f_permitidas = [0]*len(fechas_permitidas)
     salida = {}
     for item in items:
         i = 0
         for f in fechas_permitidas:
             if item['fecha'].year == f.year and item['fecha'].month == f.month:
+                fecha = str(f.year)+"-"+str(f.month)
                 banderas_f_permitidas[i] = 1
-                if str(f.year)+"-"+mes(f.month - 1) in salida:
-                    salida[str(f.year)+"-"+mes(f.month - 1)].append({'sucursal': Sucursales.objects.get(pk=item['sucursal']).nombre.encode(),
+                clave = Sucursales.objects.get(pk=item['sucursal']).nombre.encode()
+                if clave in salida:
+                    salida[clave].append({'fecha':fecha,
                         'num_ventas': item['num_ventas']})
                 else:
-                    salida[str(f.year)+"-"+mes(f.month - 1)] = [{'sucursal': Sucursales.objects.get(pk=item['sucursal']).nombre.encode(),
-                    'num_ventas': item['num_ventas']}]
+                    salida[clave] = [{'fecha':fecha,
+                        'num_ventas': item['num_ventas']}]
             i += 1
-    for k in range(0, len(banderas_f_permitidas)):
-        if banderas_f_permitidas[k] == 0:
-            salida[str(fechas_permitidas[k].year)+"-"+str(fechas_permitidas[k].month)] = []
-
-
-        
-    for sucursal in sucursales:
-        sucursal_encontrada= False
-        for clave, datos in salida.iteritems():
-            k = 1
-            for item in datos:
-                if item['sucursal'] == sucursal.nombre:
-                    break;
-                if k == len(datos):
-                    salida[clave].append({'sucursal': sucursal.nombre.encode(),
-                        'num_ventas': 0}) 
+   
 
     return salida
 
-
-
-
-    
-    return consulta
 
 def fechas_permitidas(ano_actual, num_mes_actual):
     def foo(m):
@@ -226,22 +208,32 @@ def obtener_meses(num_mes_actual):
         respueta_meses.append(mes(num_mes_actual - i))
     return respueta_meses
 
-
-def inicio_gerente(request):
-    contexto = {}
+def reporte_ventas(contexto):
     num_mes_actual = datetime.datetime.now().month
     ano_actual = datetime.datetime.now().year
     meses = obtener_meses(num_mes_actual - 1)
+    meses = meses[::-1]
     print "meses ==>", len(meses), meses
     sucursales = list(Sucursales.objects.filter(is_active=True))
-    print "sucursales ==>", len(sucursales),sucursales
+    #print "sucursales ==>", len(sucursales),sucursales
     fechas_permit = fechas_permitidas(ano_actual, num_mes_actual)
-    ventas_sucursales = consultar_ventas_sucursales(ano_actual, num_mes_actual, fechas_permit, sucursales)
-
+    ventas_sucursales = consultar_ventas_sucursales(ano_actual, 
+        num_mes_actual, fechas_permit, sucursales)
     print "ventas_sucursales ==>", len(ventas_sucursales),ventas_sucursales
-    """contexto['meses'] = simplejson.dumps(meses)
-    contexto['sucursales'] = simplejson.dumps(sucursales)"""
-    return render(request, "inicio_gerente.html")
+    nombre_sucursales = list(Sucursales.objects.values('nombre').filter(is_active=True))
+    for i in range(0, len(nombre_sucursales)):
+        nombre_sucursales[i] = nombre_sucursales[i]['nombre'].encode()
+    print "sucursales ==>", len(nombre_sucursales), nombre_sucursales
+    contexto['meses'] = simplejson.dumps(meses)
+    contexto['sucursales'] = simplejson.dumps(nombre_sucursales)
+    contexto['ventas_sucursales'] = simplejson.dumps(ventas_sucursales)
+
+
+
+def inicio_gerente(request):
+    contexto = {}
+    reporte_ventas(contexto)
+    return render(request, "inicio_gerente.html", contexto)
 
 
 def inicio_vendedor(request):
