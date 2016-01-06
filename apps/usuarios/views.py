@@ -171,7 +171,7 @@ def consultar_ventas_sucursales(ano_actual, mes_actual, fechas_permitidas, sucur
         i = 0
         for f in fechas_permitidas:
             if item['fecha'].year == f.year and item['fecha'].month == f.month:
-                fecha = str(f.year)+"-"+str(f.month)
+                fecha = str(f.year)+"-"+str(f.month)+"-1"
                 banderas_f_permitidas[i] = 1
                 clave = Sucursales.objects.get(pk=item['sucursal']).nombre.encode()
                 if clave in salida:
@@ -183,7 +183,16 @@ def consultar_ventas_sucursales(ano_actual, mes_actual, fechas_permitidas, sucur
             i += 1
    
 
-    return salida
+    return ordenar_salida(salida)
+
+def ordenar_salida(salida):
+    salida_ordenada = {}
+    for clave, valor in salida.iteritems():
+        print "VALOR ", valor
+        salida_ordenada[clave] = sorted(valor, key= lambda item: item['fecha'])
+    return salida_ordenada
+
+
 
 
 def fechas_permitidas(ano_actual, num_mes_actual):

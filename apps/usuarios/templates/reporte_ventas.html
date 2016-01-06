@@ -73,7 +73,7 @@
                         var fecha_ = arrSucursal[clave]["fecha"]
                         var sum_ventas = 0;
                         for (var i = 0; i < arrSucursal.length; i++) {
-                            if(arrSucursal[i]["fecha"] == fecha){
+                            if(arrSucursal[i]["fecha"] == fecha_){
                                 sum_ventas += arrSucursal[i]["num_ventas"]
                             }
                         };
@@ -90,7 +90,7 @@
                     series_vals = []
                     for (var i = SUCURSALES.length - 1; i >= 0; i--) {
                         series_vals.push({name: SUCURSALES[i], 
-                            data: ordenar_datos_ventas(VENTAS_SUCURSALES[k])})
+                            data: ordenar_datos_ventas(VENTAS_SUCURSALES[SUCURSALES[i]])})
                     k++;
                     };
                 };
