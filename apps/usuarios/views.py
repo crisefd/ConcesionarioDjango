@@ -164,7 +164,7 @@ def mes(m):
 def consultar_ventas_sucursales(ano_actual, mes_actual, fechas_permitidas, sucursales):
     fecha_ignorar = datetime.date(ano_actual-2,  12, 31)
     items = list(Ventas.objects.exclude(fecha__lte=fecha_ignorar).values('sucursal', 'fecha').annotate(num_ventas=Count('sucursal')).order_by('fecha'))
-    print "==> fechas permitidas ", fechas_permitidas
+    #print "==> fechas permitidas ", fechas_permitidas
     banderas_f_permitidas = [0]*len(fechas_permitidas)
     salida = {}
     for item in items:
@@ -183,18 +183,18 @@ def consultar_ventas_sucursales(ano_actual, mes_actual, fechas_permitidas, sucur
             i += 1
    
 
-    return ordenar_salida(salida)
+    return ordenar_salida_ventas(salida)
 
-def ordenar_salida(salida):
+def ordenar_salida_ventas(salida):
     salida_ordenada = {}
     for clave, valor in salida.iteritems():
-        print "VALOR ", valor
+        #print "VALOR ", valor
         salida_ordenada[clave] = sorted(valor, key= lambda item: item['fecha'])
     return salida_ordenada
 
 
 
-
+"""Reporte Ventas"""
 def fechas_permitidas(ano_actual, num_mes_actual):
     def foo(m):
         ls = [1,2,3,4,5,6,7,8,9,10,11,12]
@@ -236,6 +236,8 @@ def reporte_ventas(contexto):
     contexto['meses'] = simplejson.dumps(meses)
     contexto['sucursales'] = simplejson.dumps(nombre_sucursales)
     contexto['ventas_sucursales'] = simplejson.dumps(ventas_sucursales)
+
+"""Reporte Inventario"""
 
 
 
