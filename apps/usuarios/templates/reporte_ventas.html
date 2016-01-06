@@ -64,11 +64,24 @@
                 var ordenar_datos_ventas = function(arrSucursal){
                     //alert(arrSucursal);
                     var data = [0,0,0,0,0,0,0,0,0,0,0,0];
+                    var fechas_data = []
                     var fecha_actual = new Date();
                     var mes_actual = fecha_actual.getMonth();
                     var ano_actual = fecha_actual.getYear();
                     var cantidad_meses_ano_anterior = 12 - mes_actual;
-                    var k = 0;
+                    /*m = 0;
+                    for (var i = mes_actual + 1; i <= cantidad_meses_ano_anterior; i++) {
+                        fechas_data.push((fecha_actual.getYear()-1) + "-" + i);
+                      //  m++;
+                    };
+                    for (var i = 1; i <= mes_actual; i++) {
+                        
+                    };*/
+                    meses_num = []
+                    for (var i = 0; i < 12; i++) {
+                        meses_num.push(mes(MESES[i]))
+                    };
+                    //var k = 0;
                     for (var clave in arrSucursal) {
                         var fecha_ = arrSucursal[clave]["fecha"]
                         var sum_ventas = 0;
@@ -77,8 +90,9 @@
                                 sum_ventas += arrSucursal[i]["num_ventas"]
                             }
                         };
+                        k = meses_num.indexOf(parseInt(fecha_.split('-')[1]))
                         data[k] = sum_ventas;
-                        k++;
+                        //k++;
                     };
 
                     return data;
