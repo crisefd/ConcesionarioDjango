@@ -222,17 +222,17 @@ def reporte_ventas(contexto):
     ano_actual = datetime.datetime.now().year
     meses = obtener_meses(num_mes_actual - 1)
     meses = meses[::-1]
-    print "meses ==>", len(meses), meses
+    #print "meses ==>", len(meses), meses
     sucursales = list(Sucursales.objects.filter(is_active=True))
     #print "sucursales ==>", len(sucursales),sucursales
     fechas_permit = fechas_permitidas(ano_actual, num_mes_actual)
     ventas_sucursales = consultar_ventas_sucursales(ano_actual, 
         num_mes_actual, fechas_permit, sucursales)
-    print "ventas_sucursales ==>", len(ventas_sucursales),ventas_sucursales
+    #print "ventas_sucursales ==>", len(ventas_sucursales),ventas_sucursales
     nombre_sucursales = list(Sucursales.objects.values('nombre').filter(is_active=True))
     for i in range(0, len(nombre_sucursales)):
         nombre_sucursales[i] = nombre_sucursales[i]['nombre'].encode()
-    print "sucursales ==>", len(nombre_sucursales), nombre_sucursales
+    #print "sucursales ==>", len(nombre_sucursales), nombre_sucursales
     contexto['meses'] = simplejson.dumps(meses)
     contexto['sucursales'] = simplejson.dumps(nombre_sucursales)
     contexto['ventas_sucursales'] = simplejson.dumps(ventas_sucursales)
