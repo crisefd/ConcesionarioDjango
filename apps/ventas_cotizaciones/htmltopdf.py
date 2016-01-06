@@ -37,7 +37,11 @@ def generate_pdf(template_src,  context_dict):
     html  = template.render(Context(context_dict))
 
     # Write PDF to file
-    filename = 'factura{0}.pdf'.format(context_dict['fecha'])
+    filename = ''
+    if template_src == 'factura_venta.html':
+        filename = 'factura{0}.pdf'.format(context_dict['fecha'])
+    elif template_src == 'recibo_consignacion.html':
+        filename = 'recibo{0}.pdf'.format(context_dict['fecha'])
     path = 'static/pdfs/' + filename
     file = open(path, "w+b")
     pisaStatus = pisa.CreatePDF(html, dest=file,

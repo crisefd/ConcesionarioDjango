@@ -30,6 +30,7 @@ class SaleRegisterView(SuccessMessageMixin, FormView):
 
     def form_valid(self, form):
         form.save()
+        self.success_url = '/factura_venta/'
         global context_pdf
         context_pdf = {'vendedor': form.cleaned_data['vendedor'],
                         'sucursal': form.cleaned_data['sucursal'], 
@@ -39,7 +40,7 @@ class SaleRegisterView(SuccessMessageMixin, FormView):
                         'valor_venta': form.cleaned_data['valor_venta'],
                         'fecha': str(timezone.now())
          }
-        print "Venta ", context_pdf
+        #print "Venta ", context_pdf
         messages.add_message(self.request, messages.SUCCESS, 
             "Se ha registrado exitosamente la venta " )
         return super(SaleRegisterView, self).form_valid(form)
@@ -58,6 +59,14 @@ class QuoteRegisterView(SuccessMessageMixin, FormView):
 
     def form_valid(self, form):
         form.save()
+        self.success_url = '/recibo_consignacion/'
+        global context_pdf
+        context_pdf = {
+                        'automovil': form.cleaned_data['automovil'],
+                        'vendedor': form.cleaned_data['vendedor'],
+                        'nombre_comprador': form.cleaned_data['nombre_comprador'],
+                        'fecha': str(timezone.now())
+        }
         messages.add_message(self.request, messages.SUCCESS, 
             "Se ha registrado exitosamente la cotizacion " )
         return super(QuoteRegisterView, self).form_valid(form)
@@ -67,5 +76,5 @@ class QuoteRegisterView(SuccessMessageMixin, FormView):
             "No se ha podido registrar la cotizacion " )
         return super(QuoteRegisterView, self).form_valid(form)
 
-def pdf(request):
-    return generate_pdf("factura_venta.html", context_pdf)
+def pdf(request, template_name):
+    return generate_pdf(template_name, context_pdf)
