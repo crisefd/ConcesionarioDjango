@@ -1,7 +1,10 @@
 {%extends "base.html"%}
 {%block title%}Registro Sucursal{%endblock%}
 {%block content%}
+
 {%if user.is_authenticated %}
+    {%ifequal user.charge "Gerente"%}
+
 
        <div class="form-group" align="center">
       <div class="row">
@@ -41,8 +44,13 @@
           </div>
          
 
+
+    {%else%}
+         <h1> No tienes permisos para estara aquí </h1>
+    {%endifequal%}
  {%else%}
         <h1> Debes iniciar sesión primero</h1>
 {%endif%}
+
 
 {%endblock%}
