@@ -34,6 +34,12 @@ class CotizacionesForm(forms.ModelForm):
     automovil = forms.ModelChoiceField(queryset=Automovil.objects.filter(cantidad__gte = 1))
     vendedor = forms.ModelChoiceField(queryset=User.objects.filter(is_active=True, charge="Vendedor"))
 
+    def asignar_vendedor_sucursal(self, vendedor_username):
+        queryset_vendedor = User.objects.filter(username=vendedor_username)
+        queryset_sucursal = Sucursales.objects.filter(pk=queryset_vendedor[0].branch_id)
+        self.fields['vendedor'].queryset = queryset_vendedor
+        self.fields['sucursal'].queryset = queryset_sucursal
+
     def save(self, *args, **kwargs):
         return super(CotizacionesForm, self).save(*args, **kwargs)
 
@@ -43,4 +49,4 @@ class CotizacionesForm(forms.ModelForm):
     
     class Meta:
         model = Cotizaciones
-        fields = ('automovil', 'vendedor', 'nombre_comprador')
+        fields = ('automovil', 'sucursal',  'vendedor', 'nombre_comprador', 'doc_id_comprador')

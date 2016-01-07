@@ -54,17 +54,20 @@ class QuoteRegisterView(SuccessMessageMixin, FormView):
     def get_form(self, form_class=None):
         f = super(QuoteRegisterView, self).get_form(form_class)
         #print self.get_form_kwargs()
-        f.set_vendedor(self.request.user.username)
+        f.asignar_vendedor_sucursal(self.request.user.username)
         return f
 
     def form_valid(self, form):
+        print "formulario valido"
         form.save()
         self.success_url = '/recibo_consignacion/'
         global context_pdf
         context_pdf = {
-                        'automovil': form.cleaned_data['automovil'],
                         'vendedor': form.cleaned_data['vendedor'],
+                        'sucursal': form.cleaned_data['sucursal'], 
                         'nombre_comprador': form.cleaned_data['nombre_comprador'],
+                        'doc_id_comprador': form.cleaned_data['doc_id_comprador'],
+                        'automovil': form.cleaned_data['automovil'],
                         'fecha': str(timezone.now())
         }
         messages.add_message(self.request, messages.SUCCESS, 
@@ -72,6 +75,7 @@ class QuoteRegisterView(SuccessMessageMixin, FormView):
         return super(QuoteRegisterView, self).form_valid(form)
 
     def form_invalid(self, form):
+        print "formulario invalido"
         messages.add_message(self.request, messages.SUCCESS, 
             "No se ha podido registrar la cotizacion " )
         return super(QuoteRegisterView, self).form_valid(form)

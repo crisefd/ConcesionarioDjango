@@ -7,6 +7,8 @@ class Cotizaciones(models.Model):
     automovil = models.ForeignKey(settings.MODELO_AUTO)
     vendedor = models.ForeignKey(settings.AUTH_USER_MODEL)
     nombre_comprador = models.CharField(max_length=50, default='')
+    doc_id_comprador = models.CharField(max_length=50,default='')
+    sucursal = models.ForeignKey(settings.MODELO_SUCURSALES, default='')
     fecha = models.DateField(default=timezone.now)
 
 class Ventas(models.Model):
