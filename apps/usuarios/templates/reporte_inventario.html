@@ -12,6 +12,17 @@
                   <div class="chart" id="pieChart" style="height: 400px;"></div>
                 </div>
                 <script type="text/javascript">
+                    var AUTOS = {{consulta_autos|safe}};
+
+                    var crear_series_vals = function(){
+                        var series_vals = [];
+                        for (var i = 0; i < AUTOS.length - 1; i++) {
+                            series_vals.push({name: AUTOS[i]["marca"], y:AUTOS[i]["porcentaje"]});
+                        };
+                        return series_vals;
+                    };
+
+                    var series_vals_autos = crear_series_vals();
 
                 </script>
                 
@@ -25,7 +36,7 @@
                                     type: 'pie'
                                 },
                                 title: {
-                                    text: 'Browser market shares January, 2015 to May, 2015'
+                                    text: 'Marcas de Automoviles en Inventario'
                                 },
                                 tooltip: {
                                     pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
@@ -46,27 +57,7 @@
                                 series: [{
                                     name: "Brands",
                                     colorByPoint: true,
-                                    data: [{
-                                        name: "Microsoft Internet Explorer",
-                                        y: 56.33
-                                    }, {
-                                        name: "Chrome",
-                                        y: 24.03,
-                                        sliced: true,
-                                        selected: true
-                                    }, {
-                                        name: "Firefox",
-                                        y: 10.38
-                                    }, {
-                                        name: "Safari",
-                                        y: 4.77
-                                    }, {
-                                        name: "Opera",
-                                        y: 0.91
-                                    }, {
-                                        name: "Proprietary or Undetectable",
-                                        y: 0.2
-                                    }]
+                                    data: series_vals_autos
                                 }]
                             });
               

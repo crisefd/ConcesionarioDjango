@@ -14,7 +14,9 @@ from datatableview import helpers
 import json as simplejson
 import datetime
 from apps.ventas_cotizaciones.models import Ventas
+from apps.inventario.models import Automovil
 from django.db.models import Count
+from django.db.models import Sum
 
 
 
@@ -239,11 +241,30 @@ def reporte_ventas(contexto):
 
 """Reporte Inventario"""
 
+def consultar_automoviles():
+    consulta_autos = list(Automovil.objects.values('marca', 'cantidad').filter(cantidad__gte=1))
+    total_autos = Automovil.objects.all().aggregate(Sum('cantidad'))
+    consulta_autos.append(total_autos)
+    for i in range(0, len(consulta_autos) - 1):
+        consulta_autos[i]['marca'] = consulta_autos[i]['marca'].encode()
+    return consulta_autos
+
+def calcular_porcentaje_autos(consulta_autos):
+    total_autos = consulta_autos[-1]['cantidad__sum']
+    for i in range(0, len(consulta_autos)-1):
+        consulta_autos[i]['porcentaje'] = 1.0*consulta_autos[i]['cantidad']/(total_autos) 
+
+def reporte_inventario(contexto):
+    consulta_autos = consultar_automoviles()
+    calcular_porcentaje_autos(consulta_autos)
+    print "consulta autos ==> ", consulta_autos
+    contexto['consulta_autos'] = simplejson.dumps(consulta_autos)
 
 
 def inicio_gerente(request):
     contexto = {}
     reporte_ventas(contexto)
+    reporte_inventario(contexto)
     return render(request, "inicio_gerente.html", contexto)
 
 
