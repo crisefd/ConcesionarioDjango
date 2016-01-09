@@ -17,5 +17,5 @@ class RepuestoForm(forms.ModelForm):
     precio = forms.FloatField(min_value=1.0)
     class Meta:
         model = Repuesto
-        fields = ('precio', 'nombre', 'cantidad')
+        fields = ('precio', 'nombre','marca', 'cantidad')
     

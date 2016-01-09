@@ -9,12 +9,16 @@
                   </div>
                 </div>
                 <div class="box-body border-radius-none">
-                  <div class="chart" id="pieChart" style="height: 400px;"></div>
+                  <div class="chart" id="pieChartAutos" style="height: 400px;"></div>
+                </div>
+                <div class="box-body border-radius-none">
+                  <div class="chart" id="pieChartRepuestos" style="height: 400px;"></div>
                 </div>
                 <script type="text/javascript">
                     var AUTOS = {{consulta_autos|safe}};
+                    var REPUESTOS = {{consulta_repuestos|safe}};
 
-                    var crear_series_vals = function(){
+                    var crear_series_vals_autos = function(){
                         var series_vals = [];
                         for (var i = 0; i < AUTOS.length - 1; i++) {
                             series_vals.push({name: AUTOS[i]["marca"], y:AUTOS[i]["porcentaje"]});
@@ -22,13 +26,22 @@
                         return series_vals;
                     };
 
-                    var series_vals_autos = crear_series_vals();
+                    var crear_series_vals_repuestos = function(){
+                        var series_vals = [];
+                        for (var i = 0; i < REPUESTOS.length - 1; i++) {
+                            series_vals.push({name: REPUESTOS[i]["marca"], y:REPUESTOS[i]["porcentaje"]});
+                        };
+                        return series_vals;
+                    };
+
+                    var series_vals_autos = crear_series_vals_autos();
+                    var series_vals_repuestos = crear_series_vals_repuestos();
 
                 </script>
                 
 
                 <script type="text/javascript" >
-                            $('#pieChart').highcharts({
+                            $('#pieChartAutos').highcharts({
                                 chart: {
                                     plotBackgroundColor: null,
                                     plotBorderWidth: null,
@@ -36,8 +49,9 @@
                                     type: 'pie'
                                 },
                                 title: {
-                                    text: 'Marcas de Automoviles en Inventario'
+                                    text: "Marcas de Autos en Inventario (Total de Autos " + AUTOS.pop()['cantidad__sum'] + ")"
                                 },
+                             
                                 tooltip: {
                                     pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
                                 },
@@ -60,6 +74,41 @@
                                     data: series_vals_autos
                                 }]
                             });
+
+                            $('#pieChartRepuestos').highcharts({
+                                chart: {
+                                    plotBackgroundColor: null,
+                                    plotBorderWidth: null,
+                                    plotShadow: false,
+                                    type: 'pie'
+                                },
+                                title: {
+                                    text: "Marcas de Repuestos en Inventario (Total de Repuestos " + REPUESTOS.pop()['cantidad__sum'] + ")"
+                                },
+                                tooltip: {
+                                    pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
+                                },
+                                plotOptions: {
+                                    pie: {
+                                        allowPointSelect: true,
+                                        cursor: 'pointer',
+                                        dataLabels: {
+                                            enabled: true,
+                                            format: '<b>{point.name}</b>: {point.percentage:.1f} %',
+                                            style: {
+                                                color: (Highcharts.theme && Highcharts.theme.contrastTextColor) || 'black'
+                                            }
+                                        }
+                                    }
+                                },
+                                series: [{
+                                    name: "Marcas",
+                                    colorByPoint: true,
+                                    data: series_vals_repuestos
+                                }]
+                            });
+
+
               
                 </script>
     </div>

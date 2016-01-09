@@ -14,7 +14,7 @@ from datatableview import helpers
 import json as simplejson
 import datetime
 from apps.ventas_cotizaciones.models import Ventas
-from apps.inventario.models import Automovil
+from apps.inventario.models import Automovil, Repuesto
 from django.db.models import Count
 from django.db.models import Sum
 
@@ -252,13 +252,29 @@ def consultar_automoviles():
 def calcular_porcentaje_autos(consulta_autos):
     total_autos = consulta_autos[-1]['cantidad__sum']
     for i in range(0, len(consulta_autos)-1):
-        consulta_autos[i]['porcentaje'] = 1.0*consulta_autos[i]['cantidad']/(total_autos) 
+        consulta_autos[i]['porcentaje'] = 1.0*consulta_autos[i]['cantidad']/(total_autos)
+
+def consultar_repuestos():
+    consulta_repuestos = list(Repuesto.objects.values('marca', 'cantidad').filter(cantidad__gte=1))
+    total_repuestos = Repuesto.objects.all().aggregate(Sum('cantidad'))
+    consulta_repuestos.append(total_repuestos)
+    for i in range(0, len(consulta_repuestos) - 1):
+        consulta_repuestos[i]['marca'] = consulta_repuestos[i]['marca'].encode()
+    return consulta_repuestos
+
+def calcular_porcentaje_repuestos(consulta_repuestos):
+    total_repuestos = consulta_repuestos[-1]['cantidad__sum']
+    for i in range(0, len(consulta_repuestos)-1):
+        consulta_repuestos[i]['porcentaje'] = 1.0*consulta_repuestos[i]['cantidad']/(total_repuestos) 
 
 def reporte_inventario(contexto):
     consulta_autos = consultar_automoviles()
     calcular_porcentaje_autos(consulta_autos)
-    print "consulta autos ==> ", consulta_autos
+    consulta_repuestos = consultar_repuestos()
+    calcular_porcentaje_repuestos(consulta_repuestos)
+    print "consulta repuestos ==> ", consulta_repuestos
     contexto['consulta_autos'] = simplejson.dumps(consulta_autos)
+    contexto['consulta_repuestos'] = simplejson.dumps(consulta_repuestos)
 
 
 def inicio_gerente(request):
