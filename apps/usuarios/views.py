@@ -323,8 +323,8 @@ def consultar_ventas_vendedores():
     salida = {}
     for sucursal in sucursales:
         clave = sucursal.nombre.encode()
-        print "clave ==>", str(clave)
-        salida[clave] = encontrar_mejor_vendedor_sucursal(consulta_vendedores, sucursal)
+        #print "clave ==>", str(clave)
+        salida[str(clave)] = encontrar_mejor_vendedor_sucursal(consulta_vendedores, sucursal)
 
 
     return salida
