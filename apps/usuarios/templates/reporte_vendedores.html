@@ -1,0 +1,95 @@
+<div class="box box-solid bg-green">
+                <div class="box-header">
+                  <i class="fa fa-th"></i>
+                  <h3 class="box-title">Reporte Vendedores</h3>
+                  <div class="box-tools pull-right">
+                    <button class="btn bg-green btn-sm" data-widget="collapse"><i class="fa fa-minus"></i></button>
+                    <button class="btn bg-green btn-sm" data-widget="remove"><i class="fa fa-times"></i></button>
+                  </div>
+                </div>
+                <div class="box-body border-radius-none">
+                  <div class="chart" id="barChartVendedores" style="height: 400px;"></div>
+                </div>
+                <script type="text/javascript">
+                  var VENDEDORES = {{consulta_vendedores}};
+                  var categories_vals = [];
+                  var generar_categories_vals = function(){
+                    
+                    for (var i = 0; i < 4; i++) {
+                        categories_vals.push("AxA");
+                    };
+                    //return categories;
+                  };
+
+                  generar_categories_vals();
+
+                </script>
+                <script type="text/javascript">
+                   
+                        $('#barChartVendedores').highcharts({
+                            chart: {
+                                type: 'bar'
+                            },
+                            title: {
+                                text: 'Mejores Vendedores por Sucursal'
+                            },
+                            subtitle: {
+                                text: 'Se muestran los mejores vendedores del mes'
+                            },
+                            xAxis: {
+                                categories: categories_vals,
+                                title: {
+                                    text: null
+                                }
+                            },
+                            yAxis: {
+                                min: 0,
+                                title: {
+                                    text: 'Ventas (autos vendidos)',
+                                    align: 'high'
+                                },
+                                labels: {
+                                    overflow: 'justify'
+                                }
+                            },
+                            tooltip: {
+                                valueSuffix: 'autos vendidos'
+                            },
+                            plotOptions: {
+                                bar: {
+                                    dataLabels: {
+                                        enabled: true
+                                    }
+                                }
+                            },
+                            legend: {
+                                layout: 'vertical',
+                                align: 'right',
+                                verticalAlign: 'top',
+                                x: -40,
+                                y: 80,
+                                floating: true,
+                                borderWidth: 1,
+                                backgroundColor: ((Highcharts.theme && Highcharts.theme.legendBackgroundColor) || '#FFFFFF'),
+                                shadow: true
+                            },
+                            credits: {
+                                enabled: false
+                            },
+                            series: [{
+                                name: 'Year 1800',
+                                data: [107, 31, 635, 203, 2]
+                            }, {
+                                name: 'Year 1900',
+                                data: [133, 156, 947, 408, 6]
+                            }, {
+                                name: 'Year 2012',
+                                data: [1052, 954, 4250, 740, 38]
+                            }]
+                        });
+
+                </script>
+
+               
+
+    </div>

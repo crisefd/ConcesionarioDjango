@@ -4,7 +4,6 @@
 {%block content %}
    {% if user.is_authenticated %}
         {%ifequal user.charge "Jefe Taller"%}
-            <h1> Bienvenido, {{ user.username }} </h1>
       <div class="content-wrapper">
         <!-- Content Header (Page header) -->
          <h5>

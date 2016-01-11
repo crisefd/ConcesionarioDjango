@@ -6,35 +6,31 @@
    {% if user.is_authenticated %}
         {%ifequal user.charge "Gerente"%}
       
-      <div class="content-wrapper">
+    <div class="content-wrapper">
         <!-- Content Header (Page header) -->
-      <h5>
-          {% include "includes/show_messages.html" %}
-      </h5>
-        <section class="content-header">
-          <h1> Bienvenido, {{ user.username }} </h1>
-          <ol class="breadcrumb">
-            <li><a href="/home"><i class="fa fa-dashboard"></i> Home</a></li>
-            
-          </ol>
-        </section>
+    <h5>
+        {% include "includes/show_messages.html" %}
+    </h5>
+  <section class="content-header">
+     <h1> Bienvenido, {{ user.username }} </h1>
+     <ol class="breadcrumb">
+     <li><a href="/home"><i class="fa fa-dashboard"></i> Home</a></li>       
+    </ol>
+  </section>
 
         <!-- Main content -->
-        <section class="content">
-          <div class="row">
-    <div class="col-md-4">
-    <script src="{% static 'static/js/highcharts.js' %}"></script>
-              {%include "reporte_inventario.html"%}
-              
-              {%include "reporte_ventas.html"%}
-              
-              {%include "calendario.html"%}
-
-
-              </div>
-              </div>
-            </section>
-          </div>
+  <section class="content">
+    <div class="row">
+      <div class="col-md-4">
+        <script src="{% static 'static/js/highcharts.js' %}"></script>
+                  {%include "calendario.html"%}
+                  {%include "reporte_inventario.html"%}
+                  {%include "reporte_ventas.html"%}
+                  {%include "reporte_vendedores.html"%}
+      </div>
+    </div>
+  </section>
+        </div>
 
             
         {%else%}

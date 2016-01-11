@@ -272,15 +272,73 @@ def reporte_inventario(contexto):
     calcular_porcentaje_autos(consulta_autos)
     consulta_repuestos = consultar_repuestos()
     calcular_porcentaje_repuestos(consulta_repuestos)
-    print "consulta repuestos ==> ", consulta_repuestos
+    #print "consulta repuestos ==> ", consulta_repuestos
     contexto['consulta_autos'] = simplejson.dumps(consulta_autos)
     contexto['consulta_repuestos'] = simplejson.dumps(consulta_repuestos)
 
+"""Reporte Vendedores"""
+
+def encontrar_mejor_vendedor_sucursal(consulta_vendedores, sucursal):
+    nombre_sucursal = sucursal.nombre
+    mejor_vendedor = None
+    #k = 0
+    for item in consulta_vendedores:
+        if item['sucursal'] == nombre_sucursal:
+            if mejor_vendedor is None:
+                mejor_vendedor = item
+            elif item['num_ventas'] > mejor_vendedor['num_ventas']:
+                mejor_vendedor = item
+        #k += 1
+    if mejor_vendedor is None:
+        mejor_vendedor = {}
+    return mejor_vendedor
+
+
+
+
+def consultar_ventas_vendedores():
+    fecha_ignorar = None
+    fecha_actual = datetime.datetime.now()
+    if fecha_actual.month == 1:
+        fecha_ignorar = datetime.date(fecha_actual.year - 1, 12, 31)
+    elif fecha_actual.month == 3:
+        fecha_ignorar = datetime.date(fecha_actual.year, 2, 28) # No valida anos bisiestos
+    elif fecha_actual.month == 2 or fecha_actual.month == 4 or fecha_actual.month == 6 or fecha_actual.month == 8 or fecha_actual.month == 9 or fecha_actual.month == 11:
+        fecha_ignorar = datetime.date(fecha_actual.year, fecha_actual.month - 1, 31)
+    else:
+        fecha_ignorar = datetime.date(fecha_actual.year, fecha_actual.month - 1, 30)
+    #print "fecha ignorar ==> ", fecha_ignorar
+
+    consulta_vendedores = list(Ventas.objects.exclude(fecha__lte=fecha_ignorar).values('sucursal',
+        'vendedor').annotate(num_ventas=Count('vendedor')).order_by('num_ventas'))
+    for i in range(0, len(consulta_vendedores)):
+        id_vendedor = consulta_vendedores[i]['vendedor']
+        id_sucursal = consulta_vendedores[i]['sucursal']
+        vendedor = User.objects.get(pk=id_vendedor)
+        sucursal = Sucursales.objects.get(pk=id_sucursal)
+        consulta_vendedores[i]['vendedor'] = vendedor.first_name.encode() + " " + vendedor.last_name.encode()
+        consulta_vendedores[i]['sucursal'] = sucursal.nombre.encode()
+
+    sucursales = Sucursales.objects.filter(is_active=True) # No se validan sucursales inactivas
+    salida = {}
+    for sucursal in sucursales:
+        clave = sucursal.nombre.encode()
+        print "clave ==>", str(clave)
+        salida[clave] = encontrar_mejor_vendedor_sucursal(consulta_vendedores, sucursal)
+
+
+    return salida
+
+def reporte_vendedores(contexto):
+    consulta_vendedores = consultar_ventas_vendedores()
+    contexto['consulta_vendedores'] = simplejson.dumps(consulta_vendedores)
+    print "consulta vendedores ==> ", consulta_vendedores
 
 def inicio_gerente(request):
     contexto = {}
     reporte_ventas(contexto)
     reporte_inventario(contexto)
+    reporte_vendedores(contexto)
     return render(request, "inicio_gerente.html", contexto)
 
 
