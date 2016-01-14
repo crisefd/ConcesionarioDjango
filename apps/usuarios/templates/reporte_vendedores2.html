@@ -1,0 +1,78 @@
+<div class="box box-solid bg-green">
+ <div class="box-header">
+                  <i class="fa fa-th"></i>
+                  <h3 class="box-title">Reporte Vendedores</h3>
+                  <div class="box-tools pull-right">
+                    <button class="btn bg-green btn-sm" data-widget="collapse"><i class="fa fa-minus"></i></button>
+                    <button class="btn bg-green btn-sm" data-widget="remove"><i class="fa fa-times"></i></button>
+                  </div>
+ </div>
+ 
+ <div class="box-body">
+ 
+                  <table class="table table-bordered" id="tabla_vendedores">
+                    <tr>
+                      <th>Sucursales</th>
+                      <th>Vendedores</th>
+                      
+                    </tr>
+                   
+                    {%comment%}
+                    <tr>
+                      <td>1.</td>
+                      <td>Update software</td>
+                      <td>
+                        <div class="progress progress-xs">
+                          <div class="progress-bar progress-bar-danger" style="width: 55%"></div>
+                        </div>
+                      </td>
+                      
+                    </tr>
+                    <tr>
+                      <td>2.</td>
+                      <td>Clean database</td>
+                      <td>
+                        <div class="progress progress-xs">
+                          <div class="progress-bar progress-bar-yellow" style="width: 70%"></div>
+                        </div>
+                      </td>
+                      
+                    </tr>
+                    <tr>
+                      <td>3.</td>
+                      <td>Cron job running</td>
+                      <td>
+                        <div class="progress progress-xs progress-striped active">
+                          <div class="progress-bar progress-bar-primary" style="width: 30%"></div>
+                        </div>
+                      </td>
+                      
+                    </tr>
+                    <tr>
+                      <td>4.</td>
+                      <td>Fix and squish bugs</td>
+                      <td>
+                        <div class="progress progress-xs progress-striped active">
+                          <div class="progress-bar progress-bar-success" style="width: 90%"></div>
+                        </div>
+                      </td>
+                      
+                    </tr>{%endcomment%}
+                  </table>
+                </div><!-- /.box-body -->
+ <script type="text/javascript">
+                  var VENDEDORES = {{consulta_vendedores|safe}};
+ </script>
+ <script type="text/javascript">
+ 
+    for (var clave in VENDEDORES) {
+    	nombre_sucursal = VENDEDORES[clave]['sucursal'];
+    	nombre_vendedor = VENDEDORES[clave]['vendedor'];
+    	//console.log(nombre_vendedor)
+    	//alert(nombre_sucursal);
+    	$('#tabla_vendedores').append( '<tr><td>' + nombre_sucursal + '</td><td>' + nombre_vendedor + '</td></tr>' );
+    };
+
+ </script>
+
+</div>
