@@ -5,16 +5,20 @@ from apps.usuarios.models import User
 from .models import *
 from apps.inventario.models import Automovil
 from apps.sucursales.models import Sucursales
+#from apps.ventas_cotizaciones.models import Ventas
 
 
 class VentasForm(forms.ModelForm):
     automovil = forms.ModelChoiceField(queryset=Automovil.objects.filter(cantidad__gte = 1))
+    #valor_venta = forms.CharField( widget=forms.TextInput(attrs={'class':'disabled', 'readonly':'readonly'}))
     #vendedor = forms.ModelChoiceField(queryset=User.objects.filter(is_active=True, charge="Vendedor"))
     #sucursal = forms.ModelChoiceField(queryset=Sucursales.objects.filter(is_active=True))
     def save(self, *args, **kwargs):
         pk = self.cleaned_data['automovil'].id
         auto = Automovil.objects.get(pk=pk)
         self.cleaned_data['valor_venta'] = self.cleaned_data['automovil'].precio
+
+        #print "VALOR DE LA VENTA ==> ", self.cleaned_data['valor_venta']
         auto.cantidad -= 1
         auto.save()
         return super(VentasForm, self).save(*args, **kwargs)

@@ -8,6 +8,7 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
 from .forms import *
 from .htmltopdf import generate_pdf
+import datetime
 
 
 context_pdf = {'vendedor':'waldo'}
@@ -29,17 +30,23 @@ class SaleRegisterView(SuccessMessageMixin, FormView):
         return super(SaleRegisterView, self).form_valid(form)
 
     def form_valid(self, form):
-        form.save()
+        venta = form.save()
+
         self.success_url = '/factura_venta/'
         global context_pdf
+        fecha_venta = datetime.datetime.now()
         context_pdf = {'vendedor': form.cleaned_data['vendedor'],
                         'sucursal': form.cleaned_data['sucursal'], 
                         'nombre_comprador': form.cleaned_data['nombre_comprador'],
                         'doc_id_comprador': form.cleaned_data['doc_id_comprador'],
                         'automovil': form.cleaned_data['automovil'],
                         'valor_venta': form.cleaned_data['valor_venta'],
-                        'fecha': str(timezone.now())
+                        'fecha': str(fecha_venta)
          }
+        venta.valor_venta = form.cleaned_data['valor_venta']
+        #venta = Ventas.objects.get(fecha=fecha_venta.strftime('%Y-%m-%d') vendedor )
+        #venta.valor_venta = form.cleaned_data['valor_venta']
+        venta.save()
         #print "Venta ", context_pdf
         messages.add_message(self.request, messages.SUCCESS, 
             "Se ha registrado exitosamente la venta " )

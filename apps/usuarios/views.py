@@ -334,11 +334,49 @@ def reporte_vendedores(contexto):
     contexto['consulta_vendedores'] = simplejson.dumps(consulta_vendedores)
     #print "consulta vendedores ==> ", consulta_vendedores
 
+
+""" Reporte Ganancias """
+
+def consultar_ganancias(ano_actual, mes_actual, fechas_permitidas, sucursales):
+    fecha_ignorar = datetime.date(ano_actual-2,  12, 31)
+    items = list(Ventas.objects.exclude(fecha__lte=fecha_ignorar).values('fecha').annotate(ganancia=Sum('valor_venta')).order_by('fecha'))
+    #print "==> fechas permitidas ", fechas_permitidas
+    banderas_f_permitidas = [0]*len(fechas_permitidas)
+    salida = {}
+    for item in items:
+        i = 0
+        for f in fechas_permitidas:
+            if item['fecha'].year == f.year and item['fecha'].month == f.month:
+                fecha = str(f.year)+"-"+str(f.month)+"-1"
+                banderas_f_permitidas[i] = 1
+                clave = Sucursales.objects.get(pk=item['sucursal']).nombre.encode()
+                if clave in salida:
+                    salida[clave].append({'fecha':fecha,
+                        'num_ventas': item['num_ventas']})
+                else:
+                    salida[clave] = [{'fecha':fecha,
+                        'num_ventas': item['num_ventas']}]
+            i += 1
+   
+
+    return ordenar_salida_ventas(salida)
+
+
+
+def reporte_ganancias(contexto):
+    num_mes_actual = datetime.datetime.now().month
+    ano_actual = datetime.datetime.now().year
+    meses = obtener_meses(num_mes_actual - 1)
+    meses = meses[::-1]
+    fechas_permit = fechas_permitidas(ano_actual, num_mes_actual)
+    contexto['meses_ganancias'] = meses
+
 def inicio_gerente(request):
     contexto = {}
     reporte_ventas(contexto)
     reporte_inventario(contexto)
     reporte_vendedores(contexto)
+    reporte_ganancias(contexto)
     return render(request, "inicio_gerente.html", contexto)
 
 

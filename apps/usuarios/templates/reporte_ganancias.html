@@ -1,0 +1,60 @@
+{%load staticfiles%}
+<div class="box box-solid bg-gray" >
+                <div class="box-header">
+                  <i class="fa fa-th"></i>
+                  <h3 class="box-title">Reporte Ganancias</h3>
+                  <div class="box-tools pull-right">
+                    <button class="btn bg-gray btn-sm" data-widget="collapse"><i class="fa fa-minus"></i></button>
+                    <button class="btn bg-gray btn-sm" data-widget="remove"><i class="fa fa-times"></i></button>
+                  </div>
+                </div>
+                <div class="box-body border-radius-none">
+                  <div class="chart" id="chartGanancias" style="height: 400px;"></div>
+                </div><!-- /.box-body -->
+            <script type="text/javascript">
+                var MESES = {{meses_ganancias|safe}};
+
+            </script>
+            
+
+            <script type="text/javascript" >
+                        $(function () {
+						    $('#chartGanancias').highcharts({
+						        chart: {
+						            type: 'column',
+						            margin: 75,
+						            options3d: {
+						                enabled: true,
+						                alpha: 10,
+						                beta: 25,
+						                depth: 70
+						            }
+						        },
+						        title: {
+						            text: 'Ganancias del Concesionario en los Ultimos 12 Meses'
+						        },
+						        subtitle: {
+						            text: 'Ganancia no Neta'
+						        },
+						        plotOptions: {
+						            column: {
+						                depth: 25
+						            }
+						        },
+						        xAxis: {
+						            //categories: Highcharts.getOptions().lang.shortMonths
+						            categories: MESES
+						        },
+						        yAxis: {
+						            title: {
+						                text: null
+						            }
+						        },
+						        series: [{
+						            name: 'Sales',
+						            data: [2, 3, 0,0, 4, 0, 5, 1, 4, 6, 3, 4]
+						        }]
+						    });
+						});
+            </script>
+</div>
