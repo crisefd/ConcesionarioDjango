@@ -332,7 +332,7 @@ def consultar_ventas_vendedores():
 def reporte_vendedores(contexto):
     consulta_vendedores = consultar_ventas_vendedores()
     contexto['consulta_vendedores'] = simplejson.dumps(consulta_vendedores)
-    print "consulta vendedores ==> ", consulta_vendedores
+    #print "consulta vendedores ==> ", consulta_vendedores
 
 def inicio_gerente(request):
     contexto = {}

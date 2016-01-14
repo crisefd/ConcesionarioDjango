@@ -68,8 +68,9 @@
     for (var clave in VENDEDORES) {
     	nombre_sucursal = VENDEDORES[clave]['sucursal'];
     	nombre_vendedor = VENDEDORES[clave]['vendedor'];
-    	//console.log(nombre_vendedor)
-    	//alert(nombre_sucursal);
+    	if (nombre_sucursal === undefined || nombre_vendedor === undefined){
+    		continue;
+    	}
     	$('#tabla_vendedores').append( '<tr><td>' + nombre_sucursal + '</td><td>' + nombre_vendedor + '</td></tr>' );
     };
 
