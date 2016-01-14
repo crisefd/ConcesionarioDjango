@@ -337,30 +337,13 @@ def reporte_vendedores(contexto):
 
 """ Reporte Ganancias """
 
-def consultar_ganancias(ano_actual, mes_actual, fechas_permitidas, sucursales):
+def consultar_ganancias(ano_actual, fechas_permitidas):
     fecha_ignorar = datetime.date(ano_actual-2,  12, 31)
-    items = list(Ventas.objects.exclude(fecha__lte=fecha_ignorar).values('fecha').annotate(ganancia=Sum('valor_venta')).order_by('fecha'))
-    #print "==> fechas permitidas ", fechas_permitidas
-    banderas_f_permitidas = [0]*len(fechas_permitidas)
-    salida = {}
-    for item in items:
-        i = 0
-        for f in fechas_permitidas:
-            if item['fecha'].year == f.year and item['fecha'].month == f.month:
-                fecha = str(f.year)+"-"+str(f.month)+"-1"
-                banderas_f_permitidas[i] = 1
-                clave = Sucursales.objects.get(pk=item['sucursal']).nombre.encode()
-                if clave in salida:
-                    salida[clave].append({'fecha':fecha,
-                        'num_ventas': item['num_ventas']})
-                else:
-                    salida[clave] = [{'fecha':fecha,
-                        'num_ventas': item['num_ventas']}]
-            i += 1
-   
-
-    return ordenar_salida_ventas(salida)
-
+    consulta_ganancias = list(Ventas.objects.exclude(fecha__lte=fecha_ignorar).values('fecha').annotate(ganancia=Sum('valor_venta')).order_by('fecha'))
+    fechas_mapeadas = map(lambda var: str(var['fecha']), consulta_ganancias)
+    for i in range(0, len(consulta_ganancias)):
+        consulta_ganancias[i] = {'fecha': fechas_mapeadas[i], 'ganancia':consulta_ganancias[i]['ganancia']}
+    return consulta_ganancias
 
 
 def reporte_ganancias(contexto):
@@ -369,7 +352,10 @@ def reporte_ganancias(contexto):
     meses = obtener_meses(num_mes_actual - 1)
     meses = meses[::-1]
     fechas_permit = fechas_permitidas(ano_actual, num_mes_actual)
-    contexto['meses_ganancias'] = meses
+    consulta_ganancias = consultar_ganancias(ano_actual, fechas_permit)
+    print "consulta_ganancias ==> ",len(consulta_ganancias), consulta_ganancias
+    contexto['meses_ganancias'] = simplejson.dumps(meses)
+    contexto['consulta_ganancias'] = simplejson.dumps(consulta_ganancias)
 
 def inicio_gerente(request):
     contexto = {}

@@ -13,6 +13,18 @@
                 </div><!-- /.box-body -->
             <script type="text/javascript">
                 var MESES = {{meses_ganancias|safe}};
+                var GANANCIAS = {{consulta_ganancias|safe}};
+                var data_vals = [];
+
+                var generar_data_vals = function(){
+
+                	for (var i = 0; i < GANANCIAS.length; i++) {
+                		data_vals.push(GANANCIAS[i]['ganancia']);
+                	};
+                };
+
+                generar_data_vals();
+                alert(MESES);
 
             </script>
             
@@ -52,7 +64,7 @@
 						        },
 						        series: [{
 						            name: 'Sales',
-						            data: [2, 3, 0,0, 4, 0, 5, 1, 4, 6, 3, 4]
+						            data: data_vals
 						        }]
 						    });
 						});
