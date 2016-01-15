@@ -19,4 +19,4 @@ class Repuesto(Item_Inventario):
     nombre = models.CharField(max_length=50, default='')
 
     def __unicode__(self):
-        return "%s %s " % (self.marca, self.modelo)
+        return "%s %s " % (self.nombre, self.marca)
