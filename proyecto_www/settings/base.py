@@ -9,9 +9,9 @@ BASE_DIR = Path(__file__).ancestor(3)
 SECRET_KEY = ')4j=2+73&ed9hsj0l4nb$!=(v1)w*xgn17p^e&zv=6nzh_%cvt'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-#DEBUG = True
+DEBUG = True
 
-
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -28,7 +28,7 @@ DJANGO_APPS = (
 
 LOCAL_APPS = (
     'apps.home',
-	'apps.inventario',
+    'apps.inventario',
     'apps.usuarios',
     'apps.ordenes_trabajo',
     'apps.sucursales',
@@ -36,11 +36,7 @@ LOCAL_APPS = (
     'apps.reportes',
 )
 
-"""STATICFILES_FINDERS = ( 
-                       'django.contrib.staticfiles.finders.FileSystemFinder',
-                       'django.contrib.staticfiles.finders.AppDirectoriesFinder',
-                       )
-"""
+
 THIRD_PARTY_APPS = (
 )
 
@@ -59,7 +55,6 @@ MIDDLEWARE_CLASSES = (
 
 ROOT_URLCONF = 'proyecto_www.urls'
 
-
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
@@ -75,10 +70,8 @@ TEMPLATES = [
         },
     },
 ]
-ALLOWED_HOSTS = ['*']
+
 WSGI_APPLICATION = 'proyecto_www.wsgi.application'
-STATICFILES_DIRS=(BASE_DIR,'static')
-STATIC_URL = '/static/'
 
 
 # Internationalization
