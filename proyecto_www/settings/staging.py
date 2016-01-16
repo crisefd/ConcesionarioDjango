@@ -23,14 +23,12 @@ DATABASES = {
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.8/howto/static-files/
-STATIC_ROOT = STATIC_ROOT = 'staticfiles'
-
 
 STATIC_URL = '/static/'
-
+STATIC_ROOT = 'staticfiles'
 STATICFILES_DIRS=(BASE_DIR,'static')
 
 
-MEDIA_URL = '/media/'
-MEDIA_ROOT = BASE_DIR.child('media')
+#MEDIA_URL = '/media/'
+#MEDIA_ROOT = BASE_DIR.child('media')
 
