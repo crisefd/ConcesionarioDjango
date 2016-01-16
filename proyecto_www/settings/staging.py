@@ -18,17 +18,17 @@ DATABASES = {
 }
 
 
-STATICFILES_STORAGE = 'whitenoise.django.GzipManifestStaticFilesStorage'
 
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.8/howto/static-files/
 
-STATIC_URL = '/static/'
+#STATIC_URL = '/static/'
 STATIC_ROOT = 'staticfiles'
-STATICFILES_DIRS=(BASE_DIR,'static')
+#STATICFILES_DIRS=(BASE_DIR,'static')
+STATICFILES_STORAGE = 'whitenoise.django.GzipManifestStaticFilesStorage'
 
 
-MEDIA_URL = '/media/'
-MEDIA_ROOT = BASE_DIR.child('media')
+#MEDIA_URL = '/media/'
+#MEDIA_ROOT = BASE_DIR.child('media')
 

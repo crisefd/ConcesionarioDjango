@@ -17,8 +17,9 @@ try:
     os.environ.setdefault("DJANGO_SETTINGS_MODULE", "proyecto_www.settings.staging")
     #application = Cling(get_wsgi_application())
     application = DjangoWhiteNoise(get_wsgi_application())
+    print "whitenoise"
 except:
     os.environ.setdefault("DJANGO_SETTINGS_MODULE", "proyecto_www.settings.local")
     application = get_wsgi_application()
-
+    print "wsgi"
 #application = DjangoWhiteNoise(application)
