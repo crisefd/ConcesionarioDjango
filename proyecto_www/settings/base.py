@@ -9,9 +9,9 @@ BASE_DIR = Path(__file__).ancestor(3)
 SECRET_KEY = ')4j=2+73&ed9hsj0l4nb$!=(v1)w*xgn17p^e&zv=6nzh_%cvt'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+#DEBUG = True
 
-ALLOWED_HOSTS = ['*']
+
 
 
 # Application definition
@@ -58,8 +58,7 @@ MIDDLEWARE_CLASSES = (
 )
 
 ROOT_URLCONF = 'proyecto_www.urls'
-STATICFILES_DIRS=(BASE_DIR,'static')
-STATIC_URL = '/static/'
+
 
 TEMPLATES = [
     {
@@ -76,8 +75,10 @@ TEMPLATES = [
         },
     },
 ]
-
+ALLOWED_HOSTS = ['*']
 WSGI_APPLICATION = 'proyecto_www.wsgi.application'
+STATICFILES_DIRS=(BASE_DIR,'static')
+STATIC_URL = '/static/'
 
 
 # Internationalization

@@ -1,19 +1,22 @@
 from .base import *
 
-DEBUG_TOOLBAR_PATCH_SETTINGS = False 
+DEBUG_TOOLBAR_PATCH_SETTINGS = False
+DEBUG = True
+TEMPLATE_DEBUG = True
 
 # Database
 # https://docs.djangoproject.com/en/1.8/ref/settings/#databases
 
 DATABASES = {
    
-    'default':{
-	'ENGINE': 'django.db.backends.postgresql_psycopg2',
-	'NAME' : 'd7jighg3mjc5q7',
-	'USER' : 'sppajfgaanmrif',
-	'PASSWORD' : '93wRXO2OFE92nRGFoghli3AFrY',
-	'HOST' : 'ec2-54-83-59-203.compute-1.amazonaws.com',
-	'PORT' : '5432'
+     'default':{
+    'ENGINE': 'django.db.backends.postgresql_psycopg2',
+    'NAME' : 'concesionario',
+    'USER' : 'postgres',
+    'PASSWORD' : 'postgres',
+    'HOST' : 'localhost',
+    'PORT' : '5432'
+    }
 	}
 }
 
