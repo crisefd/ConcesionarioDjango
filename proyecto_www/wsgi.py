@@ -9,12 +9,11 @@ https://docs.djangoproject.com/en/1.8/howto/deployment/wsgi/
 
 import os
 from django.core.wsgi import get_wsgi_application
-from whitenoise.django import DjangoWhiteNoise
-
+from dj_static import Cling
 
 try:
     os.environ.setdefault("DJANGO_SETTINGS_MODULE", "proyecto_www.settings.staging")
-    application = DjangoWhiteNoise(application)
+    application = Cling(get_wsgi_application())
 except:
     os.environ.setdefault("DJANGO_SETTINGS_MODULE", "proyecto_www.settings.local")
     application = get_wsgi_application()
