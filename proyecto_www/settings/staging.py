@@ -8,7 +8,6 @@ TEMPLATE_DEBUG = True
 # https://docs.djangoproject.com/en/1.8/ref/settings/#databases
 
 DATABASES = {
-<<<<<<< HEAD
      'default':{
     'ENGINE': 'django.db.backends.postgresql_psycopg2',
     'NAME' : 'd6c27p2e134pd2',
