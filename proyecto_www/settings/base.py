@@ -36,7 +36,11 @@ LOCAL_APPS = (
     'apps.reportes',
 )
 
-
+"""STATICFILES_FINDERS = ( 
+                       'django.contrib.staticfiles.finders.FileSystemFinder',
+                       'django.contrib.staticfiles.finders.AppDirectoriesFinder',
+                       )
+"""
 THIRD_PARTY_APPS = (
 )
 
@@ -54,6 +58,8 @@ MIDDLEWARE_CLASSES = (
 )
 
 ROOT_URLCONF = 'proyecto_www.urls'
+STATICFILES_DIRS=(BASE_DIR,'static')
+STATIC_URL = '/static/'
 
 TEMPLATES = [
     {

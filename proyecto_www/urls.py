@@ -1,4 +1,5 @@
 from django.conf.urls import include, url
+from django.contrib.staticfiles.urls import staticfiles_urlpatterns
 from django.contrib import admin
 
 
@@ -14,3 +15,5 @@ urlpatterns=[
             url(r'^', include('apps.reportes.urls', namespace='reportes')),
 			]
 
+
+urlpatterns += staticfiles_urlpatterns()
