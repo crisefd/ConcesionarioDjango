@@ -10,10 +10,10 @@ TEMPLATE_DEBUG = True
 DATABASES = {
      'default':{
     'ENGINE': 'django.db.backends.postgresql_psycopg2',
-    'NAME' : 'concesionario',
-    'USER' : 'postgres',
-    'PASSWORD' : 'postgres',
-    'HOST' : 'localhost',
+    'NAME' : 'd6c27p2e134pd2',
+    'USER' : 'mywanrseysmynp',
+    'PASSWORD' : 'nFpsx41T0Dw77AEd3opMjMUPkL',
+    'HOST' : 'ec2-54-225-165-132.compute-1.amazonaws.com',
     'PORT' : '5432',
     }
 }
