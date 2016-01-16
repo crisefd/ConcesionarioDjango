@@ -16,7 +16,7 @@ urlpatterns=[
             url(r'^', include('apps.reportes.urls', namespace='reportes')),
 			]
 
-urlpatterns += url('',
-        (r'^static/(?P<path>.*)$', 'django.views.static.serve', {'document_root': settings.STATIC_ROOT}),
-    )
+#urlpatterns += url('',
+ #       (r'^static/(?P<path>.*)$', 'django.views.static.serve', {'document_root': settings.STATIC_ROOT}),
+  #  )
 #urlpatterns += staticfiles_urlpatterns()
