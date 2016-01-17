@@ -73,7 +73,10 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'proyecto_www.wsgi.application'
 
-
+STATIC_URL = '/static/'
+STATICFILES_DIRS=(BASE_DIR,'static',)
+MEDIA_URL = '/media/'
+MEDIA_ROOT = BASE_DIR.child('media')
 # Internationalization
 # https://docs.djangoproject.com/en/1.8/topics/i18n/
 
