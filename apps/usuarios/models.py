@@ -58,7 +58,13 @@ class AbstractUser(AbstractBaseUser, PermissionsMixin):
         verbose_name_plural = _('users')
         abstract = True
 
+    def get_full_name(self):
+    # The user is identified by their email address
+        return self.username
 
+    def get_short_name(self):
+        # The user is identified by their email address
+        return self.username
 
 class User(AbstractUser):
 
