@@ -39,7 +39,7 @@ class AbstractUser(AbstractBaseUser, PermissionsMixin):
     email= models.EmailField(_('email address'),max_length=50, unique=True,)
     is_staff = models.BooleanField(('staff status'), default=False)
     is_active = models.BooleanField(_('active'), default=True)
-    #date_joined = models.DateTimeField(_('date joined'), default=timezone.now)
+    date_joined = models.DateTimeField(_('date joined'), default=timezone.now)
     birth_date = models.DateField(default='1930-01-01')
     sex = models.CharField(max_length=1)
     address = models.CharField(max_length=50)
