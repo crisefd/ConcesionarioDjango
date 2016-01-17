@@ -8,8 +8,8 @@ import django.utils.timezone
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('sucursales', '0001_initial'),
         ('auth', '0006_require_contenttypes_0002'),
+        ('sucursales', '0002_sucursales_is_active'),
     ]
 
     operations = [
@@ -21,8 +21,8 @@ class Migration(migrations.Migration):
                 ('is_superuser', models.BooleanField(default=False, help_text='Designates that this user has all permissions without explicitly assigning them.', verbose_name='superuser status')),
                 ('username', models.CharField(default=b'examplename', unique=True, max_length=50)),
                 ('email', models.EmailField(unique=True, max_length=50, verbose_name='email address')),
-                ('is_staff', models.BooleanField(default=False, help_text='Designates whether the user can log into this admin site.', verbose_name='staff status')),
-                ('is_active', models.BooleanField(default=True, help_text='Designates whether this user should be treated as active. Unselect this instead of deleting accounts.', verbose_name='active')),
+                ('is_staff', models.BooleanField(default=False, verbose_name=b'staff status')),
+                ('is_active', models.BooleanField(default=True, verbose_name='active')),
                 ('date_joined', models.DateTimeField(default=django.utils.timezone.now, verbose_name='date joined')),
                 ('birth_date', models.DateField(default=b'1930-01-01')),
                 ('sex', models.CharField(max_length=1)),
