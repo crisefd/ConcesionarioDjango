@@ -91,3 +91,8 @@ class MyUserCreationForm(UserCreationForm):
         model = User
         fields = ("first_name","last_name","username", "email","address", "phone_number", 
             "id_document","sex", "charge", "birth_date", "branch")
+
+    def __init__(self, *args, **kwargs):
+        super(MyUserCreationForm, self).__init__(*args, **kwargs)
+        self.fields['branch'].required = False
+
