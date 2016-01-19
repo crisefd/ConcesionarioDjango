@@ -340,6 +340,11 @@ def reporte_vendedores(contexto):
 def consultar_ganancias(ano_actual, fechas_permitidas):
     fecha_ignorar = datetime.date(ano_actual-2,  12, 31)
     consulta_ganancias = list(Ventas.objects.exclude(fecha__lte=fecha_ignorar).values('fecha').annotate(ganancia=Sum('valor_venta')).order_by('fecha'))
+    for item in consulta_ganancias:
+        #i = 0
+        for f in fechas_permitidas:
+            if item['fecha'].year == f.year and item['fecha'].month == f.month:
+               pass
     fechas_mapeadas = map(lambda var: str(var['fecha']), consulta_ganancias)
     for i in range(0, len(consulta_ganancias)):
         consulta_ganancias[i] = {'fecha': fechas_mapeadas[i], 'ganancia':consulta_ganancias[i]['ganancia']}
