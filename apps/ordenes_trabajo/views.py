@@ -10,7 +10,7 @@ from .models import *
 from django.http import JsonResponse
 from datatableview.views import DatatableView, XEditableDatatableView
 from datatableview import helpers
-
+from django.views.decorators.csrf import csrf_exempt
 
 class RegisterView(SuccessMessageMixin, FormView):
     success_url = '/ordenes_trabajo/registro/'
@@ -72,3 +72,23 @@ class OrderDataTableView(XEditableDatatableView):
         queryset = super(OrderDataTableView, self).get_queryset()
         #print "queryset 2 ", queryset
         return queryset
+
+@csrf_exempt
+def recibir_dato(request):
+    status = ""
+    if request.method == "POST":
+        dato = request.POST['dato']
+        status = "Good " + dato
+        #return HttpResponse(status)
+    else:
+        status= "Bad" 
+    return HttpResponse(status)
+
+
+"""
+test the recibir_dato view with enviar.py
+
+import requests
+r = requests.post("http://127.0.0.1:8000/ordenes_trabajo/consultar_estado/", data={'dato': 'hola_mundo'})
+print(r.status_code, r.reason)
+"""
