@@ -62,6 +62,13 @@ class MyUserCreationForm(UserCreationForm):
             return username
         raise forms.ValidationError(self.error_messages['duplicate_username'])
 
+    username=forms.CharField(max_length = 50, 
+                                  widget = forms.TextInput(attrs={
+                                                        'id':'IdInput',
+                                                        'type':'text',
+                                                        'class':'form-control'
+                                   }))
+
     sex = forms.ChoiceField(choices=[("M", "M"),
         ("F", "F"),], widget=forms.RadioSelect())
 
@@ -74,16 +81,38 @@ class MyUserCreationForm(UserCreationForm):
     phone_number = forms.CharField(max_length = 50, 
                                   widget = forms.TextInput(attrs={
                                                         'id':'telephoneInput',
-                                                        'type':'text'
+                                                        'type':'text',
+                                                        'class':'form-control'
                                    }))
-    id_document = forms.CharField(max_length = 50)
+    id_document = forms.CharField(max_length = 50, 
+                                  widget = forms.TextInput(attrs={
+                                                        'id':'IdInput',
+                                                        'type':'text',
+                                                        'class':'form-control'
+                                   }))
     email = forms.EmailField(max_length = 255,
                               widget = forms.TextInput(attrs={
-                                                       'id':'emailInput'
+                                                       'id':'emailInput',
+                                                       'class':'form-control'
                                 }))
-    address = forms.CharField(max_length=50)
-    first_name = forms.CharField(max_length=50)
-    last_name = forms.CharField(max_length=50)
+    address = forms.CharField(max_length = 50, 
+                                  widget = forms.TextInput(attrs={
+                                                        'id':'addressInput',
+                                                        'type':'text',
+                                                        'class':'form-control'
+                                   }))
+    first_name = forms.CharField(max_length = 50, 
+                                  widget = forms.TextInput(attrs={
+                                                        'id':'firstNameInput',
+                                                        'type':'text',
+                                                        'class':'form-control'
+                                   }))
+    last_name = forms.CharField(max_length = 50, 
+                                  widget = forms.TextInput(attrs={
+                                                        'id':'lastNameInput',
+                                                        'type':'text',
+                                                        'class':'form-control'
+                                   }))
     branch = forms.ModelChoiceField(queryset=Sucursales.objects.all())
 
     def save(self, commit=True):
