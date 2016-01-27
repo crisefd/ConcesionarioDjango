@@ -14,6 +14,9 @@
   {%else %}
 
       <div class="content-wrapper" style="min-height: 1096px;">
+      <section class="content-header">
+          
+        </section>
       <div class="login-box">
       <div class="login-logo">
       <h5>
@@ -22,26 +25,24 @@
       </div><!-- /.login-logo -->
       <div class="login-box-body">
         <p class="login-box-msg">Ingrese para iniciar su sesion</p>
-        <form  method="post">{% csrf_token %}
+        <form  method="post" class="form-horizontal well" >{% csrf_token %}
           <div class="form-group has-feedback">
-            {{ form.username }}
-            
-          </div>
+            {{ form.username }}<span class="glyphicon glyphicon-user form-control-feedback"></span>
+            </div>
+
           <div class="form-group has-feedback">
-            {{ form.password }}
+            {{ form.password }}<span class="glyphicon glyphicon-lock form-control-feedback"></span>
+            </div>
             
-          </div>
+          
           <div class="row">
             <div class="col-xs-8">
-              <div class="checkbox icheck">
-                <label>
-                  <input type="checkbox"> Remember Me
-                </label>
-              </div>
+              
             </div><!-- /.col -->
             <div class="col-xs-4">
               <button type="submit" class="btn btn-primary btn-block btn-flat">Sign In</button>
             </div><!-- /.col -->
+          </div>
           </div>
         </form>
 
@@ -51,6 +52,10 @@
 
       </div><!-- /.login-box-body -->
     </div>
+    <section class="content-header">
+          
+        </section>
+        
   </div>
   {%endif %}
 

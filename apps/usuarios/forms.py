@@ -12,12 +12,16 @@ class LoginForm(forms.Form):
 
     username = forms.CharField(max_length = 50,
             widget=forms.TextInput(attrs ={
-                    'id':'usernameInput'
+                    'id':'usernameInput',
+                    'placeholder': 'User Name',
+                    'class':'form-control'
                 }))
     password = forms.CharField(max_length = 50,
             widget = forms.TextInput(attrs = {
                     'type' : 'password',
-                    'id':'passwordInput'
+                    'id':'passwordInput',
+                    'placeholder': 'Password',
+                    'class':'form-control'
                 }))
 
 
