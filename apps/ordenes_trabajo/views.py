@@ -75,20 +75,28 @@ class OrderDataTableView(XEditableDatatableView):
 
 @csrf_exempt
 def recibir_dato(request):
-    status = ""
+    print "recibiendo dato"
+    estado = ""
     if request.method == "POST":
-        dato = request.POST['dato']
-        status = "Good " + dato
+        print "solicitud POST"
+        matricula = request.POST['matricula'].encode()
+        try:
+            estado = Ordenes_Trabajo.objects.values('estado').filter(matricula_vehiculo=matricula).order_by('-timestamp')[0]['estado'].encode()
+        except Exception as err:
+            print err
+            estado = 'Error al ralizar la consulta'
         #return HttpResponse(status)
     else:
-        status= "Bad" 
-    return HttpResponse(status)
+        print "solicitud no POST"
+        estado= "Error" 
+    return HttpResponse(estado)
 
 
 """
 test the recibir_dato view with enviar.py
 
 import requests
-r = requests.post("http://127.0.0.1:8000/ordenes_trabajo/consultar_estado/", data={'dato': 'hola_mundo'})
+r = requests.post("http://127.0.0.1:8000/ordenes_trabajo/consultar_estado/", data={'matricula': 'ICL104'})
 print(r.status_code, r.reason)
+print(r.text)
 """
