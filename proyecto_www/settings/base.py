@@ -10,7 +10,7 @@ SECRET_KEY = ')4j=2+73&ed9hsj0l4nb$!=(v1)w*xgn17p^e&zv=6nzh_%cvt'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
-CORS_ORIGIN_ALLOW_ALL = True
+
 
 ALLOWED_HOSTS = ['*']
 
@@ -94,6 +94,17 @@ USE_L10N = True
 
 USE_TZ = True
 
+CORS_ALLOW_METHODS = (
+        'GET',
+        'POST',
+        'PUT',
+        'PATCH',
+        'DELETE',
+        'OPTIONS',
+    )
+
+
+CORS_ORIGIN_ALLOW_ALL = True
 
 MODELO_SUCURSALES = 'sucursales.Sucursales'
 AUTH_USER_MODEL = 'usuarios.User'
