@@ -10,6 +10,7 @@ SECRET_KEY = ')4j=2+73&ed9hsj0l4nb$!=(v1)w*xgn17p^e&zv=6nzh_%cvt'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
+CORS_ORIGIN_ALLOW_ALL = True
 
 ALLOWED_HOSTS = ['*']
 
@@ -38,6 +39,7 @@ LOCAL_APPS = (
 
 
 THIRD_PARTY_APPS = (
+    'corsheaders',
 )
 
 INSTALLED_APPS = DJANGO_APPS + LOCAL_APPS + THIRD_PARTY_APPS
@@ -51,6 +53,8 @@ MIDDLEWARE_CLASSES = (
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'django.middleware.security.SecurityMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
+    'django.middleware.common.CommonMiddleware',
 )
 
 ROOT_URLCONF = 'proyecto_www.urls'
