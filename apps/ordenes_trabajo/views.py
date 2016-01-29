@@ -79,7 +79,10 @@ def recibir_dato(request):
     estado = ""
     if request.method == "POST":
         print "solicitud POST"
-        matricula = request.POST['matricula'].encode()
+        try:
+            matricula = request.POST['matricula'].encode()
+        except Exception as err:
+            estado = "Error diccionario " + str(err)
         try:
             consulta = Ordenes_Trabajo.objects.values('estado').filter(matricula_vehiculo=matricula).order_by('-timestamp')
             if len(consulta) == 0:
@@ -89,11 +92,11 @@ def recibir_dato(request):
             #estado = Ordenes_Trabajo.objects.values('estado').filter(matricula_vehiculo=matricula).order_by('-timestamp')[0]['estado'].encode()
         except Exception as err:
             print err
-            estado = 'Error al ralizar la consulta'
+            estado = 'Error al ralizar la consulta' + str(err)
         #return HttpResponse(status)
     else:
         print "solicitud no POST"
-        estado= "Error" 
+        estado= "Error, la solictud enviada no es POST" 
     return HttpResponse(estado)
 
 
