@@ -94,6 +94,9 @@ USE_L10N = True
 
 USE_TZ = True
 
+
+CORS_ORIGIN_ALLOW_ALL = True
+
 CORS_ALLOW_METHODS = (
         'GET',
         'POST',
@@ -104,7 +107,7 @@ CORS_ALLOW_METHODS = (
     )
 
 
-CORS_ORIGIN_ALLOW_ALL = True
+
 
 MODELO_SUCURSALES = 'sucursales.Sucursales'
 AUTH_USER_MODEL = 'usuarios.User'
