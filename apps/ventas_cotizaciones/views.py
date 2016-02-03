@@ -25,7 +25,7 @@ class SaleRegisterView(SuccessMessageMixin, FormView):
         return f
 
     def form_invalid(self, form):
-        messages.add_message(self.request, messages.SUCCESS, 
+        messages.add_message(self.request, messages.ERROR, 
             "No se ha podido registrar la venta " )
         return super(SaleRegisterView, self).form_valid(form)
 

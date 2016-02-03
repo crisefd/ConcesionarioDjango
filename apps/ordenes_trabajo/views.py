@@ -60,7 +60,7 @@ class OrderDataTableView(XEditableDatatableView):
             #("Hora", 'timestamp', helpers.make_xeditable),
             #("Mecanico", 'mecanico_asignado', helpers.make_xeditable),
             ("Descripcion", 'descripcion', helpers.make_xeditable),
-            #("Matricula", 'matricula_vehiculo', helpers.make_xeditable),
+            ("Matricula", 'matricula_vehiculo'),
             ("Costo", "costo", helpers.make_xeditable),
             ("Estado", "estado", helpers.make_xeditable),
            ]

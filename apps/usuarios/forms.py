@@ -5,7 +5,7 @@ from django.forms.extras.widgets import SelectDateWidget
 from .models import *
 from apps.sucursales.models import Sucursales
 from apps.usuarios.models import User
-from django.contrib.auth.forms import AdminPasswordChangeForm
+#from django.contrib.auth.forms import AdminPasswordChangeForm
 
 class LoginForm(forms.Form):
 
