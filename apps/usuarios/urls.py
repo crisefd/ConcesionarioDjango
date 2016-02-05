@@ -1,11 +1,11 @@
 from django.conf.urls import patterns, include, url
-from django.contrib.auth.forms import PasswordChangeForm
+#from django.contrib.auth.forms import PasswordChangeForm
 from .views import *
 
 
 urlpatterns = patterns('',
     url(r'^password_change/$', 'django.contrib.auth.views.password_change',
-        {'password_change_form': PasswordChangeForm, 'template_name':'password_change_form.html', 'post_change_redirect':'password_change_done'},
+        {'password_change_form': MyPasswordChangeForm, 'template_name':'password_change_form.html', 'post_change_redirect':'password_change_done'},
         name="password_change"),
     #url(r'^accounts/', include('django.contrib.auth.urls')),
     url(r'^password_change_done/$', 'django.contrib.auth.views.password_change_done',

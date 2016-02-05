@@ -16,12 +16,15 @@
 
         <!-- Main content -->
         <section class="content">
+        <div class="box box-default">
+        <div class="box-header with-border">
+        <h3>Editar perfil</h3>
+        </div>
+        <div class="box-body">
         <div class="row">
-        <div class="col-lg-6 col-xs-12 ">
-          <form class="form-horizontal well" id="registro" method="POST">{% csrf_token %}
-            <fieldset>
-              <legend>Editar Perfil</legend>
-              
+          <form class="form-group" id="registro" method="POST">{% csrf_token %}
+          <div class="col-md-6">
+  
               <div class="control-group">
                 <label class="control-label" for="input01">Telefono</label>
                 <div class="controls">
@@ -50,14 +53,22 @@
                 <button type="reset" class="btn">Cancelar</button>
               </div>
               </fieldset>
+              <hr>
+              <div class="form-actions">
               <a href="/password_change/">
           <button class="btn" type="button" >Cambiar contrasena</button>
-        </a>   
+        </a>  
+              </div>
+             </div>    
          </form>
         </div>
-      </div>
-    </section>
-    </div>
+        </form>
+        </div>
+        </div>
+        </div>
+        </section>
+        </div>
+
            
 
  {%else%}

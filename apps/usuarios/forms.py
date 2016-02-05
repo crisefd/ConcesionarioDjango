@@ -5,7 +5,27 @@ from django.forms.extras.widgets import SelectDateWidget
 from .models import *
 from apps.sucursales.models import Sucursales
 from apps.usuarios.models import User
-#from django.contrib.auth.forms import AdminPasswordChangeForm
+from django.contrib.auth.forms import PasswordChangeForm
+from django.contrib.auth import (
+    authenticate, get_user_model
+)
+from django.utils.translation import ugettext, ugettext_lazy as _
+
+
+
+class MyPasswordChangeForm(PasswordChangeForm):
+    new_password1 = forms.CharField(label=_("New password"),
+                                    widget=forms.PasswordInput(attrs={'class':'form-control'})
+                                    #help_text=password_validation.password_validators_help_text_html()
+                                    )
+    new_password2 = forms.CharField(label=_("New password confirmation"),
+                                    widget=forms.PasswordInput(attrs={'class':'form-control'}))
+
+    old_password = forms.CharField(
+        label=_("Old password"),
+        widget=forms.PasswordInput(attrs={'autofocus': '',
+            'class':'form-control'}),
+    )
 
 class LoginForm(forms.Form):
 
@@ -28,9 +48,21 @@ class LoginForm(forms.Form):
 
 
 class EditProfileForm(forms.Form):
-    phone_number = forms.CharField(max_length=50)
-    address = forms.CharField(max_length=50)
-    email = forms.EmailField(max_length=50)
+    phone_number = forms.CharField(max_length=50,widget = forms.TextInput(attrs={
+                                                        'id':'IdInput',
+                                                        'type':'text',
+                                                        'class':'form-control'
+                                   }))
+    address = forms.CharField(max_length=50,widget = forms.TextInput(attrs={
+                                                        'id':'IdInput',
+                                                        'type':'text',
+                                                        'class':'form-control'
+                                   }))
+    email = forms.EmailField(max_length=50,widget = forms.TextInput(attrs={
+                                                        'id':'IdInput',
+                                                        'type':'text',
+                                                        'class':'form-control'
+                                   }))
 
     def set_fields(self, username):
         self.user = User.objects.get(username=username)
@@ -70,14 +102,21 @@ class MyUserCreationForm(UserCreationForm):
                                    }))
 
     sex = forms.ChoiceField(choices=[("M", "M"),
-        ("F", "F"),], widget=forms.RadioSelect())
+        ("F", "F"),], widget=forms.RadioSelect(attrs={
+            'class':'flat-red'
+            }))
 
     YEARS = [y for y in range(1930,2015)]
     birth_date = forms.DateField(widget=SelectDateWidget(years=YEARS,
-                                                        attrs={'class':'fecha'}))
+                                                        attrs={'class':'form-control select2 select2-hidden-accessible',
+                                                        'type':'date'}))
     charge = forms.ChoiceField(choices=[("Gerente","Gerente"),
                                 ("Vendedor", "Vendedor"), ("Jefe Taller", "Jefe Taller")],
-                                    widget= forms.RadioSelect())
+                                    widget= forms.RadioSelect(attrs={
+                                                        'id':'chargeInput',
+                                                        'type':'radio',
+                                                        'class':'flat-red'
+                                   }))
     phone_number = forms.CharField(max_length = 50, 
                                   widget = forms.TextInput(attrs={
                                                         'id':'telephoneInput',
@@ -113,7 +152,19 @@ class MyUserCreationForm(UserCreationForm):
                                                         'type':'text',
                                                         'class':'form-control'
                                    }))
-    branch = forms.ModelChoiceField(queryset=Sucursales.objects.all())
+    password1=forms.CharField(max_length = 50, 
+                                  widget = forms.PasswordInput(attrs={
+                                                        
+                                                        'class':'form-control'
+                                   }))
+    password2=forms.CharField(max_length = 50, 
+                                  widget = forms.PasswordInput(attrs={
+                                                        
+                                                        'class':'form-control'
+                                   }))
+    branch = forms.ModelChoiceField(queryset=Sucursales.objects.all(),
+        widget=forms.Select(attrs={'class':'form-control select2 select2-hidden-accessible'}))
+
 
     def save(self, commit=True):
         if self.cleaned_data['charge'] == "Gerente":

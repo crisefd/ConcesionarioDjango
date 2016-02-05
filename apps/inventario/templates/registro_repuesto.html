@@ -20,11 +20,15 @@
 
         <!-- Main content -->
         <section class="content">
+        <div class="box box-default">
+        <div class="box-header with-border">
+        <h3>Registrar Repuesto</h3>
+        </div>
+        <div class="box-body">
         <div class="row">
-        <div class="col-lg-6 col-xs-12 ">
-          <form class="form-horizontal well" id="registro" method="POST">{% csrf_token %}
-            <fieldset>
-              <legend>Registrar Repuesto</legend>
+        <div class="col-md-6">
+          <form class="form-group" id="registro" method="POST">{% csrf_token %}
+            
               {%comment%}
               <div class="control-group">
                 <label class="control-label" for="input01">Serial</label>
@@ -67,12 +71,14 @@
                 <button type="reset" class="btn">Cancelar</button>
                 
               </div>
-             </fieldset>
+             
                </form>
               </div>
-             </div>
-           </section>
-            </div>
+              </div>
+              </div>
+              </div>
+              </section>
+              </div>
 
         {%else%}
              <h1> No tienes permisos para estar aquí </h1>

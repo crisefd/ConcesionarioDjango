@@ -18,23 +18,21 @@
 
         <!-- Main content -->
         <section class="content">
+        
+        <div class="box box-default">
+        <div class="box-header with-border">
+        <h3>Registrar usuario</h3>
+        </div>
+        <div class="box-body">
         <div class="row">
-    		<div class="col-lg-6 col-xs-12 ">
-    			<form class="form-horizontal well" id="registro" method="POST">{% csrf_token %}
-            <fieldset>
-              <legend>Registrar Usuario</legend>
+        
+    			<form class="form-group" id="registro" method="POST">{% csrf_token %}
+              <div class="col-md-6">
               <div class="control-group">
                 <label class="control-label" for="input01">Nombre</label>
                 <div class="controls">
                   {{form.first_name}}
                   <p id="help-block" class="help-block">Coloque aqui su nombre</p>
-                </div>
-              </div>
-              <div class="control-group">
-                <label class="control-label" for="input01">Apellido</label>
-                <div class="controls">
-                  {{form.last_name}}
-                  <p id="help-block" class="help-block">Coloque aqui el apellido</p>
                 </div>
               </div>
               <div class="control-group">
@@ -45,17 +43,73 @@
                 </div>
               </div>
               <div class="control-group">
-                <label class="control-label" for="input01">E-mail</label>
-                <div class="controls">
-                  {{form.email}}
-                  <p id="help-block" class="help-block">Coloque aqui el E-mail</p>
-                </div>
-              </div>
-              <div class="control-group">
                 <label class="control-label" for="input01">Dirección</label>
                 <div class="controls">
                   {{form.address}}
                   <p id="help-block" class="help-block">Coloque aqui la dirección</p>
+                </div>
+              </div>
+              <div class="control-group">
+                <label class="control-label" for="input01">ID</label>
+                <div class="controls">
+                  {{form.id_document}}
+                  <p id="help-block" class="help-block">Coloque aqui el documento de identidad</p>
+                </div>
+              </div>
+              
+               <div class="control-group">
+                <label class="control-label" for="input04">Fecha</label>
+                <div class="controls">
+                  <div class="row">
+                  {% for date in form.birth_date %}
+                    <div class="col-sm-3">
+                    {{ date }}
+                      
+                    </div>
+                    {% endfor %}
+                    </div> 
+                  <p id="help-block" class="help-block">Coloque la fecha de nacimiento</p>
+                </div>
+              </div>
+              <hr>
+             
+             <div class="iradio_flat-green checked">
+                <label class="control-label" for="input05">Sexo</label>
+                <div class="controls">
+                  {% for radio in form.sex %}
+                    <div class="iradio_flat-green checked">
+                    <ul>{{ radio }}</ul>
+                    </div>
+                    {% endfor %}
+                 <p id="help-block" class="help-block">Escoja el sexo</p> 
+                </div>
+              </div>
+              <hr>
+              
+              <div class="control-group">
+                <label class="control-label" for="input07">Sucursal</label>
+                <div class="controls">
+                
+                   {{form.branch}} 
+                
+                 
+                  <p id="help-block" class="help-block">Escoja la sucursal, solo si no es un usuario Gerente</p>
+                </div>
+              </div>
+              </div>
+              <div class="col-md-6">
+              <div class="control-group">
+                <label class="control-label" for="input01">Apellido</label>
+                <div class="controls">
+                  {{form.last_name}}
+                  <p id="help-block" class="help-block">Coloque aqui el apellido</p>
+                </div>
+              </div>
+              <div class="control-group">
+                <label class="control-label" for="input01">E-mail</label>
+                <div class="controls">
+                  {{form.email}}
+                  <p id="help-block" class="help-block">Coloque aqui el E-mail</p>
                 </div>
               </div>
               <div class="control-group">
@@ -66,20 +120,13 @@
                 </div>
               </div>
               <div class="control-group">
-                <label class="control-label" for="input01">ID</label>
-                <div class="controls">
-                  {{form.id_document}}
-                  <p id="help-block" class="help-block">Coloque aqui el documento de identidad</p>
-                </div>
-              </div>
-              <div class="control-group">
                 <label class="control-label" for="input02">Password</label>
                 <div class="controls">
                   {{form.password1}}
                   <p id="help-block" class="help-block">Introduzca la contraseña</p>
                 </div>
               </div>
-              <div class="control-group">
+             <div class="control-group">
                 <label class="control-label" for="input03">Password confirmación</label>
                 <div class="controls">
                   {{form.password2}}
@@ -87,59 +134,37 @@
                 </div>
               </div>
               <div class="control-group">
-                <label class="control-label" for="input04">Fecha</label>
-                <div class="controls">
-                  {{form.birth_date}}	
-                  <p id="help-block" class="help-block">Coloque la fecha de nacimiento</p>
-                </div>
-              </div>
-              
-              <hr>
-             
-             <div class="control-group">
-                <label class="control-label" for="input05">Sexo</label>
-                <div class="controls">
-                  {% for radio in form.sex %}
-                    <div class="myradio">
-                    <ul>{{ radio }}</ul>
-                    </div>
-                    {% endfor %}
-                 <p id="help-block" class="help-block">Escoja el sexo</p> 
-                </div>
-              </div>
-              <hr>
-              <div class="control-group">
                 <label class="control-label" for="input06">Cargo</label>
                 <div class="controls">
                   {% for radio in form.charge %}
-                    <div class="myradio">
+                    <div class="iradio_flat-green">
                     <ul>{{ radio }}</ul>
                       
                     </div>
-                    {% endfor %}	
+                    {% endfor %}  
                   <p id="help-block" class="help-block">Escoja el cargo</p>
                 </div>
               </div>
-              <hr />
-              <div class="control-group">
-                <label class="control-label" for="input07">Sucursal</label>
-                <div class="controls">
-                  {{form.branch}} 
-                  <p id="help-block" class="help-block">Escoja la sucursal, solo si no es un usuario Gerente</p>
-                </div>
-              </div>
+              <hr>
               <div class="form-actions">
 
                 <button type="submit" class="btn btn-primary">Registrar</button>
                 <button type="reset" class="btn">Cancelar</button>
                 
               </div>
-            </fieldset>
+              </div>
+              
           </form>
-    		</div>
+
+    		
+        
         </div>
-      </section>
-      </div>
+        </div>
+        </div>
+        
+        </section>
+        </div>
+
 
     		
     	

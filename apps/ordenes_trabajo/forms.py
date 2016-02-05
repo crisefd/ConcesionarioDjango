@@ -12,7 +12,11 @@ class Ordenes_TrabajoForm(forms.ModelForm):
     #jefe_taller = forms.ModelChoiceField(queryset=User.objects.filter(is_active=True, charge="Jefe Taller"))
     #jefe_taller = forms.ModelChoiceField(queryset=User.objects.filter(username='ironman'))
     descripcion = forms.Textarea()
-
+    matricula_vehiculo=forms.CharField(max_length=50,widget = forms.TextInput(attrs={
+                                                        'id':'MatriculaInput',
+                                                        'type':'text',
+                                                        'class':'form-control'
+                                   }))
     def set_jefe_taller(self, jefe_username):
         queryset = User.objects.filter(username=jefe_username)
         #print queryset
