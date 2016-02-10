@@ -15,8 +15,9 @@ import json as simplejson
 import datetime
 from apps.ventas_cotizaciones.models import Ventas
 from apps.inventario.models import Automovil, Repuesto
-from django.db.models import Count
-from django.db.models import Sum
+from django.db.models import Count, Sum
+from django.db import connection
+truncate_date = connection.ops.date_trunc_sql('month', 'fecha')
 
 
 
@@ -338,8 +339,27 @@ def reporte_vendedores(contexto):
 """ Reporte Ganancias """
 
 def consultar_ganancias(ano_actual, fechas_permitidas):
-    fecha_ignorar = datetime.date(ano_actual-2,  12, 31)
-    consulta_ganancias = list(Ventas.objects.exclude(fecha__lte=fecha_ignorar).values('fecha').annotate(ganancia=Sum('valor_venta')).order_by('fecha'))
+    now = datetime.datetime.now()
+    fecha_ignorar_superior = datetime.date(now.year,  now.month, now.day)
+    def aux(mes, ano):
+        if mes == 12:
+            print mes
+            return datetime.date(ano, 1, 1)
+        else:
+            print mes
+            return datetime.date(ano - 1, mes + 1, 1)
+    #print datetime.datetime.now().month
+    fecha_ignorar_inferior = aux( now.month, ano_actual)
+    print "fecha ignorar inferior ", fecha_ignorar_inferior
+    qs = Ventas.objects.extra({'month':truncate_date})
+    #print "QS ==> ", qs
+    consulta_ganancias = list(qs.values('month').exclude(fecha__lte=fecha_ignorar_inferior).annotate(ganancia=Sum('valor_venta')).order_by('month'))
+    #consulta_ganancias = list(Ventas.objects.exclude(fecha__lte=fecha_ignorar).values('fecha').annotate(ganancia=Sum('valor_venta')).order_by('fecha'))
+    #print "==> ", consulta_ganancias[0]['month'].month
+    for i in range(0, len(consulta_ganancias)):
+        consulta_ganancias[i] = {'ganancia':consulta_ganancias[i]['ganancia']}
+
+    """
     for item in consulta_ganancias:
         #i = 0
         for f in fechas_permitidas:
@@ -348,6 +368,7 @@ def consultar_ganancias(ano_actual, fechas_permitidas):
     fechas_mapeadas = map(lambda var: str(var['fecha']), consulta_ganancias)
     for i in range(0, len(consulta_ganancias)):
         consulta_ganancias[i] = {'fecha': fechas_mapeadas[i], 'ganancia':consulta_ganancias[i]['ganancia']}
+        """
     return consulta_ganancias
 
 
