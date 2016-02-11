@@ -15,6 +15,7 @@ import json as simplejson
 import datetime
 from apps.ventas_cotizaciones.models import Ventas
 from apps.inventario.models import Automovil, Repuesto
+from apps.ordenes_trabajo.models import *
 from django.db.models import Count, Sum
 from django.db import connection
 truncate_date = connection.ops.date_trunc_sql('month', 'fecha')
@@ -375,13 +376,46 @@ def reporte_ganancias(contexto):
     contexto['meses_ganancias'] = simplejson.dumps(meses)
     contexto['consulta_ganancias'] = simplejson.dumps(consulta_ganancias)
 
+
+""" Reporte ordenes"""
+
+
+def consultar_ordenes():
+    fecha_actual = datetime.datetime.now()
+    fecha_ignorar = None
+    if fecha_actual.month == 1:
+        fecha_ignorar = datetime.date(fecha_actual.year - 1, 12, 31)
+    elif fecha_actual.month == 3:
+        fecha_ignorar = datetime.date(fecha_actual.year, 2, 28)
+    elif fecha_actual.month == 2 or fecha_actual.month == 4 or fecha_actual.month == 6 or fecha_actual.month == 8 or fecha_actual.month == 9 or fecha_actual.month == 11:
+        fecha_ignorar = datetime.date(fecha_actual.year, fecha_actual.month - 1, 31)
+    else:
+        fecha_ignorar = datetime.date(fecha_actual.year, fecha_actual.month - 1, 30)
+
+    consulta_ordenes = list(Orden_Repuesto.objects.values('orden_id__jefe_taller_id__branch_id__nombre').exclude(fecha__lte=fecha_ignorar).annotate(cantidad=Count('id')))
+
+    salida = []
+    print "len ", len(consulta_ordenes)
+    for i in range(0, len(consulta_ordenes)):
+        #print "i=", i
+        salida.append({'sucursal':str(consulta_ordenes[i]['orden_id__jefe_taller_id__branch_id__nombre']), 'cantidad':consulta_ordenes[i]['cantidad']})
+        #print "i=", i
+    return salida
+
+def reporte_ordenes(contexto):
+    contexto['consulta_ordenes'] = simplejson.dumps(consultar_ordenes())
+
+ 
+
 def inicio_gerente(request):
     contexto = {}
     reporte_ventas(contexto)
     reporte_inventario(contexto)
     reporte_vendedores(contexto)
     reporte_ganancias(contexto)
+    reporte_ordenes(contexto)
     return render(request, "inicio_gerente.html", contexto)
+
 
 
 def inicio_vendedor(request):

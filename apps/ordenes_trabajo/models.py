@@ -30,5 +30,6 @@ class Ordenes_Trabajo(models.Model):
 class Orden_Repuesto(models.Model):
     orden = models.ForeignKey(Ordenes_Trabajo)
     repuesto = models.ForeignKey(settings.MODELO_REPUESTO)
+    fecha = models.DateTimeField(default=timezone.now)
 
 

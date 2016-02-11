@@ -39,6 +39,11 @@ class AutorizarRepuestoView(SuccessMessageMixin, FormView):
     form_class = Orden_RepuestoForm
     template_name = 'orden_repuesto.html'
 
+    def get_form(self, form_class=None):
+        f = super(AutorizarRepuestoView, self).get_form(form_class)
+        f.set_queryset(self.request.user.id_document)
+        return f
+
 
     def form_valid(self, form):
         form.save()
@@ -52,13 +57,13 @@ class AutorizarRepuestoView(SuccessMessageMixin, FormView):
         return super(AutorizarRepuestoView, self).form_invalid(form)
 
 
+
 class OrderDataTableView(XEditableDatatableView):
     model = Ordenes_Trabajo
     template_name = 'orders_list.html'
     datatable_options = {
         'columns': [
-            #("Hora", 'timestamp', helpers.make_xeditable),
-            #("Mecanico", 'mecanico_asignado', helpers.make_xeditable),
+            ("ID", 'id'),
             ("Descripcion", 'descripcion', helpers.make_xeditable),
             ("Matricula", 'matricula_vehiculo'),
             ("Costo", "costo", helpers.make_xeditable),

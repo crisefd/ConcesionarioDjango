@@ -1,0 +1,34 @@
+<div class="box box-solid bg-orange">
+<div class="box-header">
+                  <i class="fa fa-th"></i>
+                  <h3 class="box-title">Reporte de Ordenes</h3>
+                  <div class="box-tools pull-right">
+                    <button class="btn bg-orange btn-sm" data-widget="collapse"><i class="fa fa-minus"></i></button>
+                    <button class="btn bg-orange btn-sm" data-widget="remove"><i class="fa fa-times"></i></button>
+                  </div>
+ </div>
+ <div class="box-body">
+                  <table class="table table-bordered" id="tabla_ordenes">
+                    <tr>
+                      <th>Sucursales</th>
+                      <th>Cantidad de ordenes generadas</th>
+                    </tr>
+                  </table>
+                </div><!-- /.box-body -->
+ <script type="text/javascript">
+                  var ORDENES = {{consulta_ordenes|safe}};
+ </script>
+ <script type="text/javascript">
+ 
+    for (var clave in ORDENES) {
+    	nombre_sucursal = ORDENES[clave]['sucursal'];
+    	cantidad_ordenes = ORDENES[clave]['cantidad'];
+    	if (nombre_sucursal === undefined || cantidad_ordenes === undefined){
+    		continue;
+    	}
+    	$('#tabla_ordenes').append( '<tr><td>' + nombre_sucursal + '</td><td>' + cantidad_ordenes + '</td></tr>' );
+    };
+
+ </script>
+
+</div>

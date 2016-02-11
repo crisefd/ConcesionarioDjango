@@ -32,6 +32,11 @@ class Orden_RepuestoForm(forms.ModelForm):
     orden = forms.ModelChoiceField(queryset=Ordenes_Trabajo.objects.filter(estado='Activa'))
     repuesto = forms.ModelChoiceField(queryset=Repuesto.objects.filter(cantidad__gte=1))
 
+    def set_queryset(self, jefe_id):
+        queryset = Ordenes_Trabajo.objects.filter(jefe_taller=jefe_id, estado='Activa')
+        #print queryset
+        self.fields['orden'].queryset = queryset
+
     def save(self, *args, **kwargs):
         pk_rep = self.cleaned_data['repuesto'].id
         pk_ord = self.cleaned_data['orden'].id
