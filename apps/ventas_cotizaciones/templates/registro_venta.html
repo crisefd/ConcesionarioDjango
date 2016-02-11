@@ -83,7 +83,9 @@
             </div>
       <script type="text/javascript">
          $('#registrarVenta').click(function(){
-            window.location.reload();
+            $(location).attr('href', '/venta/registro/')
+            //window.location.href = "/venta/registro/";
+            console.log("redireccionando");
          });
       </script>
 
