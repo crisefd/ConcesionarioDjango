@@ -8,4 +8,4 @@ local/
 include/
 build/
 dist/
-
+*html*
