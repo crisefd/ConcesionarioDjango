@@ -243,9 +243,10 @@ def reporte_ventas(contexto):
 """Reporte Inventario"""
 
 def consultar_automoviles():
-    consulta_autos = list(Automovil.objects.values('marca', 'cantidad').filter(cantidad__gte=1))
+    consulta_autos = list(Automovil.objects.values('marca').filter(cantidad__gte=1).annotate(cantidad_total=Sum('cantidad')).order_by('marca'))
     total_autos = Automovil.objects.all().aggregate(Sum('cantidad'))
     consulta_autos.append(total_autos)
+    print "consulta_autos ", consulta_autos
     for i in range(0, len(consulta_autos) - 1):
         consulta_autos[i]['marca'] = consulta_autos[i]['marca'].encode()
     return consulta_autos
@@ -253,10 +254,10 @@ def consultar_automoviles():
 def calcular_porcentaje_autos(consulta_autos):
     total_autos = consulta_autos[-1]['cantidad__sum']
     for i in range(0, len(consulta_autos)-1):
-        consulta_autos[i]['porcentaje'] = 1.0*consulta_autos[i]['cantidad']/(total_autos)
+        consulta_autos[i]['porcentaje'] = 1.0*consulta_autos[i]['cantidad_total']/(total_autos)
 
 def consultar_repuestos():
-    consulta_repuestos = list(Repuesto.objects.values('marca', 'cantidad').filter(cantidad__gte=1))
+    consulta_repuestos = list(Repuesto.objects.values('marca').filter(cantidad__gte=1).annotate(cantidad_total=Sum('cantidad')).order_by('marca'))
     total_repuestos = Repuesto.objects.all().aggregate(Sum('cantidad'))
     consulta_repuestos.append(total_repuestos)
     for i in range(0, len(consulta_repuestos) - 1):
@@ -266,7 +267,7 @@ def consultar_repuestos():
 def calcular_porcentaje_repuestos(consulta_repuestos):
     total_repuestos = consulta_repuestos[-1]['cantidad__sum']
     for i in range(0, len(consulta_repuestos)-1):
-        consulta_repuestos[i]['porcentaje'] = 1.0*consulta_repuestos[i]['cantidad']/(total_repuestos) 
+        consulta_repuestos[i]['porcentaje'] = 1.0*consulta_repuestos[i]['cantidad_total']/(total_repuestos) 
 
 def reporte_inventario(contexto):
     consulta_autos = consultar_automoviles()
@@ -312,7 +313,7 @@ def consultar_ventas_vendedores():
 
     consulta_vendedores = list(Ventas.objects.exclude(fecha__lte=fecha_ignorar).values('sucursal',
         'vendedor').annotate(num_ventas=Count('vendedor')).order_by('num_ventas'))
-    print "consulta_vendedores ", consulta_vendedores
+    #print "consulta_vendedores ", consulta_vendedores
     for i in range(0, len(consulta_vendedores)):
         id_vendedor = consulta_vendedores[i]['vendedor']
         id_sucursal = consulta_vendedores[i]['sucursal']
@@ -321,7 +322,7 @@ def consultar_ventas_vendedores():
         consulta_vendedores[i]['vendedor'] = vendedor.first_name.encode() + " " + vendedor.last_name.encode()
         consulta_vendedores[i]['sucursal'] = sucursal.nombre.encode()
 
-    print "consulta_vendedores ", consulta_vendedores
+    #print "consulta_vendedores ", consulta_vendedores
     sucursales = Sucursales.objects.filter(is_active=True) # No se validan sucursales inactivas
     salida = {}
     for sucursal in sucursales:
@@ -329,7 +330,7 @@ def consultar_ventas_vendedores():
         #print "clave ==>", str(clave)
         salida[str(clave)] = encontrar_mejor_vendedor_sucursal(consulta_vendedores, sucursal)
 
-    print "salida ", salida
+    #print "salida ", salida
     return salida
 
 def reporte_vendedores(contexto):
@@ -350,7 +351,7 @@ def consultar_ganancias(ano_actual, fechas_permitidas):
             return datetime.date(ano - 1, mes + 1, 1)
     #print datetime.datetime.now().month
     fecha_ignorar_inferior = aux( now.month, ano_actual)
-    print "fecha ignorar inferior ", fecha_ignorar_inferior
+    #print "fecha ignorar inferior ", fecha_ignorar_inferior
     qs = Ventas.objects.extra({'month':truncate_date})
     #print "QS ==> ", qs
     consulta_ganancias = list(qs.values('month').exclude(fecha__lt=fecha_ignorar_inferior).annotate(ganancia=Sum('valor_venta')).order_by('month'))
