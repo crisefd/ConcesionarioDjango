@@ -308,10 +308,11 @@ def consultar_ventas_vendedores():
         fecha_ignorar = datetime.date(fecha_actual.year, fecha_actual.month - 1, 31)
     else:
         fecha_ignorar = datetime.date(fecha_actual.year, fecha_actual.month - 1, 30)
-    #print "fecha ignorar ==> ", fecha_ignorar
+    print "fecha ignorar ==> ", fecha_ignorar
 
     consulta_vendedores = list(Ventas.objects.exclude(fecha__lte=fecha_ignorar).values('sucursal',
         'vendedor').annotate(num_ventas=Count('vendedor')).order_by('num_ventas'))
+    print "consulta_vendedores ", consulta_vendedores
     for i in range(0, len(consulta_vendedores)):
         id_vendedor = consulta_vendedores[i]['vendedor']
         id_sucursal = consulta_vendedores[i]['sucursal']
@@ -320,6 +321,7 @@ def consultar_ventas_vendedores():
         consulta_vendedores[i]['vendedor'] = vendedor.first_name.encode() + " " + vendedor.last_name.encode()
         consulta_vendedores[i]['sucursal'] = sucursal.nombre.encode()
 
+    print "consulta_vendedores ", consulta_vendedores
     sucursales = Sucursales.objects.filter(is_active=True) # No se validan sucursales inactivas
     salida = {}
     for sucursal in sucursales:
@@ -327,7 +329,7 @@ def consultar_ventas_vendedores():
         #print "clave ==>", str(clave)
         salida[str(clave)] = encontrar_mejor_vendedor_sucursal(consulta_vendedores, sucursal)
 
-
+    print "salida ", salida
     return salida
 
 def reporte_vendedores(contexto):
@@ -343,32 +345,20 @@ def consultar_ganancias(ano_actual, fechas_permitidas):
     fecha_ignorar_superior = datetime.date(now.year,  now.month, now.day)
     def aux(mes, ano):
         if mes == 12:
-            print mes
             return datetime.date(ano, 1, 1)
         else:
-            print mes
             return datetime.date(ano - 1, mes + 1, 1)
     #print datetime.datetime.now().month
     fecha_ignorar_inferior = aux( now.month, ano_actual)
     print "fecha ignorar inferior ", fecha_ignorar_inferior
     qs = Ventas.objects.extra({'month':truncate_date})
     #print "QS ==> ", qs
-    consulta_ganancias = list(qs.values('month').exclude(fecha__lte=fecha_ignorar_inferior).annotate(ganancia=Sum('valor_venta')).order_by('month'))
-    #consulta_ganancias = list(Ventas.objects.exclude(fecha__lte=fecha_ignorar).values('fecha').annotate(ganancia=Sum('valor_venta')).order_by('fecha'))
-    #print "==> ", consulta_ganancias[0]['month'].month
+    consulta_ganancias = list(qs.values('month').exclude(fecha__lt=fecha_ignorar_inferior).annotate(ganancia=Sum('valor_venta')).order_by('month'))
+    #print "XXXXXX ", consulta_ganancias
     for i in range(0, len(consulta_ganancias)):
         consulta_ganancias[i] = {'ganancia':consulta_ganancias[i]['ganancia']}
 
-    """
-    for item in consulta_ganancias:
-        #i = 0
-        for f in fechas_permitidas:
-            if item['fecha'].year == f.year and item['fecha'].month == f.month:
-               pass
-    fechas_mapeadas = map(lambda var: str(var['fecha']), consulta_ganancias)
-    for i in range(0, len(consulta_ganancias)):
-        consulta_ganancias[i] = {'fecha': fechas_mapeadas[i], 'ganancia':consulta_ganancias[i]['ganancia']}
-        """
+    
     return consulta_ganancias
 
 
@@ -379,7 +369,8 @@ def reporte_ganancias(contexto):
     meses = meses[::-1]
     fechas_permit = fechas_permitidas(ano_actual, num_mes_actual)
     consulta_ganancias = consultar_ganancias(ano_actual, fechas_permit)
-    print "consulta_ganancias ==> ",len(consulta_ganancias), consulta_ganancias
+    #print "consulta_ganancias ==> ",len(consulta_ganancias), consulta_ganancias
+    #print "meses ==> ", meses
     contexto['meses_ganancias'] = simplejson.dumps(meses)
     contexto['consulta_ganancias'] = simplejson.dumps(consulta_ganancias)
 

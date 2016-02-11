@@ -34,7 +34,6 @@ LOCAL_APPS = (
     'apps.ordenes_trabajo',
     'apps.sucursales',
     'apps.ventas_cotizaciones',
-    'apps.reportes',
 )
 
 
