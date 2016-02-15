@@ -9,10 +9,6 @@ https://docs.djangoproject.com/en/1.8/howto/deployment/wsgi/
 
 import os
 
-#from dj_static import Cling
-
-
-
 
 try:
 #For deployment
