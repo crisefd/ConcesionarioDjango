@@ -9,10 +9,13 @@ from apps.sucursales.models import Sucursales
 
 
 class VentasForm(forms.ModelForm):
-    automovil = forms.ModelChoiceField(queryset=Automovil.objects.filter(cantidad__gte = 1))
+    automovil = forms.ModelChoiceField(queryset=Automovil.objects.filter(cantidad__gte = 1),
+        widget=forms.Select(attrs={'class':'form-control select2 select2-hidden-accessible'}))
     #valor_venta = forms.CharField( widget=forms.TextInput(attrs={'class':'disabled', 'readonly':'readonly'}))
-    #vendedor = forms.ModelChoiceField(queryset=User.objects.filter(is_active=True, charge="Vendedor"))
-    #sucursal = forms.ModelChoiceField(queryset=Sucursales.objects.filter(is_active=True))
+    vendedor = forms.ModelChoiceField(queryset=User.objects.filter(is_active=True, charge="Vendedor"),
+        widget=forms.Select(attrs={'class':'form-control select2 select2-hidden-accessible'}))
+    sucursal = forms.ModelChoiceField(queryset=Sucursales.objects.filter(is_active=True),
+        widget=forms.Select(attrs={'class':'form-control select2 select2-hidden-accessible'}))
     nombre_comprador=forms.CharField(max_length=50,widget = forms.TextInput(attrs={
                                                         'id':'nameshoperInput',
                                                         'type':'text',
@@ -23,6 +26,7 @@ class VentasForm(forms.ModelForm):
                                                         'type':'text',
                                                         'class':'form-control'
                                    }))
+
     def save(self, *args, **kwargs):
         pk = self.cleaned_data['automovil'].id
         auto = Automovil.objects.get(pk=pk)
@@ -45,8 +49,12 @@ class VentasForm(forms.ModelForm):
                  'automovil')
 
 class CotizacionesForm(forms.ModelForm):
-    automovil = forms.ModelChoiceField(queryset=Automovil.objects.filter(cantidad__gte = 1))
-    vendedor = forms.ModelChoiceField(queryset=User.objects.filter(is_active=True, charge="Vendedor"))
+    automovil = forms.ModelChoiceField(queryset=Automovil.objects.filter(cantidad__gte = 1),
+        widget=forms.Select(attrs={'class':'form-control select2 select2-hidden-accessible'}))
+    vendedor = forms.ModelChoiceField(queryset=User.objects.filter(is_active=True, charge="Vendedor"),
+        widget=forms.Select(attrs={'class':'form-control select2 select2-hidden-accessible'}))
+    sucursal = forms.ModelChoiceField(queryset=Sucursales.objects.filter(is_active=True),
+        widget=forms.Select(attrs={'class':'form-control select2 select2-hidden-accessible'}))
 
     nombre_comprador=forms.CharField(max_length=50,widget = forms.TextInput(attrs={
                                                         'id':'nameshoperInput',

@@ -27,8 +27,9 @@
         </div>
         <div class="box-body">
         <div class="row">
-        <div class="col-md-6">
+        
           <form class="form-group" id="registro" method="POST">{% csrf_token %}
+          <div class="col-md-6">
 
               <div class="control-group">
                 <label class="control-label" for="input01">Nombre</label>
@@ -37,6 +38,8 @@
                   <p id="help-block" class="help-block">Inserte nombre sucursal</p>
                 </div>
               </div>
+              </div>
+              <div class="col-md-6">
               <div class="control-group">
                 <label class="control-label" for="input01">Direccion</label>
                 <div class="controls">
@@ -48,9 +51,9 @@
                 <button type="submit" class="btn btn-primary">Registrar</button>
                 <button type="reset" class="btn">Cancelar</button>
               </div>
-             
-             </form>
              </div>
+             </form>
+             
             </div>
             </div>
             </div>

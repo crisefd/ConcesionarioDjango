@@ -7,8 +7,10 @@ from apps.inventario.models import Repuesto
 from .models import *
 
 class Ordenes_TrabajoForm(forms.ModelForm):
-    mecanico_asignado = forms.ModelChoiceField(queryset=Mecanicos.objects.all())
-    jefe_taller = forms.ModelChoiceField(queryset=User.objects.all())
+    mecanico_asignado = forms.ModelChoiceField(queryset=Mecanicos.objects.all(),
+        widget=forms.Select(attrs={'class':'form-control select2 select2-hidden-accessible'}))
+    jefe_taller = forms.ModelChoiceField(queryset=User.objects.all(),
+        widget=forms.Select(attrs={'class':'form-control select2 select2-hidden-accessible'}))
     #jefe_taller = forms.ModelChoiceField(queryset=User.objects.filter(is_active=True, charge="Jefe Taller"))
     #jefe_taller = forms.ModelChoiceField(queryset=User.objects.filter(username='ironman'))
     descripcion = forms.Textarea()
@@ -29,8 +31,10 @@ class Ordenes_TrabajoForm(forms.ModelForm):
         exclude = ('costo', 'timestamp', 'estado')
 
 class Orden_RepuestoForm(forms.ModelForm):
-    orden = forms.ModelChoiceField(queryset=Ordenes_Trabajo.objects.filter(estado='Activa'))
-    repuesto = forms.ModelChoiceField(queryset=Repuesto.objects.filter(cantidad__gte=1))
+    orden = forms.ModelChoiceField(queryset=Ordenes_Trabajo.objects.filter(estado='Activa'),
+        widget=forms.Select(attrs={'class':'form-control select2 select2-hidden-accessible'}))
+    repuesto = forms.ModelChoiceField(queryset=Repuesto.objects.filter(cantidad__gte=1),
+        widget=forms.Select(attrs={'class':'form-control select2 select2-hidden-accessible'}))
 
     def set_queryset(self, jefe_id):
         queryset = Ordenes_Trabajo.objects.filter(jefe_taller=jefe_id, estado='Activa')

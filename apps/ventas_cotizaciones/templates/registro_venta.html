@@ -27,15 +27,15 @@
         </div>
         <div class="box-body">
         <div class="row">
-        <div class="col-md-6">
+        
           <form class="form-group" id="registro" method="POST">{% csrf_token %}
 
-            
+            <div class="col-md-6">
               <div class="control-group">
-                <label class="control-label" for="input01">Vendedor</label>
+                <label class="control-label" for="input01">Nombre comprador</label>
                 <div class="controls">
-                  {{form.vendedor}}
-                  <p id="help-block" class="help-block">Seleccione quien realiza la venta</p>
+                  {{form.nombre_comprador}}
+                  <p id="help-block" class="help-block">Escriba el nombre del cliente</p>
                 </div>
               </div>
               <div class="control-group">
@@ -46,13 +46,15 @@
                 </div>
               </div>
               <div class="control-group">
-                <label class="control-label" for="input01">Nombre comprador</label>
+                <label class="control-label" for="input01">Vendedor</label>
                 <div class="controls">
-                  {{form.nombre_comprador}}
-                  <p id="help-block" class="help-block">Escriba el nombre del cliente</p>
+                  {{form.vendedor}}
+                  <p id="help-block" class="help-block">Seleccione quien realiza la venta</p>
                 </div>
               </div>
               
+              </div>
+              <div class="col-md-6">
               <div class="control-group">
                 <label class="control-label" for="input01">Id comprador</label>
                 <div class="controls">
@@ -73,9 +75,9 @@
                 <button type="reset" class="btn">Cancelar</button>
                 
               </div>
-              
+              </div>
              </form>
-            </div>
+           
             </div>
             </div>
             </div>
