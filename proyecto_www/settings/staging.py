@@ -29,7 +29,7 @@ DATABASES = {
 #STATIC_URL = '/static/'
 STATIC_ROOT = 'staticfiles'
 #STATICFILES_DIRS=(BASE_DIR,'static')
-STATICFILES_STORAGE = 'whitenoise.django.GzipManifestStaticFilesStorage'
+#STATICFILES_STORAGE = 'whitenoise.django.GzipManifestStaticFilesStorage'
 
 
 #MEDIA_URL = '/media/'
