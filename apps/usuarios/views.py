@@ -129,6 +129,11 @@ class UserDatatableView(XEditableDatatableView):
         ]
     }
 
+    def get_queryset(self):
+        self.queryset = User.objects.filter(is_superuser=False)
+        queryset = super(UserDatatableView, self).get_queryset()
+        return queryset
+
 
 
 
