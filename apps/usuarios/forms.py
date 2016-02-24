@@ -14,6 +14,13 @@ from django.utils.translation import ugettext, ugettext_lazy as _
 
 
 class MyPasswordChangeForm(PasswordChangeForm):
+
+    old_password = forms.CharField(
+        label=_("Old password"),
+        widget=forms.PasswordInput(attrs={'autofocus': '',
+            'class':'form-control'}),
+    )
+
     new_password1 = forms.CharField(label=_("New password"),
                                     widget=forms.PasswordInput(attrs={'class':'form-control'})
                                     #help_text=password_validation.password_validators_help_text_html()
@@ -21,11 +28,7 @@ class MyPasswordChangeForm(PasswordChangeForm):
     new_password2 = forms.CharField(label=_("New password confirmation"),
                                     widget=forms.PasswordInput(attrs={'class':'form-control'}))
 
-    old_password = forms.CharField(
-        label=_("Old password"),
-        widget=forms.PasswordInput(attrs={'autofocus': '',
-            'class':'form-control'}),
-    )
+    
 
 class LoginForm(forms.Form):
 
@@ -71,7 +74,7 @@ class EditProfileForm(forms.Form):
         self.fields['email'].initial = self.user.email
 
     def update(self):
-        print "SALVADO!"
+        # print "SALVADO!"
         #user = super(EditProfileForm, self).save(commit=False)
         self.user.phone_number = self.cleaned_data['phone_number']
         self.user.address = self.cleaned_data['address']
@@ -162,7 +165,7 @@ class MyUserCreationForm(UserCreationForm):
                                                         
                                                         'class':'form-control'
                                    }))
-    branch = forms.ModelChoiceField(queryset=Sucursales.objects.all(),
+    branch = forms.ModelChoiceField(queryset=Sucursales.objects.filter(is_active=True),
         widget=forms.Select(attrs={'class':'form-control select2 select2-hidden-accessible'}))
 
 

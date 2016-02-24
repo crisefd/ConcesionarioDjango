@@ -75,7 +75,7 @@ class RegisterView(SuccessMessageMixin, FormView):
         return super(RegisterView, self).form_valid(form)
 
     def form_invalid(self, form):
-        print "formularion invalido"
+        # print "formularion invalido"
         messages.add_message(self.request, messages.ERROR, "No se pudo registrar al usuario")
         return super(RegisterView, self).form_invalid(form)
 
